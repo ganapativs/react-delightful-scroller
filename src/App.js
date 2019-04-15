@@ -1,26 +1,39 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import generateFakeText from './fakeText';
+import IScroller from './iscroller';
+
+const items = new Array(1000)
+  .fill(true)
+  .map(() => generateFakeText(Math.ceil(Math.random() * 3)));
+
+const itemRenderer = (item, index) => (
+  <pre
+    key={item}
+    style={{
+      whiteSpace: 'pre-wrap',
+      // backgroundColor: '#' + ((Math.random() * 0xffffff) << 0).toString(16),
+      borderBottom: '1px solid #ccc',
+    }}>
+    {item}
+  </pre>
+);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <IScroller
+        /* u */ items={items}
+        /* u */ renderItem={itemRenderer}
+        itemsCount={items.length}
+        minItemHeight={1} // Min item height should be 1px
+        itemHeight={null} // Dynamic item height
+        removeFromDOM
+        axis="y"
+        threshold={0}
+        rootElement={null} // Scroll parent
+        fetchItems={() => {}}
+        loader={() => 'Loading...'}
+      />
     );
   }
 }
