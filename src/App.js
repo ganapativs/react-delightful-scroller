@@ -22,8 +22,9 @@ class App extends Component {
   render() {
     return (
       <IScroller
-        /* u */ items={items}
-        /* u */ renderItem={itemRenderer}
+        /* d */ items={items}
+        /* d */ renderItem={itemRenderer}
+        ref={r => console.log('TCL: App -> render -> r', r)}
         itemsCount={items.length}
         minItemHeight={1} // Min item height should be 1px
         itemHeight={null} // Dynamic item height

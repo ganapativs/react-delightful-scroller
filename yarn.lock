@@ -854,6 +854,13 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.2.0":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.3.tgz#79888e452034223ad9609187a0ad1fe0d2ad4bdc"
+  integrity sha512-9lsJwJLxDh/T3Q3SZszfWOTkk3pHbkmH+3KY+zwIDmsNlxsumuhS2TH3NIpktU4kNvfzy+k3eLT7aTJSPTo0OA==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/template@^7.1.0", "@babel/template@^7.2.2", "@babel/template@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.4.0.tgz#12474e9c077bae585c5d835a95c0b0b790c25c8b"
@@ -4238,6 +4245,11 @@ get-caller-file@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.3.tgz#f978fa4c90d1dfe7ff2d6beda2a515e713bdcf4a"
   integrity sha512-3t6rVToeoZfYSGd8YoLFR2DJkiQrIiUrGcjvFX2mDw3bn6k2OtwHN0TNCLbBO+w8qTvimhDkv+LSscbJY1vE6w==
+
+get-node-dimensions@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/get-node-dimensions/-/get-node-dimensions-1.2.1.tgz#fb7b4bb57060fb4247dd51c9d690dfbec56b0823"
+  integrity sha512-2MSPMu7S1iOTL+BOa6K1S62hB2zUAYNF/lV0gSVlOaacd087lc6nR1H1r0e3B1CerTo+RceOmi1iJW+vp21xcQ==
 
 get-own-enumerable-property-symbols@^3.0.0:
   version "3.0.0"
@@ -8299,6 +8311,16 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
+react-measure@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/react-measure/-/react-measure-2.2.6.tgz#e20bf4d0d29bd7b3a84ba1ac14d1278f234c39f3"
+  integrity sha512-g4kCXnTbU0AP6Yh/MwPRY77FluqlZXTzgBIyodis7JnkssBh+X3KNNuErFhJynN2j/8WDwQ1RdHWpJ3jnfGsaw==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    get-node-dimensions "^1.2.1"
+    prop-types "^15.6.2"
+    resize-observer-polyfill "^1.5.0"
+
 react-scripts@2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/react-scripts/-/react-scripts-2.1.8.tgz#21195bb928b2c0462aa98b2d32edf7d034cff2a9"
@@ -8472,6 +8494,11 @@ regenerator-runtime@^0.12.0:
   version "0.12.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
   integrity sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==
+
+regenerator-runtime@^0.13.2:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
+  integrity sha512-S/TQAZJO+D3m9xeN1WTI8dLKBBiRgXBlTJvbWjCThHWZj9EvHK70Ff50/tYj2J/fvBY6JtFVwRuazHN2E7M9BA==
 
 regenerator-transform@^0.13.4:
   version "0.13.4"
@@ -8663,6 +8690,11 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+
+resize-observer-polyfill@^1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
