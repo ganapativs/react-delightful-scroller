@@ -1,6 +1,8 @@
 import { memo } from 'react';
 
+const Render = ({ item, index, renderItem }) => renderItem(item, index);
+
 export const RenderItem = memo(
-  ({ item, index, renderItem }) => renderItem(item, index),
+  Render,
   ({ item: prevItem }, { item }) => prevItem === item,
 );

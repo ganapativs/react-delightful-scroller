@@ -2,8 +2,8 @@ import { LoremIpsum } from 'lorem-ipsum';
 
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
-    max: 8,
-    min: 4,
+    max: 3,
+    min: 1,
   },
   wordsPerSentence: {
     max: 16,
