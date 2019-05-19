@@ -18,10 +18,14 @@ function IScroller({
   const Elements = items.map((item, index) => {
     const key = getItemKey(item, index);
 
-    return React.createElement(
-      wrapperElement,
-      { key },
-      <RenderItem item={item} index={index} renderItem={renderItem} />,
+    return (
+      <RenderItem
+        key={key}
+        wrapperElement={wrapperElement}
+        item={item}
+        index={index}
+        renderItem={renderItem}
+      />
     );
   });
 
@@ -40,7 +44,7 @@ IScroller.defaultProps = {
   /** Item renderer function */
   renderItem: item => item,
   /** Get unique key for every item, used to detect item value change */
-  getItemKey: (item, index) => item,
+  getItemKey: (item, index) => index,
   /** HTML tag used to wrap each rendered item */
   wrapperElement: 'div',
   /** Container node renderer */
