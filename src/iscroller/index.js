@@ -6,6 +6,7 @@
  */
 import React, { memo } from 'react';
 import { RenderItem } from './RenderItem';
+import { useDimensions } from './useDimensions';
 
 function IScroller({
   items,
@@ -15,6 +16,8 @@ function IScroller({
   forwardRef,
   itemContainerRenderer,
 }) {
+  const [dimensions, setDimensions] = useDimensions();
+  console.log(dimensions);
   const Elements = items.map((item, index) => {
     const key = getItemKey(item, index);
 
@@ -25,6 +28,7 @@ function IScroller({
         item={item}
         index={index}
         renderItem={renderItem}
+        setDimensions={setDimensions}
       />
     );
   });
