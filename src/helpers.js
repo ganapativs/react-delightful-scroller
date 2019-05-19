@@ -3,11 +3,12 @@ import styled from 'styled-components/macro';
 export const Container = styled.div`
   max-width: 700px;
   margin: 0px auto;
+  padding-top: 10px;
 `;
 
 export const Card = styled.div`
   background: #fff;
-  margin: 10px 0;
+  margin-bottom: 10px;
   padding: 10px;
   box-shadow: 0 1px 4px #ddd;
   white-space: pre-line;
