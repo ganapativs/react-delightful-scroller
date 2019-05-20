@@ -6,7 +6,7 @@
  */
 import React, { memo } from 'react';
 import { RenderItem } from './RenderItem';
-import { useDimensions } from './useDimensions';
+import { useDimensions } from './utils/useDimensions';
 
 function IScroller({
   items,
@@ -17,18 +17,20 @@ function IScroller({
   itemContainerRenderer,
 }) {
   const [dimensions, setDimensions] = useDimensions();
-  console.log(dimensions);
+
   const Elements = items.map((item, index) => {
     const key = getItemKey(item, index);
+    const dimension = dimensions.get(index);
 
     return (
       <RenderItem
-        key={key}
+        key={`${key}-${(dimension && dimension.top) || 'x'}`}
         wrapperElement={wrapperElement}
         item={item}
         index={index}
         renderItem={renderItem}
         setDimensions={setDimensions}
+        dimension={dimension}
       />
     );
   });
@@ -58,7 +60,8 @@ IScroller.defaultProps = {
   // removeFromDOM
   // axis="y"
   // threshold={0}
-  // rootElement={null} // Scroll parent
+  // root={null} // Scroll parent
+  // rootMargin={null} // Margin around the root
   // fetchItems={() => {}}
   // loader={() => "Loading..."}
 };

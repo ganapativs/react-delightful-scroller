@@ -31,7 +31,8 @@ class App extends Component {
           removeFromDOM
           axis="y"
           threshold={0}
-          rootElement={null} // Scroll parent
+          root={null} // Scroll parent
+          rootMargin={null} // Margin around the root
           fetchItems={() => {}}
           loader={() => 'Loading...'}
         />
