@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import generateFakeText from './fakeText';
 import IScroller from './iscroller';
 
-const items = new Array(1000)
+const items = new Array(50)
   .fill(true)
   .map(() => generateFakeText(Math.ceil(Math.random() * 3)));
 

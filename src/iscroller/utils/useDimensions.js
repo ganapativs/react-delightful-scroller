@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 
 export function useDimensions() {
-  const [dimensions, setDimension] = useState(new Map());
+  const [dimensionsMap, setDimension] = useState(new Map());
   // Set state is not immediate, we need a ref to store intermediate value
   const intermediate = useRef(null);
 
@@ -12,13 +12,13 @@ export function useDimensions() {
     if (prevValue && prevValue.top === value.top) {
       return;
     }
-    console.log('000');
-    const newDimensions = new Map(intermediate.current);
-    newDimensions.set(index, { ...value });
-    intermediate.current = newDimensions;
 
-    setDimension(newDimensions);
+    const newDimensionsMap = new Map(intermediate.current);
+    newDimensionsMap.set(index, { ...value });
+    intermediate.current = newDimensionsMap;
+
+    setDimension(newDimensionsMap);
   };
 
-  return [dimensions, wrappedSetDimensions];
+  return [dimensionsMap, wrappedSetDimensions];
 }

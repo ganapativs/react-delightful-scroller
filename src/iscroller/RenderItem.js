@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import Measure from 'react-measure';
 import styled from 'styled-components/macro';
 import Observer from '@researchgate/react-intersection-observer';
@@ -14,14 +14,14 @@ const Render = ({
   renderItem,
   wrapperElement,
   setDimensions,
+  setVisibility,
   dimension,
+  visible,
 }) => {
-  const [visible, setVisible] = useState(true);
-
   return (
     <Observer
       onChange={s => {
-        setVisible(s.isIntersecting);
+        setVisibility(index, s.isIntersecting);
       }}>
       {visible || !dimension ? (
         <Measure
@@ -55,9 +55,15 @@ const Render = ({
   otherwise return false
   */
 const areEqual = (
-  { item: prevItem, dimension: prevDimension },
-  { item, dimension, index },
-) =>
-  prevItem === item || (prevDimension && prevDimension.top) === dimension.top;
+  { item: prevItem, dimension: prevDimension, visible: prevVisible },
+  { item, dimension, visible, index },
+) => {
+  const eq =
+    prevItem === item &&
+    (prevDimension && prevDimension.top) === dimension.top &&
+    prevVisible === visible;
+
+  return eq;
+};
 
 export const RenderItem = memo(Render, areEqual);

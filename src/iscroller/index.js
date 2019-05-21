@@ -7,6 +7,7 @@
 import React, { memo } from 'react';
 import { RenderItem } from './RenderItem';
 import { useDimensions } from './utils/useDimensions';
+import { useVisibility } from './utils/useVisibility';
 
 function IScroller({
   items,
@@ -16,11 +17,13 @@ function IScroller({
   forwardRef,
   itemContainerRenderer,
 }) {
-  const [dimensions, setDimensions] = useDimensions();
+  const [dimensionsMap, setDimensions] = useDimensions();
+  const [visibilityMap, setVisibility] = useVisibility();
 
   const Elements = items.map((item, index) => {
     const key = getItemKey(item, index);
-    const dimension = dimensions.get(index);
+    const dimension = dimensionsMap.get(index);
+    const visible = visibilityMap.get(index);
 
     return (
       <RenderItem
@@ -30,7 +33,9 @@ function IScroller({
         index={index}
         renderItem={renderItem}
         setDimensions={setDimensions}
+        setVisibility={setVisibility}
         dimension={dimension}
+        visible={visible === undefined ? true : visible}
       />
     );
   });
