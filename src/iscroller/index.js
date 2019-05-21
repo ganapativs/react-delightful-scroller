@@ -16,6 +16,7 @@ function IScroller({
   wrapperElement,
   forwardRef,
   itemContainerRenderer,
+  removeFromDOM,
 }) {
   const [dimensionsMap, setDimensions] = useDimensions();
   const [visibilityMap, setVisibility] = useVisibility();
@@ -36,6 +37,7 @@ function IScroller({
         setVisibility={setVisibility}
         dimension={dimension}
         visible={visible === undefined ? true : visible}
+        removeFromDOM={removeFromDOM}
       />
     );
   });
@@ -60,9 +62,9 @@ IScroller.defaultProps = {
   wrapperElement: 'div',
   /** Container node renderer */
   itemContainerRenderer: ({ children, ref }) => <div ref={ref}>{children}</div>,
+  removeFromDOM: true,
   // minItemHeight={1} // Min item height should be 1px
   // itemHeight={null} // Dynamic item height
-  // removeFromDOM
   // axis="y"
   // threshold={0}
   // root={null} // Scroll parent

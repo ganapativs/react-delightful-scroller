@@ -24,11 +24,11 @@ class App extends Component {
         <IScroller
           /* d */ items={items}
           /* d */ renderItem={itemRenderer}
-          ref={r => console.log('TCL: App -> render -> r', r)}
+          /* d */ ref={r => console.log('TCL: App -> render -> r', r)}
+          /* d */ removeFromDOM
           itemsCount={items.length}
           minItemHeight={1} // Min item height should be 1px
           itemHeight={null} // Dynamic item height
-          removeFromDOM
           axis="y"
           threshold={0}
           root={null} // Scroll parent

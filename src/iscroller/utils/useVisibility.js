@@ -7,6 +7,7 @@ export function useVisibility() {
 
   const wrappedSetVisibility = (index, value) => {
     const prevValue = intermediate.current && intermediate.current.get(index);
+
     // If prev and current values are same, do nothing
     if (prevValue && prevValue === value) {
       return;

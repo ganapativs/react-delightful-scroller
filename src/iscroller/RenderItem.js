@@ -17,34 +17,48 @@ const Render = ({
   setVisibility,
   dimension,
   visible,
+  removeFromDOM,
 }) => {
+  let node = null;
+
+  if (visible || !removeFromDOM || !dimension) {
+    node = (
+      <Measure
+        offset
+        onResize={contentRect => {
+          setDimensions(index, contentRect.offset);
+        }}>
+        {({ measureRef }) => (
+          <Wrapper
+            as={wrapperElement}
+            ref={measureRef}
+            style={
+              !removeFromDOM
+                ? { visibility: visible ? 'visible' : 'hidden' }
+                : {}
+            }>
+            {renderItem(item, index)}
+          </Wrapper>
+        )}
+      </Measure>
+    );
+  } else {
+    node = (
+      <div
+        style={{
+          top: dimension.top,
+          height: dimension.height,
+        }}
+      />
+    );
+  }
+
   return (
     <Observer
       onChange={s => {
         setVisibility(index, s.isIntersecting);
       }}>
-      {visible || !dimension ? (
-        <Measure
-          // bounds
-          offset
-          onResize={contentRect => {
-            setDimensions(index, contentRect.offset);
-          }}>
-          {({ measureRef }) => (
-            <Wrapper as={wrapperElement} ref={measureRef}>
-              {renderItem(item, index)}
-            </Wrapper>
-          )}
-        </Measure>
-      ) : (
-        <div
-          style={{
-            // transform: `translateY(${dimension.top}px)`,
-            top: dimension.top,
-            height: dimension.height,
-          }}
-        />
-      )}
+      {node}
     </Observer>
   );
 };
@@ -55,13 +69,19 @@ const Render = ({
   otherwise return false
   */
 const areEqual = (
-  { item: prevItem, dimension: prevDimension, visible: prevVisible },
-  { item, dimension, visible, index },
+  {
+    item: prevItem,
+    dimension: prevDimension,
+    visible: prevVisible,
+    removeFromDOM: prevRemoveFromDOM,
+  },
+  { item, dimension, visible, removeFromDOM },
 ) => {
   const eq =
     prevItem === item &&
     (prevDimension && prevDimension.top) === dimension.top &&
-    prevVisible === visible;
+    prevVisible === visible &&
+    prevRemoveFromDOM === removeFromDOM;
 
   return eq;
 };
