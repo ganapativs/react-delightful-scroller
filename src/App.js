@@ -22,10 +22,15 @@ class App extends Component {
     return (
       <Container>
         <IScroller
+          /* d */ ref={r => console.log('TCL: App -> render -> r', r)}
           /* d */ items={items}
           /* d */ renderItem={itemRenderer}
-          /* d */ ref={r => console.log('TCL: App -> render -> r', r)}
+          /* d */ getItemKey={(item, index) => item + index}
+          /* d */ wrapperElement="div"
           /* d */ removeFromDOM
+          /* d */ itemContainerRenderer={({ children, ref }) => (
+            <div ref={ref}>{children}</div>
+          )}
           itemsCount={items.length}
           minItemHeight={1} // Min item height should be 1px
           itemHeight={null} // Dynamic item height
