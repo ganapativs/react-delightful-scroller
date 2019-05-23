@@ -18,6 +18,9 @@ const Render = ({
   dimension,
   visible,
   removeFromDOM,
+  threshold,
+  root,
+  rootMargin,
 }) => {
   let node = null;
 
@@ -57,7 +60,10 @@ const Render = ({
     <Observer
       onChange={s => {
         setVisibility(index, s.isIntersecting);
-      }}>
+      }}
+      threshold={threshold}
+      root={root}
+      rootMargin={rootMargin}>
       {node}
     </Observer>
   );

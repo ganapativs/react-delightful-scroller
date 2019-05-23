@@ -5,11 +5,14 @@
  * - Wrap elements in resize observer
  */
 import React, { memo } from 'react';
+import useWindowSize from '@rehooks/window-size';
 import { RenderItem } from './RenderItem';
 import { useDimensions } from './utils/useDimensions';
 import { useVisibility } from './utils/useVisibility';
 
 function IScroller({
+  windowWidth,
+  windowHeight,
   items,
   renderItem,
   getItemKey,
@@ -17,6 +20,9 @@ function IScroller({
   forwardRef,
   itemContainerRenderer,
   removeFromDOM,
+  threshold,
+  root,
+  rootMargin,
 }) {
   const [dimensionsMap, setDimensions] = useDimensions();
   const [visibilityMap, setVisibility] = useVisibility();
@@ -38,6 +44,9 @@ function IScroller({
         dimension={dimension}
         visible={visible === undefined ? true : visible}
         removeFromDOM={removeFromDOM}
+        threshold={threshold}
+        root={root}
+        rootMargin={rootMargin}
       />
     );
   });
@@ -63,16 +72,63 @@ IScroller.defaultProps = {
   /** Container node renderer */
   itemContainerRenderer: ({ children, ref }) => <div ref={ref}>{children}</div>,
   removeFromDOM: true,
+  /** Percentage of the target's visibility the observer's callback should be executed */
+  threshold: 0,
+  /** Scroll parent - should be an element */
+  root: null,
+  /** Margin around the root */
+  rootMargin: '0px 0px 0px 0px',
   // minItemHeight={1} // Min item height should be 1px
   // itemHeight={null} // Dynamic item height
   // axis="y"
-  // threshold={0}
-  // root={null} // Scroll parent
-  // rootMargin={null} // Margin around the root
   // fetchItems={() => {}}
   // loader={() => "Loading..."}
 };
 
+// const WindowContainer = props => {
+//   let { innerWidth, innerHeight } = useWindowSize();
+
+//   return (
+//     <IScroller
+//       {...props}
+//       containerWidth={innerWidth}
+//       containerHeight={innerHeight}
+//     />
+//   );
+// };
+
+// const CustomContainer = props => {
+//   return (
+//     <Measure
+//       offset
+//       onResize={contentRect => {
+//         setDimensions(index, contentRect.offset);
+//       }}>
+//       {({ measureRef }) => (
+//         <Wrapper
+//           as={wrapperElement}
+//           ref={measureRef}
+//           style={
+//             !removeFromDOM ? { visibility: visible ? 'visible' : 'hidden' } : {}
+//           }>
+//           {renderItem(item, index)}
+//         </Wrapper>
+//       )}
+//     </Measure>
+//   );
+// };
+
 export default memo(
-  React.forwardRef((props, ref) => <IScroller {...props} forwardRef={ref} />),
+  React.forwardRef((props, ref) => {
+    let { innerWidth, innerHeight } = useWindowSize();
+
+    return (
+      <IScroller
+        {...props}
+        windowWidth={innerWidth}
+        windowHeight={innerHeight}
+        forwardRef={ref}
+      />
+    );
+  }),
 );

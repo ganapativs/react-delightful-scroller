@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import generateFakeText from './fakeText';
 
 export const Container = styled.div`
   max-width: 700px;
@@ -24,3 +25,8 @@ export const Card = styled.div`
 
 export const getRandomColor = () =>
   '#' + ((Math.random() * 0xffffff) << 0).toString(16);
+
+export const getItems = (count = 0) =>
+  new Array(count)
+    .fill(true)
+    .map(() => generateFakeText(Math.ceil(Math.random() * 3)));
