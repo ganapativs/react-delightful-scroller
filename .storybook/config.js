@@ -1,9 +1,11 @@
 import { addParameters, configure } from '@storybook/react';
+import { themes } from '@storybook/theming';
 
 addParameters({
     options: {
       name: 'React iScroller',
-      showAddonPanel: false
+      showAddonPanel: false,
+      theme: themes.dark,
     }
 });
 
