@@ -21,10 +21,11 @@ const Render = ({
   threshold,
   root,
   rootMargin,
+  isBufferedCard,
 }) => {
   let node = null;
 
-  if (visible || !removeFromDOM || !dimension) {
+  if (visible || !removeFromDOM || !dimension || isBufferedCard) {
     node = (
       <Measure
         offset
@@ -49,7 +50,7 @@ const Render = ({
     node = (
       <div
         style={{
-          top: dimension.top,
+          // top: dimension.top,
           height: dimension.height,
         }}
       />
@@ -80,14 +81,16 @@ const areEqual = (
     dimension: prevDimension,
     visible: prevVisible,
     removeFromDOM: prevRemoveFromDOM,
+    isBufferedCard: prevIsBufferedCard,
   },
-  { item, dimension, visible, removeFromDOM },
+  { item, dimension, visible, removeFromDOM, isBufferedCard },
 ) => {
   const eq =
     prevItem === item &&
     (prevDimension && prevDimension.top) === dimension.top &&
     prevVisible === visible &&
-    prevRemoveFromDOM === removeFromDOM;
+    prevRemoveFromDOM === removeFromDOM &&
+    prevIsBufferedCard === isBufferedCard;
 
   return eq;
 };

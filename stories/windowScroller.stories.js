@@ -31,14 +31,14 @@ const WindowScroller = () => (
       /** Scroll parent - should be an element */
       root={null}
       /** Margin around the root */
-      rootMargin={'0px 0px 0px 0px'}
+      rootMargin={'20%'}
       itemsCount={items.length}
-      minItemHeight={1} // Min item height should be 1px
+      averageItemHeight={50} // Average item height should be 1px
       itemHeight={null} // Dynamic item height
       axis="y"
       fetchItems={() => {}}
       loader={() => 'Loading...'}
-      cardBuffer={null}
+      itemsBuffer={2} // Extra items to render on each side in both directions
     />
   </Container>
 );

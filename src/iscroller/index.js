@@ -9,10 +9,12 @@ import useWindowSize from '@rehooks/window-size';
 import { RenderItem } from './RenderItem';
 import { useDimensions } from './utils/useDimensions';
 import { useVisibility } from './utils/useVisibility';
+import { getVisibleIndexes } from './utils/getVisibleIndexes';
+import { initializeInitialVisibility } from './utils/initializeInitialVisibility';
 
 function IScroller({
-  windowWidth,
-  windowHeight,
+  containerWidth,
+  containerHeight,
   items,
   renderItem,
   getItemKey,
@@ -23,14 +25,36 @@ function IScroller({
   threshold,
   root,
   rootMargin,
+  averageItemHeight,
+  itemHeight,
+  axis,
+  itemsCount,
+  itemsBuffer,
 }) {
   const [dimensionsMap, setDimensions] = useDimensions();
-  const [visibilityMap, setVisibility] = useVisibility();
+  const [visibilityMap, setVisibility] = useVisibility(
+    initializeInitialVisibility(
+      axis,
+      containerHeight,
+      itemHeight,
+      averageItemHeight,
+    ),
+  );
+  let [startIndex, endIndex] = getVisibleIndexes(visibilityMap);
+  const bufferedStartIndex = Math.max(startIndex - itemsBuffer, 0);
+  const bufferedEndIndex = Math.min(endIndex + itemsBuffer, itemsCount);
+
+  const previous = items.slice(0, bufferedStartIndex);
+  const current = items.slice(bufferedStartIndex, bufferedEndIndex + 1);
+  const next = items.slice(bufferedEndIndex + 1, itemsCount);
 
   const Elements = items.map((item, index) => {
     const key = getItemKey(item, index);
     const dimension = dimensionsMap.get(index);
     const visible = visibilityMap.get(index);
+    const isBufferedCard =
+      (index >= bufferedStartIndex && index < startIndex) ||
+      (index > endIndex && index <= bufferedEndIndex);
 
     return (
       <RenderItem
@@ -47,6 +71,7 @@ function IScroller({
         threshold={threshold}
         root={root}
         rootMargin={rootMargin}
+        isBufferedCard={isBufferedCard}
       />
     );
   });
@@ -78,24 +103,25 @@ IScroller.defaultProps = {
   root: null,
   /** Margin around the root */
   rootMargin: '0px 0px 0px 0px',
-  // minItemHeight={1} // Min item height should be 1px
-  // itemHeight={null} // Dynamic item height
-  // axis="y"
+  averageItemHeight: 10, // Average item height should be 1px
+  itemHeight: null, // Dynamic item height
+  axis: 'y',
+  itemsBuffer: 4, // Extra items to render on each side in both directions
   // fetchItems={() => {}}
   // loader={() => "Loading..."}
 };
 
-// const WindowContainer = props => {
-//   let { innerWidth, innerHeight } = useWindowSize();
+const WindowContainer = props => {
+  let { innerWidth, innerHeight } = useWindowSize();
 
-//   return (
-//     <IScroller
-//       {...props}
-//       containerWidth={innerWidth}
-//       containerHeight={innerHeight}
-//     />
-//   );
-// };
+  return (
+    <IScroller
+      {...props}
+      containerWidth={innerWidth}
+      containerHeight={innerHeight}
+    />
+  );
+};
 
 // const CustomContainer = props => {
 //   return (
@@ -120,15 +146,11 @@ IScroller.defaultProps = {
 
 export default memo(
   React.forwardRef((props, ref) => {
-    let { innerWidth, innerHeight } = useWindowSize();
+    if (!props.root) {
+      return <WindowContainer {...props} forwardRef={ref} />;
+    }
 
-    return (
-      <IScroller
-        {...props}
-        windowWidth={innerWidth}
-        windowHeight={innerHeight}
-        forwardRef={ref}
-      />
-    );
+    // TODO - Custom container
+    return null;
   }),
 );

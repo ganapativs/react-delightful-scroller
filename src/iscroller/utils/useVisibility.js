@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 
-export function useVisibility() {
-  const [visibilityMap, setVisibility] = useState(new Map());
+export function useVisibility(initial = new Map()) {
+  const [visibilityMap, setVisibility] = useState(initial);
   // Set state is not immediate, we need a ref to store intermediate value
   const intermediate = useRef(null);
 
