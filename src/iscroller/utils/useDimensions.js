@@ -3,10 +3,10 @@ import { useState, useRef } from 'react';
 export function useDimensions() {
   const [dimensionsMap, setDimension] = useState(new Map());
   // Set state is not immediate, we need a ref to store intermediate value
-  const intermediate = useRef(null);
+  const intermediate = useRef(new Map(dimensionsMap));
 
   const wrappedSetDimensions = (index, value) => {
-    const prevValue = intermediate.current && intermediate.current.get(index);
+    const prevValue = intermediate.current.get(index);
 
     // If prev and current values are same, do nothing
     if (prevValue && prevValue.top === value.top) {

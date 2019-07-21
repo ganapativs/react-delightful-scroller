@@ -1,6 +1,7 @@
 export function initializeInitialVisibility(
   axis,
   containerHeight,
+  containerWidth,
   itemHeight,
   averageItemHeight,
 ) {

@@ -36,19 +36,45 @@ function IScroller({
     initializeInitialVisibility(
       axis,
       containerHeight,
+      containerWidth,
       itemHeight,
       averageItemHeight,
     ),
   );
-  let [startIndex, endIndex] = getVisibleIndexes(visibilityMap);
+  let [startIndex = 0, endIndex = itemsCount - 1] = getVisibleIndexes(
+    visibilityMap,
+  );
   const bufferedStartIndex = Math.max(startIndex - itemsBuffer, 0);
+  console.log('TCL: bufferedStartIndex', bufferedStartIndex);
   const bufferedEndIndex = Math.min(endIndex + itemsBuffer, itemsCount);
 
+  console.log('TCL: bufferedEndIndex', bufferedEndIndex);
   const previous = items.slice(0, bufferedStartIndex);
   const current = items.slice(bufferedStartIndex, bufferedEndIndex + 1);
   const next = items.slice(bufferedEndIndex + 1, itemsCount);
 
-  const Elements = items.map((item, index) => {
+  const prevHeight = previous.reduce((p, c, i) => {
+    const index = i;
+    const dimension = dimensionsMap.get(index);
+
+    const height =
+      (dimension && dimension.height) || itemHeight || averageItemHeight;
+
+    return p + height;
+  }, 0);
+
+  const nextHeight = next.reduce((p, c, i) => {
+    const index = previous.length + current.length + i;
+    const dimension = dimensionsMap.get(index);
+
+    const height =
+      (dimension && dimension.height) || itemHeight || averageItemHeight;
+
+    return p + height;
+  }, 0);
+
+  const Elements = current.map((item, i) => {
+    const index = previous.length + i;
     const key = getItemKey(item, index);
     const dimension = dimensionsMap.get(index);
     const visible = visibilityMap.get(index);
@@ -77,7 +103,13 @@ function IScroller({
   });
 
   const Container = itemContainerRenderer({
-    children: Elements,
+    children: (
+      <>
+        <div style={{ height: prevHeight }} />
+        {Elements}
+        <div style={{ height: nextHeight }} />
+      </>
+    ),
     ref: forwardRef,
   });
   return Container;
