@@ -4,87 +4,15 @@
  * - Store visible items range
  * - Wrap elements in resize observer
  */
-import React, { memo, useContext, useState, useRef } from 'react';
+import React, { memo } from 'react';
 import useWindowSize from '@rehooks/window-size';
-import IScrollerContext, { IScrollerProvider } from './context';
-import Measure from 'react-measure';
-
-const Wrapper = React.forwardRef(({ as = 'div', children }, ref) =>
-  React.createElement(as, { ref }, children),
-);
-
-const getBatchedItems = (items, batchSize = 1) => {
-  const itemsClone = [...items];
-  let batched = [];
-  while (itemsClone.length) {
-    batched = [...batched, itemsClone.splice(0, batchSize)];
-  }
-
-  return batched;
-};
-
-const useDimensions = (initialValue = {}) => {
-  const [dimensions, setDimension] = useState(initialValue);
-  // Set state is not immediate, we need a ref to store intermediate value
-  const intermediate = useRef(null);
-
-  const wrappedSetDimensions = (index, dimension) => {
-    const newDimensions = { ...intermediate.current };
-    newDimensions[index] = { ...dimension };
-    intermediate.current = newDimensions;
-    console.log(index, newDimensions);
-    setDimension(newDimensions);
-  };
-
-  return [dimensions, wrappedSetDimensions];
-};
-
-const RenderItem = ({ item, index }) => {
-  const { renderItem } = useContext(IScrollerContext);
-
-  return renderItem(item, index);
-};
-
-const BatchRenderer = ({ batch, index }) => {
-  const {
-    getItemKey,
-    batchSize,
-    wrapperElement,
-    removeFromDOM,
-    dimensions,
-    setDimension,
-  } = useContext(IScrollerContext);
-  const items = batch.map((item, idx) => {
-    const actualIndex = batchSize * index + idx;
-    const key = getItemKey(item, actualIndex);
-
-    return <RenderItem key={key} item={item} index={actualIndex} />;
-  });
-
-  const batchWithResizeObserver = (
-    <Measure
-      // ScrollHeight is actual height of batch including content margins
-      scroll
-      onResize={contentRect => {
-        setDimension(index, contentRect);
-      }}>
-      {({ measureRef }) => (
-        <Wrapper
-          data-iscroller-batch={index}
-          as={wrapperElement}
-          ref={measureRef}
-          // style={
-          //   !removeFromDOM ? { visibility: visible ? 'visible' : 'hidden' } : {}
-          // }
-        >
-          {items}
-        </Wrapper>
-      )}
-    </Measure>
-  );
-
-  return batchWithResizeObserver;
-};
+import { IScrollerProvider } from './context';
+import { useVisibility } from './useVisibility';
+import { initializeInitialVisibility } from './initializeInitialVisibility';
+import { getBatchedItems } from './getBatchedItems';
+import { useDimensions } from './useDimensions';
+import { BatchRenderer } from './BatchRenderer';
+import { useScroll } from './useScroll';
 
 function IScroller({
   containerWidth,
@@ -98,8 +26,23 @@ function IScroller({
   removeFromDOM,
   root,
   batchSize,
+  axis,
+  averageItemHeight,
+  itemHeight,
 }) {
   const [dimensions, setDimension] = useDimensions({});
+  const scrollOffset = useScroll(root, axis);
+  const [visibilityMap, setVisibility] = useVisibility(
+    initializeInitialVisibility({
+      axis,
+      containerHeight,
+      itemHeight,
+      averageItemHeight,
+      batchSize,
+    }),
+  );
+  console.log('TCL: scrollOffset', scrollOffset);
+
   const batchedItems = getBatchedItems(items, batchSize);
   const batchedElements = batchedItems.map((batch, index) => {
     return <BatchRenderer key={index} batch={batch} index={index} />;
