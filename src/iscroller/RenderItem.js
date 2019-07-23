@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import Measure from 'react-measure';
 import styled from 'styled-components/macro';
 import Observer from '@researchgate/react-intersection-observer';
@@ -14,18 +14,17 @@ const Render = ({
   renderItem,
   wrapperElement,
   setDimensions,
-  setVisibility,
   dimension,
-  visible,
   removeFromDOM,
   threshold,
   root,
   rootMargin,
-  isBufferedCard,
 }) => {
+  const [visible, setVisibility] = useState(true);
   let node = null;
+  console.log('render item', index);
 
-  if (visible || !removeFromDOM || !dimension || isBufferedCard) {
+  if (visible || !removeFromDOM || !dimension) {
     node = (
       <Measure
         offset
@@ -52,6 +51,7 @@ const Render = ({
         style={{
           // top: dimension.top,
           height: dimension.height,
+          background: 'red',
         }}
       />
     );
@@ -60,7 +60,8 @@ const Render = ({
   return (
     <Observer
       onChange={s => {
-        setVisibility(index, s.isIntersecting);
+        console.log('Intesection', index, s.isIntersecting);
+        setVisibility(s.isIntersecting);
       }}
       threshold={threshold}
       root={root}
@@ -81,16 +82,14 @@ const areEqual = (
     dimension: prevDimension,
     visible: prevVisible,
     removeFromDOM: prevRemoveFromDOM,
-    isBufferedCard: prevIsBufferedCard,
   },
-  { item, dimension, visible, removeFromDOM, isBufferedCard },
+  { item, dimension, visible, removeFromDOM },
 ) => {
   const eq =
     prevItem === item &&
     (prevDimension && prevDimension.top) === dimension.top &&
     prevVisible === visible &&
-    prevRemoveFromDOM === removeFromDOM &&
-    prevIsBufferedCard === isBufferedCard;
+    prevRemoveFromDOM === removeFromDOM;
 
   return eq;
 };

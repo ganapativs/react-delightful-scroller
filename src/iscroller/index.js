@@ -20,7 +20,7 @@ function IScroller({
   getItemKey,
   wrapperElement,
   forwardRef,
-  itemContainerRenderer,
+  containerRenderer,
   removeFromDOM,
   threshold,
   root,
@@ -29,32 +29,12 @@ function IScroller({
   itemHeight,
   axis,
   itemsCount,
-  itemsBuffer,
 }) {
   const [dimensionsMap, setDimensions] = useDimensions();
-  const [visibilityMap, setVisibility] = useVisibility(
-    initializeInitialVisibility(
-      axis,
-      containerHeight,
-      itemHeight,
-      averageItemHeight,
-    ),
-  );
-  let [startIndex, endIndex] = getVisibleIndexes(visibilityMap);
-  const bufferedStartIndex = Math.max(startIndex - itemsBuffer, 0);
-  const bufferedEndIndex = Math.min(endIndex + itemsBuffer, itemsCount);
-
-  const previous = items.slice(0, bufferedStartIndex);
-  const current = items.slice(bufferedStartIndex, bufferedEndIndex + 1);
-  const next = items.slice(bufferedEndIndex + 1, itemsCount);
 
   const Elements = items.map((item, index) => {
     const key = getItemKey(item, index);
     const dimension = dimensionsMap.get(index);
-    const visible = visibilityMap.get(index);
-    const isBufferedCard =
-      (index >= bufferedStartIndex && index < startIndex) ||
-      (index > endIndex && index <= bufferedEndIndex);
 
     return (
       <RenderItem
@@ -64,19 +44,16 @@ function IScroller({
         index={index}
         renderItem={renderItem}
         setDimensions={setDimensions}
-        setVisibility={setVisibility}
         dimension={dimension}
-        visible={visible === undefined ? true : visible}
         removeFromDOM={removeFromDOM}
         threshold={threshold}
         root={root}
         rootMargin={rootMargin}
-        isBufferedCard={isBufferedCard}
       />
     );
   });
 
-  const Container = itemContainerRenderer({
+  const Container = containerRenderer({
     children: Elements,
     ref: forwardRef,
   });
@@ -91,11 +68,11 @@ IScroller.defaultProps = {
   /** Item renderer function */
   renderItem: item => item,
   /** Get unique key for every item, used to detect item value change */
-  getItemKey: (item, index) => index,
+  getItemKey: (item, index) => (typeof item === 'string' ? item : index),
   /** HTML tag used to wrap each rendered item */
   wrapperElement: 'div',
   /** Container node renderer */
-  itemContainerRenderer: ({ children, ref }) => <div ref={ref}>{children}</div>,
+  containerRenderer: ({ children, ref }) => <div ref={ref}>{children}</div>,
   removeFromDOM: true,
   /** Percentage of the target's visibility the observer's callback should be executed */
   threshold: 0,
