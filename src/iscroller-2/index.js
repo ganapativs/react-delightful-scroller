@@ -13,27 +13,11 @@
  *   - https://gist.github.com/paulmillr/3118943
  *   - https://gomakethings.com/debouncing-events-with-requestanimationframe-for-better-performance/
  */
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import useWindowSize from '@rehooks/window-size';
-import { useVisibility } from './useVisibility';
-import { initializeInitialVisibility } from './initializeInitialVisibility';
-import { initializeDimensions } from './initializeDimensions';
 import { getBatchedItems } from './getBatchedItems';
-import { useDimensions } from './useDimensions';
 import { BatchRenderer } from './BatchRenderer';
-import { useScroll } from './useScroll';
-
-// Time interval B 'overlaps' A if:
-// B starts after A starts but before A finishes.
-// B starts before A starts and finishes after A starts.
-// https://stackoverflow.com/a/47668070/2627022
-function areOverlapping(A, B) {
-  if (B[0] < A[0]) {
-    return B[1] > A[0];
-  } else {
-    return B[0] < A[1];
-  }
-}
+import { useVisibilityAndDimension } from './useVisibilityAndDimension';
 
 function IScroller({
   containerWidth,
@@ -52,61 +36,15 @@ function IScroller({
   itemHeight,
   itemsCount,
 }) {
-  const [dimensions, setDimension] = useDimensions(
-    initializeDimensions({
-      itemsCount,
-      axis,
-      itemHeight,
-      averageItemHeight,
-      batchSize,
-    }),
-  );
-  const scrollOffset = useScroll(root, axis, containerHeight);
-  const [visibility, setVisibility] = useVisibility(
-    initializeInitialVisibility({
-      itemsCount,
-      axis,
-      containerHeight,
-      itemHeight,
-      averageItemHeight,
-      batchSize,
-    }),
-  );
-
-  useEffect(() => {
-    const bufferOffset = 0;
-    const limits = [
-      scrollOffset - bufferOffset,
-      scrollOffset + containerHeight + bufferOffset,
-    ];
-    const totalBatches = Math.ceil(itemsCount / batchSize);
-    const newVisibility = Array.from({ length: totalBatches }).reduce(
-      (p, c, i) => {
-        const currentHeight = p.total;
-        const nextHeight = p.total + dimensions[i].height;
-
-        p.visibility[i] = areOverlapping(limits, [currentHeight, nextHeight]);
-        p.total = nextHeight;
-        return p;
-      },
-      { visibility: [], total: 0 },
-    );
-
-    const visibilityChanged = newVisibility.visibility.some(
-      (e, i) => e !== visibility[i],
-    );
-    if (visibilityChanged) {
-      setVisibility(newVisibility.visibility);
-    }
-  }, [
-    batchSize,
+  const [dimensions, visibility, setDimension] = useVisibilityAndDimension({
+    root,
+    axis,
     containerHeight,
-    dimensions,
     itemsCount,
-    scrollOffset,
-    setVisibility,
-    visibility,
-  ]);
+    itemHeight,
+    averageItemHeight,
+    batchSize,
+  });
 
   const batchedItems = getBatchedItems(items, batchSize);
   const batchedElements = batchedItems.map((batch, index) => {
