@@ -4,13 +4,21 @@
  * - Store visible items range
  * - Wrap elements in resize observer
  */
+
+/**
+ * Things learnt
+ * React.memo re-renders when context is used
+ *   - https://github.com/facebook/react/issues/15156
+ * Use requestAnimationFrame instead of throttle on scroll
+ *   - https://gist.github.com/paulmillr/3118943
+ *   - https://gomakethings.com/debouncing-events-with-requestanimationframe-for-better-performance/
+ */
 import React, { memo } from 'react';
 import useWindowSize from '@rehooks/window-size';
-import { RenderItem } from './RenderItem';
-import { useDimensions } from './utils/useDimensions';
-import { useVisibility } from './utils/useVisibility';
-import { getVisibleIndexes } from './utils/getVisibleIndexes';
-import { initializeInitialVisibility } from './utils/initializeInitialVisibility';
+import { getBatchedItems } from './getBatchedItems';
+import { BatchRenderer } from './BatchRenderer';
+import { useVisibilityAndDimension } from './useVisibilityAndDimension';
+import { getVisibleIndexes } from './getVisibleIndexes';
 
 function IScroller({
   containerWidth,
@@ -22,41 +30,71 @@ function IScroller({
   forwardRef,
   containerRenderer,
   removeFromDOM,
-  threshold,
   root,
-  rootMargin,
+  batchSize,
+  axis,
   averageItemHeight,
   itemHeight,
-  axis,
   itemsCount,
 }) {
-  const [dimensionsMap, setDimensions] = useDimensions();
+  const [dimensions, visibility, setDimension] = useVisibilityAndDimension({
+    root,
+    axis,
+    containerHeight,
+    itemsCount,
+    itemHeight,
+    averageItemHeight,
+    batchSize,
+  });
 
-  const Elements = items.map((item, index) => {
-    const key = getItemKey(item, index);
-    const dimension = dimensionsMap.get(index);
+  const batchedItems = getBatchedItems(items, batchSize);
+  let [startIndex, endIndex] = getVisibleIndexes(visibility);
+  const previous = batchedItems.slice(0, startIndex);
+  const current = batchedItems.slice(startIndex, endIndex + 1);
+  const next = batchedItems.slice(endIndex + 1, batchedItems.length);
 
+  const prevHeight = previous.reduce((p, c, i) => {
+    const index = i;
+    const dimension = dimensions[index];
+    return p + dimension.height;
+  }, 0);
+
+  const nextHeight = next.reduce((p, c, i) => {
+    const index = previous.length + current.length + i;
+    const dimension = dimensions[index];
+    return p + dimension.height;
+  }, 0);
+
+  const batchedElements = current.map((batch, i) => {
+    const index = previous.length + i;
     return (
-      <RenderItem
-        key={`${key}-${(dimension && dimension.top) || 'x'}`}
-        wrapperElement={wrapperElement}
-        item={item}
+      <BatchRenderer
+        key={index}
+        batch={batch}
         index={index}
-        renderItem={renderItem}
-        setDimensions={setDimensions}
-        dimension={dimension}
+        getItemKey={getItemKey}
+        batchSize={batchSize}
+        wrapperElement={wrapperElement}
         removeFromDOM={removeFromDOM}
-        threshold={threshold}
-        root={root}
-        rootMargin={rootMargin}
+        setDimension={setDimension}
+        renderItem={renderItem}
+        dimensions={dimensions[index]}
+        visible={visibility[index]}
       />
     );
   });
 
   const Container = containerRenderer({
-    children: Elements,
+    children: (
+      <>
+        <div style={{ height: prevHeight, visibility: 'hidden' }} />
+        {batchedElements}
+        <div style={{ height: nextHeight, visibility: 'hidden' }} />
+      </>
+    ),
     ref: forwardRef,
   });
+
   return Container;
 }
 
@@ -74,16 +112,12 @@ IScroller.defaultProps = {
   /** Container node renderer */
   containerRenderer: ({ children, ref }) => <div ref={ref}>{children}</div>,
   removeFromDOM: true,
-  /** Percentage of the target's visibility the observer's callback should be executed */
-  threshold: 0,
   /** Scroll parent - should be an element */
   root: null,
-  /** Margin around the root */
-  rootMargin: '0px 0px 0px 0px',
-  averageItemHeight: 10, // Average item height should be 1px
-  itemHeight: null, // Dynamic item height
+  averageItemHeight: 10, // Average item height should be min 1px
+  itemHeight: null, // Fixed item height(Optional)
   axis: 'y',
-  itemsBuffer: 4, // Extra items to render on each side in both directions
+  batchSize: 10, // Batch items into batch of n elements
   // fetchItems={() => {}}
   // loader={() => "Loading..."}
 };
@@ -99,27 +133,6 @@ const WindowContainer = props => {
     />
   );
 };
-
-// const CustomContainer = props => {
-//   return (
-//     <Measure
-//       offset
-//       onResize={contentRect => {
-//         setDimensions(index, contentRect.offset);
-//       }}>
-//       {({ measureRef }) => (
-//         <Wrapper
-//           as={wrapperElement}
-//           ref={measureRef}
-//           style={
-//             !removeFromDOM ? { visibility: visible ? 'visible' : 'hidden' } : {}
-//           }>
-//           {renderItem(item, index)}
-//         </Wrapper>
-//       )}
-//     </Measure>
-//   );
-// };
 
 export default memo(
   React.forwardRef((props, ref) => {
