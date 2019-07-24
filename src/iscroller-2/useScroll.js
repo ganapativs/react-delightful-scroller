@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import throttle from 'lodash.throttle';
 
 const getScrollOffset = (element, axis) => {
@@ -8,16 +8,34 @@ const getScrollOffset = (element, axis) => {
 
 export const useScroll = (root, axis) => {
   const element = root || window;
-  const handler = throttle(() => {
-    setScrollOffset(getScrollOffset(element, axis));
-  }, 50);
+  const timeout = useRef(null);
+  // const handler = throttle(() => {
+  //   setScrollOffset(getScrollOffset(element, axis));
+  // }, 100);
   const [scrollOffset, setScrollOffset] = useState(
     getScrollOffset(element, axis),
   );
+
   useEffect(() => {
+    const handler = () => {
+      // If there's a timer, cancel it
+      if (timeout.current) {
+        window.cancelAnimationFrame(timeout.current);
+      }
+
+      // Setup the new requestAnimationFrame()
+      timeout.current = window.requestAnimationFrame(() => {
+        // Run our scroll functions
+        console.log('debounced');
+        setScrollOffset(getScrollOffset(element, axis));
+      });
+    };
+
     element.addEventListener('scroll', handler, { passive: true });
+
     return () =>
       element.removeEventListener('scroll', handler, { passive: true });
-  }, [element, handler]);
+  }, [axis, element]);
+
   return scrollOffset;
 };

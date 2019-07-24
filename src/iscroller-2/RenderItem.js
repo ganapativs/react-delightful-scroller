@@ -1,7 +1,5 @@
-import { useContext } from 'react';
-import IScrollerContext from './context';
+import React from 'react';
 
-export const RenderItem = ({ item, index }) => {
-  const { renderItem } = useContext(IScrollerContext);
+export const RenderItem = React.memo(({ item, index, renderItem }) => {
   return renderItem(item, index);
-};
+});

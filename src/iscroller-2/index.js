@@ -4,9 +4,17 @@
  * - Store visible items range
  * - Wrap elements in resize observer
  */
+
+/**
+ * Things learnt
+ * React.memo re-renders when context is used
+ *   - https://github.com/facebook/react/issues/15156
+ * Use requestAnimationFrame instead of throttle on scroll
+ *   - https://gist.github.com/paulmillr/3118943
+ *   - https://gomakethings.com/debouncing-events-with-requestanimationframe-for-better-performance/
+ */
 import React, { memo } from 'react';
 import useWindowSize from '@rehooks/window-size';
-import { IScrollerProvider } from './context';
 import { useVisibility } from './useVisibility';
 import { initializeInitialVisibility } from './initializeInitialVisibility';
 import { getBatchedItems } from './getBatchedItems';
@@ -45,27 +53,27 @@ function IScroller({
 
   const batchedItems = getBatchedItems(items, batchSize);
   const batchedElements = batchedItems.map((batch, index) => {
-    return <BatchRenderer key={index} batch={batch} index={index} />;
+    return (
+      <BatchRenderer
+        key={index}
+        batch={batch}
+        index={index}
+        getItemKey={getItemKey}
+        batchSize={batchSize}
+        wrapperElement={wrapperElement}
+        removeFromDOM={removeFromDOM}
+        dimensions={dimensions}
+        setDimension={setDimension}
+        renderItem={renderItem}
+      />
+    );
   });
   const Container = containerRenderer({
     children: batchedElements,
     ref: forwardRef,
   });
 
-  return (
-    <IScrollerProvider
-      value={{
-        renderItem,
-        getItemKey,
-        wrapperElement,
-        removeFromDOM,
-        batchSize,
-        dimensions,
-        setDimension,
-      }}>
-      {Container}
-    </IScrollerProvider>
-  );
+  return Container;
 }
 
 IScroller.defaultProps = {
