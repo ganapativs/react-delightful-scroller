@@ -18,6 +18,7 @@ import useWindowSize from '@rehooks/window-size';
 import { getBatchedItems } from './getBatchedItems';
 import { BatchRenderer } from './BatchRenderer';
 import { useVisibilityAndDimension } from './useVisibilityAndDimension';
+import { getVisibleIndexes } from './getVisibleIndexes';
 
 function IScroller({
   containerWidth,
@@ -47,7 +48,25 @@ function IScroller({
   });
 
   const batchedItems = getBatchedItems(items, batchSize);
-  const batchedElements = batchedItems.map((batch, index) => {
+  let [startIndex, endIndex] = getVisibleIndexes(visibility);
+  const previous = batchedItems.slice(0, startIndex);
+  const current = batchedItems.slice(startIndex, endIndex + 1);
+  const next = batchedItems.slice(endIndex + 1, batchedItems.length);
+
+  const prevHeight = previous.reduce((p, c, i) => {
+    const index = i;
+    const dimension = dimensions[index];
+    return p + dimension.height;
+  }, 0);
+
+  const nextHeight = next.reduce((p, c, i) => {
+    const index = previous.length + current.length + i;
+    const dimension = dimensions[index];
+    return p + dimension.height;
+  }, 0);
+
+  const batchedElements = current.map((batch, i) => {
+    const index = previous.length + i;
     return (
       <BatchRenderer
         key={index}
@@ -64,8 +83,15 @@ function IScroller({
       />
     );
   });
+
   const Container = containerRenderer({
-    children: batchedElements,
+    children: (
+      <>
+        <div style={{ height: prevHeight }} />
+        {batchedElements}
+        <div style={{ height: nextHeight }} />
+      </>
+    ),
     ref: forwardRef,
   });
 

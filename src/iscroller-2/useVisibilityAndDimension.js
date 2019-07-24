@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useDimensions } from './useDimensions';
 import { initializeDimensions } from './initializeDimensions';
 import { useVisibility } from './useVisibility';
 import { initializeInitialVisibility } from './initializeInitialVisibility';
+import { useScroll } from './useScroll';
 
 // Time interval B 'overlaps' A if:
 // B starts after A starts but before A finishes.
@@ -15,11 +16,6 @@ function areOverlapping(A, B) {
     return B[0] < A[1];
   }
 }
-
-const getScrollOffset = (element, axis) => {
-  const { scrollTop, scrollY } = element;
-  return axis === 'y' ? (scrollTop !== undefined ? scrollTop : scrollY) : 0;
-};
 
 export const useVisibilityAndDimension = ({
   root,
@@ -49,66 +45,38 @@ export const useVisibilityAndDimension = ({
       batchSize,
     }),
   );
-
-  const element = root || window;
-  const timeout = useRef(null);
+  const scrollOffset = useScroll({ root, axis });
 
   useEffect(() => {
-    function updateVisibility(scrollOffset) {
-      const bufferOffset = 0;
-      const limits = [
-        scrollOffset - bufferOffset,
-        scrollOffset + containerHeight + bufferOffset,
-      ];
-      const totalBatches = Math.ceil(itemsCount / batchSize);
+    const bufferOffset = 0;
+    const limits = [
+      scrollOffset - bufferOffset,
+      scrollOffset + containerHeight + bufferOffset,
+    ];
+    const totalBatches = Math.ceil(itemsCount / batchSize);
 
-      let nextTotal = 0;
-      let nextVisibility = [];
-      for (let i = 0; i < totalBatches; i++) {
-        const currentHeight = nextTotal;
-        const nextHeight = nextTotal + dimensions[i].height;
-        nextVisibility[i] = areOverlapping(limits, [currentHeight, nextHeight]);
-        nextTotal = nextHeight;
-      }
-
-      const visibilityChanged = nextVisibility.some(
-        (e, i) => e !== visibility[i],
-      );
-      if (visibilityChanged) {
-        setVisibility(nextVisibility);
-      }
+    let nextTotal = 0;
+    let nextVisibility = [];
+    for (let i = 0; i < totalBatches; i++) {
+      const currentHeight = nextTotal;
+      const nextHeight = nextTotal + dimensions[i].height;
+      nextVisibility[i] = areOverlapping(limits, [currentHeight, nextHeight]);
+      nextTotal = nextHeight;
     }
 
-    const handler = () => {
-      // If there's a timer, cancel it
-      if (timeout.current) {
-        window.cancelAnimationFrame(timeout.current);
-      }
-
-      // Setup the new requestAnimationFrame()
-      timeout.current = window.requestAnimationFrame(() => {
-        // Run our scroll functions
-        updateVisibility(getScrollOffset(element, axis));
-      });
-    };
-
-    element.addEventListener('scroll', handler, {
-      capture: false,
-      passive: true,
-    });
-
-    return () => {
-      window.cancelAnimationFrame(timeout.current);
-      element.removeEventListener('scroll', handler);
-    };
+    const visibilityChanged = nextVisibility.some(
+      (e, i) => e !== visibility[i],
+    );
+    if (visibilityChanged) {
+      setVisibility(nextVisibility);
+    }
   }, [
-    axis,
     batchSize,
     containerHeight,
-    dimensions,
-    element,
-    itemsCount,
     setVisibility,
+    dimensions,
+    itemsCount,
+    scrollOffset,
     visibility,
   ]);
 
