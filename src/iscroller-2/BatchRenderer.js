@@ -16,7 +16,7 @@ export const BatchRenderer = React.memo(
     renderItem,
     visible,
   }) => {
-    console.log('Batch render', index);
+    console.log('Batch render', index, visible);
     const items = batch.map((item, idx) => {
       const actualIndex = batchSize * index + idx;
       const key = getItemKey(item, actualIndex);
@@ -48,7 +48,7 @@ export const BatchRenderer = React.memo(
     ) : (
       <div
         style={{
-          height: dimensions.scroll.height,
+          height: dimensions.height,
         }}
       />
     );

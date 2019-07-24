@@ -6,13 +6,6 @@ export function initializeDimensions({
   itemsCount,
 }) {
   return () => {
-    console.log({
-      axis,
-      itemHeight,
-      averageItemHeight,
-      batchSize,
-      itemsCount,
-    });
     const totalBatches = Math.ceil(itemsCount / batchSize);
     const estimatedEmptyBatchHeight =
       axis === 'y'
@@ -20,8 +13,8 @@ export function initializeDimensions({
         : // TODO - handle other directions
           0;
     const initial = [];
-    for (let i = 0; i < Array.from({ length: totalBatches }).length; i++) {
-      initial[i] = { scroll: { height: estimatedEmptyBatchHeight } };
+    for (let i = 0; i < totalBatches; i++) {
+      initial[i] = { height: estimatedEmptyBatchHeight, width: null };
     }
     return initial;
   };

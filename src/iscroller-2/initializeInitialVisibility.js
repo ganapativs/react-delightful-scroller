@@ -4,8 +4,10 @@ export function initializeInitialVisibility({
   itemHeight,
   averageItemHeight,
   batchSize,
+  itemsCount,
 }) {
   return () => {
+    const totalBatches = Math.ceil(itemsCount / batchSize);
     const estimatedInitialBatches =
       axis === 'y'
         ? Math.ceil(
@@ -14,12 +16,8 @@ export function initializeInitialVisibility({
         : // TODO - handle other directions
           0;
     const initial = [];
-    for (
-      let i = 0;
-      i < Array.from({ length: estimatedInitialBatches }).length;
-      i++
-    ) {
-      initial[i] = true;
+    for (let i = 0; i < totalBatches; i++) {
+      initial[i] = i < estimatedInitialBatches ? true : false;
     }
     return initial;
   };

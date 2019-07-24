@@ -30,10 +30,15 @@ export const useScroll = (root, axis) => {
       });
     };
 
-    element.addEventListener('scroll', handler, { passive: true });
+    element.addEventListener('scroll', handler, {
+      capture: false,
+      passive: true,
+    });
 
-    return () =>
-      element.removeEventListener('scroll', handler, { passive: true });
+    return () => {
+      window.cancelAnimationFrame(timeout.current);
+      element.removeEventListener('scroll', handler);
+    };
   }, [axis, element]);
 
   return scrollOffset;

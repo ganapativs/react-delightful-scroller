@@ -8,7 +8,8 @@ export const useDimensions = (initialValue = []) => {
     const newDimensions = [
       ...((intermediate && intermediate.current) || dimensions),
     ];
-    newDimensions[index] = { ...dimension };
+    const { width, height } = dimension.scroll;
+    newDimensions[index] = { width, height };
     intermediate.current = newDimensions;
     setDimension(newDimensions);
   };
