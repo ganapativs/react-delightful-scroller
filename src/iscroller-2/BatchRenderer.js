@@ -14,6 +14,7 @@ export const BatchRenderer = React.memo(
     dimensions,
     setDimension,
     renderItem,
+    visible,
   }) => {
     console.log('Batch render', index);
     const items = batch.map((item, idx) => {
@@ -28,7 +29,7 @@ export const BatchRenderer = React.memo(
         />
       );
     });
-    const batchWithResizeObserver = (
+    const batchWithResizeObserver = visible ? (
       <Measure
         // ScrollHeight is actual height of batch including content margins
         scroll
@@ -44,14 +45,21 @@ export const BatchRenderer = React.memo(
           </Wrapper>
         )}
       </Measure>
+    ) : (
+      <div
+        style={{
+          height: dimensions.scroll.height,
+        }}
+      />
     );
+
     return batchWithResizeObserver;
   },
-  ({ batch: prevBatch }, { batch }) => {
+  ({ batch: prevBatch, visible: prevVisible }, { batch, visible }) => {
     const batchItemsHaveSameRef =
       prevBatch.length === batch.length &&
       prevBatch.every((e, i) => e === batch[i]);
 
-    return batchItemsHaveSameRef;
+    return batchItemsHaveSameRef && prevVisible === visible;
   },
 );

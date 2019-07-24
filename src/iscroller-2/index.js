@@ -17,6 +17,7 @@ import React, { memo } from 'react';
 import useWindowSize from '@rehooks/window-size';
 import { useVisibility } from './useVisibility';
 import { initializeInitialVisibility } from './initializeInitialVisibility';
+import { initializeDimensions } from './initializeDimensions';
 import { getBatchedItems } from './getBatchedItems';
 import { useDimensions } from './useDimensions';
 import { BatchRenderer } from './BatchRenderer';
@@ -37,10 +38,19 @@ function IScroller({
   axis,
   averageItemHeight,
   itemHeight,
+  itemsCount,
 }) {
-  const [dimensions, setDimension] = useDimensions({});
+  const [dimensions, setDimension] = useDimensions(
+    initializeDimensions({
+      itemsCount,
+      axis,
+      itemHeight,
+      averageItemHeight,
+      batchSize,
+    }),
+  );
   const scrollOffset = useScroll(root, axis);
-  const [visibilityMap, setVisibility] = useVisibility(
+  const [visibility, setVisibility] = useVisibility(
     initializeInitialVisibility({
       axis,
       containerHeight,
@@ -49,7 +59,7 @@ function IScroller({
       batchSize,
     }),
   );
-  console.log('TCL: scrollOffset', scrollOffset);
+  console.log('TCL: scrollOffset', scrollOffset, visibility, dimensions);
 
   const batchedItems = getBatchedItems(items, batchSize);
   const batchedElements = batchedItems.map((batch, index) => {
@@ -62,9 +72,10 @@ function IScroller({
         batchSize={batchSize}
         wrapperElement={wrapperElement}
         removeFromDOM={removeFromDOM}
-        dimensions={dimensions}
         setDimension={setDimension}
         renderItem={renderItem}
+        dimensions={dimensions[index]}
+        visible={visibility[index]}
       />
     );
   });

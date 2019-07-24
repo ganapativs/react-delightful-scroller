@@ -26,7 +26,6 @@ export const useScroll = (root, axis) => {
       // Setup the new requestAnimationFrame()
       timeout.current = window.requestAnimationFrame(() => {
         // Run our scroll functions
-        console.log('debounced');
         setScrollOffset(getScrollOffset(element, axis));
       });
     };

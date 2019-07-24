@@ -13,7 +13,7 @@ export function initializeInitialVisibility({
           )
         : // TODO - handle other directions
           0;
-    const initial = {};
+    const initial = [];
     for (
       let i = 0;
       i < Array.from({ length: estimatedInitialBatches }).length;

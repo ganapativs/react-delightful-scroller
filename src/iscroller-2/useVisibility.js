@@ -1,16 +1,18 @@
 import { useState, useRef } from 'react';
 
-export function useVisibility(initial = {}) {
-  const [visibilityMap, setVisibility] = useState(initial);
-  // Set state is not immediate, we need a ref to store intermediate value
+export function useVisibility(initial = []) {
+  const [visibility, setVisibility] = useState(initial);
+  // Set state is async, we need a ref to store intermediate value
   const intermediate = useRef(null);
 
   const wrappedSetVisibility = (index, visibility) => {
-    const newDimensions = { ...intermediate.current };
-    newDimensions[index] = visibility;
-    intermediate.current = newDimensions;
-    setVisibility(newDimensions);
+    const newVisibility = [
+      ...((intermediate && intermediate.current) || visibility),
+    ];
+    newVisibility[index] = visibility;
+    intermediate.current = newVisibility;
+    setVisibility(newVisibility);
   };
 
-  return [visibilityMap, wrappedSetVisibility];
+  return [visibility, wrappedSetVisibility];
 }
