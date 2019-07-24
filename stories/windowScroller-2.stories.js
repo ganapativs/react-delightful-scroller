@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { getItems, Card, Container } from './components/helpers';
 import Iscroller from '../src/iscroller-2';
 
-const items = getItems(50);
+const items = getItems(10000);
 const itemRenderer = (item, index) => (
   <Card key={item} style={{ background: item.gradient }}>
     <p>

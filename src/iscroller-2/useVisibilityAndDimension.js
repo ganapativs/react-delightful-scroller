@@ -61,23 +61,21 @@ export const useVisibilityAndDimension = ({
         scrollOffset + containerHeight + bufferOffset,
       ];
       const totalBatches = Math.ceil(itemsCount / batchSize);
-      const newVisibility = Array.from({ length: totalBatches }).reduce(
-        (p, c, i) => {
-          const currentHeight = p.total;
-          const nextHeight = p.total + dimensions[i].height;
 
-          p.visibility[i] = areOverlapping(limits, [currentHeight, nextHeight]);
-          p.total = nextHeight;
-          return p;
-        },
-        { visibility: [], total: 0 },
-      );
+      let nextTotal = 0;
+      let nextVisibility = [];
+      for (let i = 0; i < totalBatches; i++) {
+        const currentHeight = nextTotal;
+        const nextHeight = nextTotal + dimensions[i].height;
+        nextVisibility[i] = areOverlapping(limits, [currentHeight, nextHeight]);
+        nextTotal = nextHeight;
+      }
 
-      const visibilityChanged = newVisibility.visibility.some(
+      const visibilityChanged = nextVisibility.some(
         (e, i) => e !== visibility[i],
       );
       if (visibilityChanged) {
-        setVisibility(newVisibility.visibility);
+        setVisibility(nextVisibility);
       }
     }
 

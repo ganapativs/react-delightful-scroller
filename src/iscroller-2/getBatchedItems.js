@@ -1,8 +1,12 @@
 export const getBatchedItems = (items, batchSize = 1) => {
-  const itemsClone = [...items];
-  let batched = [];
-  while (itemsClone.length) {
-    batched = [...batched, itemsClone.splice(0, batchSize)];
+  var batched = [];
+
+  // Faster that clone and splice
+  for (let index = 0; index < items.length; index += batchSize) {
+    let chunk = items.slice(index, index + batchSize);
+    // Do something if you want with the group
+    batched.push(chunk);
   }
+
   return batched;
 };

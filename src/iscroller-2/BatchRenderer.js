@@ -16,43 +16,50 @@ export const BatchRenderer = React.memo(
     renderItem,
     visible,
   }) => {
-    const items = batch.map((item, idx) => {
-      const actualIndex = batchSize * index + idx;
-      const key = getItemKey(item, actualIndex);
-      return (
-        <RenderItem
-          key={key}
-          item={item}
-          index={actualIndex}
-          renderItem={renderItem}
+    let batchElement = null;
+
+    if (visible) {
+      const items = batch.map((item, idx) => {
+        const actualIndex = batchSize * index + idx;
+        const key = getItemKey(item, actualIndex);
+        return (
+          <RenderItem
+            key={key}
+            item={item}
+            index={actualIndex}
+            renderItem={renderItem}
+          />
+        );
+      });
+
+      batchElement = (
+        <Measure
+          // ScrollHeight is actual height of batch including content margins
+          scroll
+          onResize={contentRect => {
+            setDimension(index, contentRect);
+          }}>
+          {({ measureRef }) => (
+            <Wrapper
+              data-iscroller-batch={index}
+              as={wrapperElement}
+              ref={measureRef}>
+              {items}
+            </Wrapper>
+          )}
+        </Measure>
+      );
+    } else {
+      batchElement = (
+        <div
+          style={{
+            height: dimensions.height,
+          }}
         />
       );
-    });
-    const batchWithResizeObserver = visible ? (
-      <Measure
-        // ScrollHeight is actual height of batch including content margins
-        scroll
-        onResize={contentRect => {
-          setDimension(index, contentRect);
-        }}>
-        {({ measureRef }) => (
-          <Wrapper
-            data-iscroller-batch={index}
-            as={wrapperElement}
-            ref={measureRef}>
-            {items}
-          </Wrapper>
-        )}
-      </Measure>
-    ) : (
-      <div
-        style={{
-          height: dimensions.height,
-        }}
-      />
-    );
+    }
 
-    return batchWithResizeObserver;
+    return batchElement;
   },
   ({ batch: prevBatch, visible: prevVisible }, { batch, visible }) => {
     const batchItemsHaveSameRef =
