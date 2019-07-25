@@ -1,7 +1,7 @@
 import React from 'react';
 import Measure from 'react-measure';
 import { Wrapper } from './Wrapper';
-import { RenderItem } from './RenderItem';
+import { RenderItemWrapper } from './RenderItemWrapper';
 
 export const BatchRenderer = React.memo(
   ({
@@ -13,7 +13,7 @@ export const BatchRenderer = React.memo(
     removeFromDOM,
     dimensions,
     setDimension,
-    renderItem,
+    RenderItem,
     visible,
   }) => {
     let batchElement = null;
@@ -23,11 +23,11 @@ export const BatchRenderer = React.memo(
         const actualIndex = batchSize * index + idx;
         const key = getItemKey(item, actualIndex);
         return (
-          <RenderItem
+          <RenderItemWrapper
             key={key}
             item={item}
             index={actualIndex}
-            renderItem={renderItem}
+            RenderItem={RenderItem}
           />
         );
       });

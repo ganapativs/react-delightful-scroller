@@ -32,11 +32,11 @@ function IScroller({
   containerWidth,
   containerHeight,
   items,
-  renderItem,
+  RenderItem,
   getItemKey,
   wrapperElement,
   forwardRef,
-  containerRenderer,
+  RenderContainer,
   removeFromDOM,
   root,
   batchSize,
@@ -92,15 +92,15 @@ function IScroller({
         wrapperElement={wrapperElement}
         removeFromDOM={removeFromDOM}
         setDimension={setDimension}
-        renderItem={renderItem}
+        RenderItem={RenderItem}
         dimensions={dimensions[index]}
         visible={visibility[index]}
       />
     );
   });
 
-  const Container = containerRenderer({
-    children: (
+  const Container = (
+    <RenderContainer forwardRef={forwardRef}>
       <>
         {prevHeight ? (
           <div style={{ height: prevHeight, visibility: 'hidden' }} />
@@ -110,10 +110,8 @@ function IScroller({
           <div style={{ height: nextHeight, visibility: 'hidden' }} />
         ) : null}
       </>
-    ),
-    ref: forwardRef,
-  });
-
+    </RenderContainer>
+  );
   return Container;
 }
 
@@ -122,14 +120,16 @@ IScroller.defaultProps = {
   items: [],
   /** Total number of items to render */
   itemsCount: 0,
-  /** Item renderer function */
-  renderItem: item => item,
+  /** Item renderer component */
+  RenderItem: ({ item, index }) => item,
   /** Get unique key for every item, used to detect item value change */
   getItemKey: (item, index) => (typeof item === 'string' ? item : index),
   /** HTML tag used to wrap each rendered item */
   wrapperElement: 'div',
-  /** Container node renderer */
-  containerRenderer: ({ children, ref }) => <div ref={ref}>{children}</div>,
+  /** Container node renderer component */
+  RenderContainer: ({ children, forwardRef }) => (
+    <div ref={forwardRef}>{children}</div>
+  ),
   removeFromDOM: true,
   /** Scroll parent - should be an element */
   root: null,
