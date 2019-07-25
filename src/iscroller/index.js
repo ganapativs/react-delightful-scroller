@@ -1,7 +1,6 @@
 /**
  * TODO:
  * - Scroll to index - taken care automatically
- * - Remove from dom
  * - Optimize every piece of code
  * - Fixed height elements
  * - Updating item test
