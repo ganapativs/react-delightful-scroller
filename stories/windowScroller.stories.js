@@ -1,25 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import {
-  getItems,
-  Card,
-  Container,
-  Input,
-  DarkLayer,
-} from './components/helpers';
+import { getItems, Container } from './components/helpers';
 import Iscroller from '../src/iscroller';
+import { itemRenderer } from './shared/itemRenderer';
 
 const items = getItems(10000);
-const itemRenderer = ({ item, index }) => {
-  return (
-    <Card key={item} style={{ background: item.gradient }}>
-      <DarkLayer>
-        <p>{item.text}</p>
-        <Input defaultValue={index} type="number" />
-      </DarkLayer>
-    </Card>
-  );
-};
 
 const WindowScroller = () => (
   <Container>

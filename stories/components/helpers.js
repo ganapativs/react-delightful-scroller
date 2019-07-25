@@ -20,6 +20,8 @@ export const Card = styled.div`
   background: #607d8b;
   position: relative;
   z-index: 0;
+  overflow: hidden;
+  line-height: 24px;
 `;
 
 export const DarkLayer = styled.div`
@@ -32,6 +34,12 @@ export const DarkLayer = styled.div`
     left: 0;
     top: 0;
     z-index: -1;
+    transition: all 0.2s ease-out;
+  }
+
+  &:hover :before {
+    opacity: 0.4;
+    transition: all 0.4s ease-in;
   }
 `;
 

@@ -1,6 +1,7 @@
 /**
  * TODO:
  * - Scroll to index - taken care automatically
+ * - Test with different totalCount and items
  * - Optimize every piece of code
  * - Fixed height elements
  * - Updating item test
