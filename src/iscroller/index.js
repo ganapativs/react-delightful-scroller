@@ -1,8 +1,16 @@
 /**
  * TODO:
- * - Scroll to index
- * - Store visible items range
- * - Wrap elements in resize observer
+ * - Scroll to index - taken care automatically
+ * - Remove from dom
+ * - Optimize every piece of code
+ * - Fixed height elements
+ * - Updating item test
+ * - Sentinel with intersection observer?
+ * - Loading indicator after sentinel
+ * - Custom element scroll
+ * - More stories
+ * - Multiple axis support
+ * - Testing
  */
 
 /**
@@ -48,22 +56,29 @@ function IScroller({
   });
 
   const batchedItems = getBatchedItems(items, batchSize);
-  let [startIndex, endIndex] = getVisibleIndexes(visibility);
-  const previous = batchedItems.slice(0, startIndex);
-  const current = batchedItems.slice(startIndex, endIndex + 1);
-  const next = batchedItems.slice(endIndex + 1, batchedItems.length);
+  let current = batchedItems;
+  let previous = [],
+    next = [];
+  let prevHeight, nextHeight;
 
-  const prevHeight = previous.reduce((p, c, i) => {
-    const index = i;
-    const dimension = dimensions[index];
-    return p + dimension.height;
-  }, 0);
+  if (removeFromDOM) {
+    let [startIndex, endIndex] = getVisibleIndexes(visibility);
+    previous = batchedItems.slice(0, startIndex);
+    current = batchedItems.slice(startIndex, endIndex + 1);
+    next = batchedItems.slice(endIndex + 1, batchedItems.length);
 
-  const nextHeight = next.reduce((p, c, i) => {
-    const index = previous.length + current.length + i;
-    const dimension = dimensions[index];
-    return p + dimension.height;
-  }, 0);
+    prevHeight = previous.reduce((p, c, i) => {
+      const index = i;
+      const dimension = dimensions[index];
+      return p + dimension.height;
+    }, 0);
+
+    nextHeight = next.reduce((p, c, i) => {
+      const index = previous.length + current.length + i;
+      const dimension = dimensions[index];
+      return p + dimension.height;
+    }, 0);
+  }
 
   const batchedElements = current.map((batch, i) => {
     const index = previous.length + i;
@@ -87,9 +102,13 @@ function IScroller({
   const Container = containerRenderer({
     children: (
       <>
-        <div style={{ height: prevHeight, visibility: 'hidden' }} />
+        {prevHeight ? (
+          <div style={{ height: prevHeight, visibility: 'hidden' }} />
+        ) : null}
         {batchedElements}
-        <div style={{ height: nextHeight, visibility: 'hidden' }} />
+        {nextHeight ? (
+          <div style={{ height: nextHeight, visibility: 'hidden' }} />
+        ) : null}
       </>
     ),
     ref: forwardRef,

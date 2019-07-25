@@ -18,7 +18,7 @@ export const BatchRenderer = React.memo(
   }) => {
     let batchElement = null;
 
-    if (visible) {
+    if (visible || !removeFromDOM) {
       const items = batch.map((item, idx) => {
         const actualIndex = batchSize * index + idx;
         const key = getItemKey(item, actualIndex);
@@ -43,7 +43,12 @@ export const BatchRenderer = React.memo(
             <Wrapper
               data-iscroller-batch={index}
               as={wrapperElement}
-              ref={measureRef}>
+              ref={measureRef}
+              style={
+                !removeFromDOM
+                  ? { visibility: visible ? 'visible' : 'hidden' }
+                  : {}
+              }>
               {items}
             </Wrapper>
           )}
