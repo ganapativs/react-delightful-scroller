@@ -24,6 +24,15 @@ export const Card = styled.div`
   line-height: 24px;
 `;
 
+export const Input = styled.input`
+  background: rgba(37, 36, 36, 0.1);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: #fff;
+  transition: background 0.2s ease-out;
+`;
+
 export const DarkLayer = styled.div`
   &:before {
     content: '';
@@ -41,14 +50,11 @@ export const DarkLayer = styled.div`
     opacity: 0.4;
     transition: all 0.4s ease-in;
   }
-`;
 
-export const Input = styled.input`
-  background: rgba(37, 36, 36, 0.1);
-  border: none;
-  padding: 5px 10px;
-  border-radius: 20px;
-  color: #fff;
+  &:hover ${Input} {
+    background: rgba(37, 36, 36, 0.3);
+    transition: background 0.4s ease-in;
+  }
 `;
 
 export const getRandomColor = () =>

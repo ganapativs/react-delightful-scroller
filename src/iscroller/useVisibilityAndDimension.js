@@ -25,6 +25,7 @@ export const useVisibilityAndDimension = ({
   itemHeight,
   averageItemHeight,
   batchSize,
+  batchBufferDistance,
 }) => {
   const [dimensions, setDimension] = useDimensions(
     initializeDimensions({
@@ -48,10 +49,9 @@ export const useVisibilityAndDimension = ({
   const scrollOffset = useScroll({ root, axis });
 
   useEffect(() => {
-    const bufferOffset = 0;
     const limits = [
-      scrollOffset - bufferOffset,
-      scrollOffset + containerHeight + bufferOffset,
+      scrollOffset - batchBufferDistance,
+      scrollOffset + containerHeight + batchBufferDistance,
     ];
     const totalBatches = Math.ceil(itemsCount / batchSize);
 
@@ -78,6 +78,7 @@ export const useVisibilityAndDimension = ({
     itemsCount,
     scrollOffset,
     visibility,
+    batchBufferDistance,
   ]);
 
   return [dimensions, visibility, setDimension];

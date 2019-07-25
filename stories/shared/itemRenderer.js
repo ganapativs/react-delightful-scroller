@@ -6,7 +6,7 @@ export const itemRenderer = ({ item, index }) => {
     <Card key={item} style={{ background: item.gradient }}>
       <DarkLayer>
         <p>{item.text}</p>
-        <Input defaultValue={index} type="number" />
+        <Input defaultValue={index} />
       </DarkLayer>
     </Card>
   );

@@ -1,10 +1,11 @@
 /**
  * TODO:
  * - Scroll to index - taken care automatically
- * - Test with different totalCount and items
+ * - Buffer - done
  * - Optimize every piece of code
  * - Fixed height elements
  * - Updating item test
+ * - Test with different totalCount and items
  * - Sentinel with intersection observer?
  * - Loading indicator after sentinel
  * - Custom element scroll
@@ -44,6 +45,7 @@ function IScroller({
   averageItemHeight,
   itemHeight,
   itemsCount,
+  batchBufferDistance,
 }) {
   const [dimensions, visibility, setDimension] = useVisibilityAndDimension({
     root,
@@ -53,6 +55,7 @@ function IScroller({
     itemHeight,
     averageItemHeight,
     batchSize,
+    batchBufferDistance,
   });
 
   const batchedItems = getBatchedItems(items, batchSize);
@@ -112,6 +115,7 @@ function IScroller({
       </>
     </RenderContainer>
   );
+
   return Container;
 }
 
@@ -137,6 +141,7 @@ IScroller.defaultProps = {
   itemHeight: null, // Fixed item height(Optional)
   axis: 'y',
   batchSize: 10, // Batch items into batch of n elements
+  batchBufferDistance: 250, // Batch buffer distance on both sides in px
   // fetchItems={() => {}}
   // loader={() => "Loading..."}
 };
