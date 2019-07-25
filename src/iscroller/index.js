@@ -99,6 +99,7 @@ function IScroller({
         RenderItem={RenderItem}
         dimensions={dimensions[index]}
         visible={visibility[index]}
+        itemHeight={itemHeight}
       />
     );
   });

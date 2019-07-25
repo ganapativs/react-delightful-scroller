@@ -12,7 +12,7 @@ const WindowScroller = () => (
       /* d */ ref={r => console.log('TCL: App -> render -> r', r)}
       /* d */ items={items}
       /* d */ RenderItem={itemRenderer}
-      /* d */ getItemKey={(item, index) => item + index}
+      /* d */ getItemKey={(item, index) => item.text + index}
       /* d */ wrapperElement="div"
       /* d */ removeFromDOM
       /* d */ RenderContainer={({ children, forwardRef }) => (

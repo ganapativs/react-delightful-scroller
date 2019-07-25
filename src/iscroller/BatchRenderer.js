@@ -15,8 +15,10 @@ export const BatchRenderer = React.memo(
     setDimension,
     RenderItem,
     visible,
+    itemHeight,
   }) => {
-    let batchElement = null;
+    const hasFixedHeightItems = !!itemHeight;
+    let batchWrapper = null;
 
     if (visible || !removeFromDOM) {
       const items = batch.map((item, idx) => {
@@ -32,30 +34,35 @@ export const BatchRenderer = React.memo(
         );
       });
 
-      batchElement = (
+      const itemsBatch = (
+        <Wrapper
+          data-iscroller-batch={index}
+          as={wrapperElement}
+          style={
+            !removeFromDOM ? { visibility: visible ? 'visible' : 'hidden' } : {}
+          }>
+          {items}
+        </Wrapper>
+      );
+
+      batchWrapper = hasFixedHeightItems ? (
+        // No need to add resize observer to batch of fixed height items
+        itemsBatch
+      ) : (
+        // Add resize observer to batch of dynamic items
         <Measure
           // ScrollHeight is actual height of batch including content margins
           scroll
           onResize={contentRect => {
             setDimension(index, contentRect);
           }}>
-          {({ measureRef }) => (
-            <Wrapper
-              data-iscroller-batch={index}
-              as={wrapperElement}
-              ref={measureRef}
-              style={
-                !removeFromDOM
-                  ? { visibility: visible ? 'visible' : 'hidden' }
-                  : {}
-              }>
-              {items}
-            </Wrapper>
-          )}
+          {({ measureRef }) =>
+            React.cloneElement(itemsBatch, { ref: measureRef })
+          }
         </Measure>
       );
     } else {
-      batchElement = (
+      batchWrapper = (
         <div
           style={{
             height: dimensions.height,
@@ -64,7 +71,7 @@ export const BatchRenderer = React.memo(
       );
     }
 
-    return batchElement;
+    return batchWrapper;
   },
   ({ batch: prevBatch, visible: prevVisible }, { batch, visible }) => {
     const batchItemsHaveSameRef =
