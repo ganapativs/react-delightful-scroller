@@ -1,12 +1,13 @@
 /**
  * TODO:
- * - Scroll to index - taken care automatically
+ * - Scroll to index - taken care automatically by the browser
  * - Buffer distance - done
+ * - Fixed height elements - done
+ * - Updating item test - done
+ * - Test with different totalCount and items - done
+ *
  * - Remove triggering scroll setState every time
  * - Optimize every piece of code
- * - Fixed height elements
- * - Updating item test
- * - Test with different totalCount and items
  * - Sentinel with intersection observer?
  * - Loading indicator after sentinel
  * - Custom element scroll
