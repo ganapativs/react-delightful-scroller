@@ -17,9 +17,9 @@ export const useScroll = ({ root, axis }) => {
         window.cancelAnimationFrame(timeout.current);
       }
       // Setup the new requestAnimationFrame()
-      timeout.current = window.requestAnimationFrame(() => {
-        setScrollOffset(getScrollOffset(element, axis));
-      });
+      timeout.current = window.requestAnimationFrame(() =>
+        setScrollOffset(getScrollOffset(element, axis)),
+      );
     };
     element.addEventListener('scroll', handler, {
       capture: false,

@@ -1,7 +1,8 @@
 /**
  * TODO:
  * - Scroll to index - taken care automatically
- * - Buffer - done
+ * - Buffer distance - done
+ * - Remove triggering scroll setState every time
  * - Optimize every piece of code
  * - Fixed height elements
  * - Updating item test

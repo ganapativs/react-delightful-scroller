@@ -8,7 +8,6 @@ import { useScroll } from './useScroll';
 // Time interval B 'overlaps' A if:
 // B starts after A starts but before A finishes.
 // B starts before A starts and finishes after A starts.
-// https://stackoverflow.com/a/47668070/2627022
 function areOverlapping(A, B) {
   if (B[0] < A[0]) {
     return B[1] > A[0];
@@ -49,7 +48,7 @@ export const useVisibilityAndDimension = ({
   const scrollOffset = useScroll({ root, axis });
 
   useEffect(() => {
-    const limits = [
+    const renderWindow = [
       scrollOffset - batchBufferDistance,
       scrollOffset + containerHeight + batchBufferDistance,
     ];
@@ -60,7 +59,10 @@ export const useVisibilityAndDimension = ({
     for (let i = 0; i < totalBatches; i++) {
       const currentHeight = nextTotal;
       const nextHeight = nextTotal + dimensions[i].height;
-      nextVisibility[i] = areOverlapping(limits, [currentHeight, nextHeight]);
+      nextVisibility[i] = areOverlapping(renderWindow, [
+        currentHeight,
+        nextHeight,
+      ]);
       nextTotal = nextHeight;
     }
 
