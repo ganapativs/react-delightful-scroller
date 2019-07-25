@@ -11,8 +11,8 @@ const lorem = new LoremIpsum({
   },
 });
 
-// lorem.generateWords(1);
-// lorem.generateSentences(5);
-// lorem.generateParagraphs(7);
-
 export default n => lorem.generateParagraphs(n);
+
+export const generateWords = n => lorem.generateWords(5);
+
+export const generateSentences = n => lorem.generateSentences(5);

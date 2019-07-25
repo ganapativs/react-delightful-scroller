@@ -1,18 +1,22 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { getItems, Card, Container } from './components/helpers';
+import {
+  getItems,
+  Card,
+  Container,
+  Input,
+  DarkLayer,
+} from './components/helpers';
 import Iscroller from '../src/iscroller';
 
-const items = getItems(100);
+const items = getItems(10000);
 const itemRenderer = ({ item, index }) => {
   return (
     <Card key={item} style={{ background: item.gradient }}>
-      <p>
-        <b>Index: </b>
-        {index}
-      </p>
-      <p>{item.text}</p>
-      <input defaultValue={item.text} />
+      <DarkLayer>
+        <p>{item.text}</p>
+        <Input defaultValue={index} type="number" />
+      </DarkLayer>
     </Card>
   );
 };
@@ -25,7 +29,7 @@ const WindowScroller = () => (
       /* d */ RenderItem={itemRenderer}
       /* d */ getItemKey={(item, index) => item + index}
       /* d */ wrapperElement="div"
-      /* d */ removeFromDOM={false}
+      /* d */ removeFromDOM
       /* d */ RenderContainer={({ children, forwardRef }) => (
         <div ref={forwardRef}>{children}</div>
       )}

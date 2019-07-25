@@ -18,6 +18,29 @@ export const Card = styled.div`
   white-space: pre-line;
   color: #fff;
   background: #607d8b;
+  position: relative;
+  z-index: 0;
+`;
+
+export const DarkLayer = styled.div`
+  &:before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(43, 33, 78, 0.75);
+    left: 0;
+    top: 0;
+    z-index: -1;
+  }
+`;
+
+export const Input = styled.input`
+  background: rgba(37, 36, 36, 0.1);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: #fff;
 `;
 
 export const getRandomColor = () =>
