@@ -4,16 +4,17 @@
  * - Buffer distance - done
  * - Fixed height elements - done
  * - Updating item test - done
- * - Test with different totalCount and items - done
+ * - Test with different itemsCount and items - done
  *
+ * - Sentinel with intersection observer?
  * - Remove triggering scroll setState every time
  * - Optimize every piece of code
- * - Sentinel with intersection observer?
  * - Loading indicator after sentinel
  * - Custom element scroll
  * - More stories
  * - Multiple axis support
  * - Testing
+ * - Animatable card story
  */
 
 /**
@@ -30,6 +31,7 @@ import { getBatchedItems } from './getBatchedItems';
 import { BatchRenderer } from './BatchRenderer';
 import { useVisibilityAndDimension } from './useVisibilityAndDimension';
 import { getVisibleIndexes } from './getVisibleIndexes';
+import { Sentinel } from './Sentinel';
 
 function IScroller({
   containerWidth,
@@ -48,6 +50,9 @@ function IScroller({
   itemHeight,
   itemsCount,
   batchBufferDistance,
+  onFetchMore,
+  RenderLoader,
+  fetchMoreBufferDistance,
 }) {
   const [dimensions, visibility, setDimension] = useVisibilityAndDimension({
     root,
@@ -107,15 +112,26 @@ function IScroller({
 
   const Container = (
     <RenderContainer forwardRef={forwardRef}>
-      <>
-        {prevHeight ? (
-          <div style={{ height: prevHeight, visibility: 'hidden' }} />
-        ) : null}
-        {batchedElements}
-        {nextHeight ? (
-          <div style={{ height: nextHeight, visibility: 'hidden' }} />
-        ) : null}
-      </>
+      {prevHeight ? (
+        <div style={{ height: prevHeight, visibility: 'hidden' }} />
+      ) : null}
+      {batchedElements}
+      {nextHeight ? (
+        <div style={{ height: nextHeight, visibility: 'hidden' }} />
+      ) : null}
+      {axis === 'y' && items.length < itemsCount ? (
+        <Sentinel
+          onFetchMore={onFetchMore}
+          fetchMoreBufferDistance={fetchMoreBufferDistance}
+          RenderLoader={RenderLoader}
+          wrapperElement={wrapperElement}
+          items={items}
+          itemsCount={itemsCount}
+          batchSize={batchSize}
+          root={root}
+          axis={axis}
+        />
+      ) : null}
     </RenderContainer>
   );
 
@@ -131,7 +147,7 @@ IScroller.defaultProps = {
   RenderItem: ({ item, index }) => item,
   /** Get unique key for every item, used to detect item value change */
   getItemKey: (item, index) => (typeof item === 'string' ? item : index),
-  /** HTML tag used to wrap each rendered item */
+  /** HTML tag used to wrap each rendered item and sentinel */
   wrapperElement: 'div',
   /** Container node renderer component */
   RenderContainer: ({ children, forwardRef }) => (
@@ -145,8 +161,9 @@ IScroller.defaultProps = {
   axis: 'y',
   batchSize: 10, // Batch items into batch of n elements
   batchBufferDistance: 250, // Batch buffer distance on both sides in px
-  // fetchItems={() => {}}
-  // loader={() => "Loading..."}
+  fetchMoreBufferDistance: 500, // fetch more buffer distance on both sides in px
+  onFetchMore: ({ items, itemsCount, batchSize }) => {},
+  RenderLoader: ({ items, itemsCount, batchSize }) => null,
 };
 
 const WindowContainer = props => {
