@@ -21,16 +21,20 @@ export const Sentinel = ({
         axis === 'y' ? `0px 0px ${fetchMoreBufferDistance}px 0px` : '0px',
       threshold: 0,
     };
-    const callback = entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          onFetchMore({ items, itemsCount, batchSize });
-        }
-      });
+    const callback = ([{ isIntersecting }]) => {
+      if (isIntersecting) {
+        onFetchMore({ items, itemsCount, batchSize });
+      }
     };
     const observer = new IntersectionObserver(callback, options);
-    observer.observe(targetNode);
-    return () => observer.unobserve(targetNode);
+    if (targetNode) {
+      observer.observe(targetNode);
+    }
+
+    return () => {
+      // Stop watching all of its target elements for visibility changes
+      observer.disconnect();
+    };
   }, [
     axis,
     fetchMoreBufferDistance,
