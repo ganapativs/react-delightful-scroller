@@ -1,54 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { getItems, Container } from './components/helpers';
 import Iscroller from '../src/iscroller';
-import { itemRenderer } from './shared/itemRenderer';
-
-/**
- *
- Updating item(s)
-      const it = [...items];
-      it[0] = { ...it[0], text: 'hoi' };
-      setItems(it);
-
-  Appending items
-    useEffect(() => {
-      setTimeout(() => {
-        console.log('set');
-        s([...i, ...i]);
-      }, 4000);
-  }, []);
- */
+import { RenderItem } from './shared/RenderItem';
+import { RenderContainer } from './shared/RenderContainer';
 
 const WindowScroller = () => {
-  const [items, setItems] = useState(getItems(100));
+  const [items, setItems] = useState([]);
+  const ref = useRef(null);
+  const loading = useRef(false);
+
+  useEffect(() => {
+    if (loading.current) {
+      loading.current = false;
+    }
+  });
 
   const onFetchMore = ({ items, itemsCount, batchSize }) => {
-    console.log('Fetch more', items);
-
-    const newItems = getItems(100);
-    setItems([...items, ...newItems]);
+    if (!loading.current) {
+      loading.current = true;
+      const newItems = getItems(100);
+      setItems([...items, ...newItems]);
+    }
   };
 
   return (
     <Container>
       <Iscroller
-        ref={r => {
-          debugger;
-          console.log('TCL: App -> render -> r', r);
-        }}
+        ref={ref}
         items={items}
-        RenderItem={itemRenderer}
+        RenderItem={RenderItem}
         getItemKey={(item, index) => item.text + index}
         wrapperElement="div"
         removeFromDOM
-        RenderContainer={({ children, forwardRef }) => {
-          return (
-            <div id="Test" ref={forwardRef}>
-              {children}
-            </div>
-          );
-        }}
+        RenderContainer={RenderContainer}
         /** Scroll parent - should be an element */
         root={null}
         itemsCount={300}

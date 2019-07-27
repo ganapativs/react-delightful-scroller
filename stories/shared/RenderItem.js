@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card, Input, DarkLayer } from '../components/helpers';
 
-export const itemRenderer = ({ item, index }) => {
+export const RenderItem = ({ item, index }) => {
   return (
-    <Card key={item} style={{ background: item.gradient }}>
+    <Card key={item.text} style={{ background: item.gradient }}>
       <DarkLayer>
         <p>{item.text}</p>
         <Input defaultValue={index} />

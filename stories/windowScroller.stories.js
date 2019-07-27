@@ -2,7 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { getItems, Container } from './components/helpers';
 import Iscroller from '../src/iscroller';
-import { itemRenderer } from './shared/itemRenderer';
+import { RenderItem } from './shared/RenderItem';
+import { RenderContainer } from './shared/RenderContainer';
 
 const items = getItems(100);
 
@@ -28,13 +29,11 @@ const WindowScroller = () => {
       <Iscroller
         ref={r => console.log('TCL: App -> render -> r', r)}
         items={items}
-        RenderItem={itemRenderer}
+        RenderItem={RenderItem}
         getItemKey={(item, index) => item.text + index}
         wrapperElement="div"
         removeFromDOM
-        RenderContainer={({ children, forwardRef }) => (
-          <div ref={forwardRef}>{children}</div>
-        )}
+        RenderContainer={RenderContainer}
         /** Scroll parent - should be an element */
         root={null}
         itemsCount={items.length}
