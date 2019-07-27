@@ -5,11 +5,11 @@
  * - Fixed height elements - done
  * - Updating item test - done
  * - Test with different itemsCount and items - done
+ * - Sentinel with intersection observer - done
+ * - Remove triggering scroll setState every time - done using throttle + requestAnimationFrame
+ * - Loading indicator after sentinel - done
  *
- * - Sentinel with intersection observer?
- * - Remove triggering scroll setState every time
  * - Optimize every piece of code
- * - Loading indicator after sentinel
  * - Custom element scroll
  * - More stories
  * - Multiple axis support
