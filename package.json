@@ -13,13 +13,15 @@
     "lint-rds-storybook": "cd packages/storybook; yarn lint",
     "watch": "run-p watch-rds watch-rds-storybook",
     "build": "run-s build-rds build-rds-storybook",
-    "lint": "run-s lint-rds lint-rds-storybook"
+    "lint": "run-s lint-rds lint-rds-storybook",
+    "serve": "cd packages/storybook/build; serve"
   },
   "dependencies": {
     "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
-    "husky": "^3.0.1"
+    "husky": "^3.0.1",
+    "serve": "^11.1.0"
   },
   "husky": {
     "hooks": {
