@@ -15,7 +15,7 @@
   </a>
 </p>
 
-> Delightful, modern, virtualized(60fps) infinite scroller 🎉
+> Delightful, virtualized modern infinite scroller 🎉
 
 ### 🏠 [Homepage](https://github.com/ganapativs/react-delightful-scroller)
 

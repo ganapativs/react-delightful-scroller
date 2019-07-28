@@ -1,7 +1,7 @@
 {
   "name": "react-delightful-scroller",
   "version": "0.0.1",
-  "description": "Delightful, modern, virtualized(60fps) infinite scroller 🎉",
+  "description": "Delightful, virtualized modern infinite scroller 🎉",
   "source": "src/index.js",
   "main": "dist/react-delightful-scroller.js",
   "module": "dist/react-delightful-scroller.es.js",
