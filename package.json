@@ -1,9 +1,21 @@
 {
   "name": "react-delightful-scroller-monorepo",
+  "version": "0.0.0",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
+  "source": "packages/react-delightful-scroller/src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ganapativs/react-delightful-scroller.git"
+  },
+  "author": "Ganapati V S <meetguns.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ganapativs/react-delightful-scroller/issues"
+  },
+  "homepage": "https://github.com/ganapativs/react-delightful-scroller",
   "scripts": {
     "watch-rds": "cd packages/react-delightful-scroller; yarn watch",
     "build-rds": "cd packages/react-delightful-scroller; yarn build",
