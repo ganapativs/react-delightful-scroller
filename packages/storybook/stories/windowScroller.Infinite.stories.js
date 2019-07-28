@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { storiesOf } from '@storybook/react';
-import { getItems, Container } from './components/helpers';
-import Iscroller from '../src/iscroller';
-import { RenderItem } from './shared/RenderItem';
-import { RenderContainer } from './shared/RenderContainer';
+import React, { useState, useEffect, useRef } from "react";
+import { storiesOf } from "@storybook/react";
+import DelightfulScroller from "react-delightful-scroller";
+import { getItems, Container } from "./components/helpers";
+import { RenderItem } from "./shared/RenderItem";
+import { RenderContainer } from "./shared/RenderContainer";
 
 const WindowScroller = () => {
   const [items, setItems] = useState([]);
@@ -26,7 +26,7 @@ const WindowScroller = () => {
 
   return (
     <Container>
-      <Iscroller
+      <DelightfulScroller
         ref={ref}
         items={items}
         RenderItem={RenderItem}
@@ -43,7 +43,7 @@ const WindowScroller = () => {
         fetchMoreBufferDistance={1000}
         onFetchMore={onFetchMore}
         RenderLoader={({ items, itemsCount, batchSize }) => (
-          <div style={{ textAlign: 'center' }}>{`Loading page ${items.length /
+          <div style={{ textAlign: "center" }}>{`Loading page ${items.length /
             batchSize +
             1}...`}</div>
         )}
@@ -52,6 +52,6 @@ const WindowScroller = () => {
   );
 };
 
-storiesOf('Window Scroller', module).add('Infinite scroll', () => (
+storiesOf("Window Scroller", module).add("Infinite scroll", () => (
   <WindowScroller />
 ));

@@ -3,7 +3,7 @@ import { themes } from '@storybook/theming';
 
 addParameters({
     options: {
-      name: 'React iScroller',
+      name: 'Delightful Scroller',
       showAddonPanel: false,
       theme: themes.dark,
     }

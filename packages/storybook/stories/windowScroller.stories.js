@@ -1,9 +1,9 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { getItems, Container } from './components/helpers';
-import Iscroller from '../../o/src/iscroller';
-import { RenderItem } from './shared/RenderItem';
-import { RenderContainer } from './shared/RenderContainer';
+import React from "react";
+import { storiesOf } from "@storybook/react";
+import DelightfulScroller from "react-delightful-scroller";
+import { getItems, Container } from "./components/helpers";
+import { RenderItem } from "./shared/RenderItem";
+import { RenderContainer } from "./shared/RenderContainer";
 
 const items = getItems(100);
 
@@ -26,8 +26,8 @@ const items = getItems(100);
 const WindowScroller = () => {
   return (
     <Container>
-      <Iscroller
-        ref={r => console.log('TCL: App -> render -> r', r)}
+      <DelightfulScroller
+        ref={r => console.log("TCL: App -> render -> r", r)}
         items={items}
         RenderItem={RenderItem}
         getItemKey={(item, index) => item.text + index}
@@ -45,6 +45,6 @@ const WindowScroller = () => {
   );
 };
 
-storiesOf('Window Scroller', module).add('Default options', () => (
+storiesOf("Window Scroller", module).add("Default options", () => (
   <WindowScroller />
 ));
