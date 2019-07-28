@@ -1,6 +1,6 @@
-import styled from 'styled-components/macro';
-import gradient from 'random-gradient';
-import generateFakeText from './fakeText';
+import styled from "styled-components/macro";
+import gradient from "random-gradient";
+import generateFakeText from "./fakeText";
 
 export const Container = styled.div`
   max-width: 700px;
@@ -35,7 +35,7 @@ export const Input = styled.input`
 
 export const DarkLayer = styled.div`
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     height: 100%;
     width: 100%;
@@ -58,7 +58,8 @@ export const DarkLayer = styled.div`
 `;
 
 export const getRandomColor = () =>
-  '#' + ((Math.random() * 0xffffff) << 0).toString(16);
+  // eslint-disable-next-line no-bitwise
+  `#${((Math.random() * 0xffffff) << 0).toString(16)}`;
 
 export const getItems = (count = 0) =>
   new Array(count).fill(true).map(() => {
@@ -66,6 +67,6 @@ export const getItems = (count = 0) =>
 
     return {
       text,
-      gradient: gradient(text),
+      gradient: gradient(text)
     };
   });

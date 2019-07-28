@@ -42,11 +42,6 @@
     "prepublishOnly": "yarn build",
     "size": "size-limit"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn build && git add dist"
-    }
-  },
   "size-limit": [
     {
       "limit": "10 KB",
@@ -56,7 +51,6 @@
   "devDependencies": {
     "@ganapativs/babel-preset-react": "^0.0.2",
     "@ganapativs/eslint-config-react": "^0.0.2",
-    "husky": "^3.0.0",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.3",
     "rollup": "^1.16.7",

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, Input, DarkLayer } from '../components/helpers';
+import React from "react";
+import { Card, Input, DarkLayer } from "../components/helpers";
 
 export const RenderItem = ({ item, index }) => {
   return (

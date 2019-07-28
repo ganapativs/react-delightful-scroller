@@ -7,12 +7,23 @@
   "scripts": {
     "watch-rds": "cd packages/react-delightful-scroller; yarn watch",
     "build-rds": "cd packages/react-delightful-scroller; yarn build",
+    "lint-rds": "cd packages/react-delightful-scroller; yarn lint",
     "watch-rds-storybook": "cd packages/storybook; yarn storybook",
     "build-rds-storybook": "cd packages/storybook; yarn build-storybook",
+    "lint-rds-storybook": "cd packages/storybook; yarn lint",
     "watch": "run-p watch-rds watch-rds-storybook",
-    "build": "run-s build-rds build-rds-storybook"
+    "build": "run-s build-rds build-rds-storybook",
+    "lint": "run-s lint-rds lint-rds-storybook"
   },
   "dependencies": {
     "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
+    "husky": "^3.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
   }
 }

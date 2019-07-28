@@ -16,11 +16,12 @@ const WindowScroller = () => {
     }
   });
 
-  const onFetchMore = ({ items, itemsCount, batchSize }) => {
+  // eslint-disable-next-line no-unused-vars
+  const onFetchMore = ({ items: i, itemsCount, batchSize }) => {
     if (!loading.current) {
       loading.current = true;
       const newItems = getItems(100);
-      setItems([...items, ...newItems]);
+      setItems([...i, ...newItems]);
     }
   };
 
@@ -42,8 +43,9 @@ const WindowScroller = () => {
         axis="y"
         fetchMoreBufferDistance={1000}
         onFetchMore={onFetchMore}
-        RenderLoader={({ items, itemsCount, batchSize }) => (
-          <div style={{ textAlign: "center" }}>{`Loading page ${items.length /
+        // eslint-disable-next-line no-unused-vars
+        RenderLoader={({ items: i, itemsCount, batchSize }) => (
+          <div style={{ textAlign: "center" }}>{`Loading page ${i.length /
             batchSize +
             1}...`}</div>
         )}
