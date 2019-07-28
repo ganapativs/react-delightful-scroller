@@ -1,8 +1,8 @@
 export const getVisibleIndexes = visibility => {
-  let start = undefined;
-  let end = undefined;
+  let start;
+  let end;
 
-  for (let i = 0; i < visibility.length; i++) {
+  for (let i = 0; i < visibility.length; i += 1) {
     const v = visibility[i];
     if (start !== undefined && end !== undefined && !v) {
       break;

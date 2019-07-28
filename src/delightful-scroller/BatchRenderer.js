@@ -1,7 +1,7 @@
-import React from 'react';
-import Measure from 'react-measure';
-import { Wrapper } from './Wrapper';
-import { RenderItemWrapper } from './RenderItemWrapper';
+import React from "react";
+import Measure from "react-measure";
+import { Wrapper } from "./Wrapper";
+import { RenderItemWrapper } from "./RenderItemWrapper";
 
 export const BatchRenderer = React.memo(
   ({
@@ -15,7 +15,7 @@ export const BatchRenderer = React.memo(
     setDimension,
     RenderItem,
     visible,
-    itemHeight,
+    itemHeight
   }) => {
     const hasFixedHeightItems = !!itemHeight;
     let batchWrapper = null;
@@ -39,8 +39,9 @@ export const BatchRenderer = React.memo(
           data-iscroller-batch={index}
           as={wrapperElement}
           style={
-            !removeFromDOM ? { visibility: visible ? 'visible' : 'hidden' } : {}
-          }>
+            !removeFromDOM ? { visibility: visible ? "visible" : "hidden" } : {}
+          }
+        >
           {items}
         </Wrapper>
       );
@@ -55,7 +56,8 @@ export const BatchRenderer = React.memo(
           scroll
           onResize={contentRect => {
             setDimension(index, contentRect);
-          }}>
+          }}
+        >
           {({ measureRef }) =>
             React.cloneElement(itemsBatch, { ref: measureRef })
           }
@@ -65,7 +67,7 @@ export const BatchRenderer = React.memo(
       batchWrapper = (
         <div
           style={{
-            height: dimensions.height,
+            height: dimensions.height
           }}
         />
       );
@@ -79,5 +81,7 @@ export const BatchRenderer = React.memo(
       prevBatch.every((e, i) => e === batch[i]);
 
     return batchItemsHaveSameRef && prevVisible === visible;
-  },
+  }
 );
+
+BatchRenderer.displayName = "BatchRenderer";

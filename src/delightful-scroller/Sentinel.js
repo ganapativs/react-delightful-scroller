@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 
 export const Sentinel = ({
   fetchMoreBufferDistance,
@@ -9,7 +9,7 @@ export const Sentinel = ({
   itemsCount,
   batchSize,
   root,
-  axis,
+  axis
 }) => {
   const ref = useRef(null);
 
@@ -18,8 +18,8 @@ export const Sentinel = ({
     const options = {
       root,
       rootMargin:
-        axis === 'y' ? `0px 0px ${fetchMoreBufferDistance}px 0px` : '0px',
-      threshold: 0,
+        axis === "y" ? `0px 0px ${fetchMoreBufferDistance}px 0px` : "0px",
+      threshold: 0
     };
     const callback = ([{ isIntersecting }]) => {
       if (isIntersecting) {
@@ -42,17 +42,14 @@ export const Sentinel = ({
     items,
     onFetchMore,
     root,
-    itemsCount,
+    itemsCount
   ]);
 
-  return React.createElement(wrapperElement, {
-    ref,
-    children: (
-      <RenderLoader
-        items={items}
-        itemsCount={itemsCount}
-        batchSize={batchSize}
-      />
-    ),
-  });
+  return React.createElement(
+    wrapperElement,
+    {
+      ref
+    },
+    <RenderLoader items={items} itemsCount={itemsCount} batchSize={batchSize} />
+  );
 };

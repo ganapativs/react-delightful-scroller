@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export function useVisibility(initial = []) {
   const [visibility, setVisibility] = useState(initial);

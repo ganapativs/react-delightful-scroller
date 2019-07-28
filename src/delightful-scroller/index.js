@@ -30,16 +30,15 @@
  *   - https://gomakethings.com/debouncing-events-with-requestanimationframe-for-better-performance/
  * react remounts rendered node when ref and functional component reference change in render
  */
-import React, { memo } from 'react';
-import useWindowSize from '@rehooks/window-size';
-import { getBatchedItems } from './getBatchedItems';
-import { BatchRenderer } from './BatchRenderer';
-import { useVisibilityAndDimension } from './useVisibilityAndDimension';
-import { getVisibleIndexes } from './getVisibleIndexes';
-import { Sentinel } from './Sentinel';
+import React, { memo } from "react";
+import useWindowSize from "@rehooks/window-size";
+import { getBatchedItems } from "./getBatchedItems";
+import { BatchRenderer } from "./BatchRenderer";
+import { useVisibilityAndDimension } from "./useVisibilityAndDimension";
+import { getVisibleIndexes } from "./getVisibleIndexes";
+import { Sentinel } from "./Sentinel";
 
-function IScroller({
-  containerWidth,
+const DelightfulScroller = ({
   containerHeight,
   items,
   RenderItem,
@@ -57,8 +56,8 @@ function IScroller({
   batchBufferDistance,
   onFetchMore,
   RenderLoader,
-  fetchMoreBufferDistance,
-}) {
+  fetchMoreBufferDistance
+}) => {
   const [dimensions, visibility, setDimension] = useVisibilityAndDimension({
     root,
     axis,
@@ -67,17 +66,18 @@ function IScroller({
     itemHeight,
     averageItemHeight,
     batchSize,
-    batchBufferDistance,
+    batchBufferDistance
   });
 
   const batchedItems = getBatchedItems(items, batchSize);
   let current = batchedItems;
-  let previous = [],
-    next = [];
-  let prevHeight, nextHeight;
+  let previous = [];
+  let next = [];
+  let prevHeight;
+  let nextHeight;
 
   if (removeFromDOM) {
-    let [startIndex, endIndex] = getVisibleIndexes(visibility);
+    const [startIndex, endIndex] = getVisibleIndexes(visibility);
     previous = batchedItems.slice(0, startIndex);
     current = batchedItems.slice(startIndex, endIndex + 1);
     next = batchedItems.slice(endIndex + 1, batchedItems.length);
@@ -118,13 +118,13 @@ function IScroller({
   const Container = (
     <RenderContainer forwardRef={forwardRef}>
       {prevHeight ? (
-        <div style={{ height: prevHeight, visibility: 'hidden' }} />
+        <div style={{ height: prevHeight, visibility: "hidden" }} />
       ) : null}
       {batchedElements}
       {nextHeight ? (
-        <div style={{ height: nextHeight, visibility: 'hidden' }} />
+        <div style={{ height: nextHeight, visibility: "hidden" }} />
       ) : null}
-      {axis === 'y' && items.length < itemsCount ? (
+      {axis === "y" && items.length < itemsCount ? (
         <Sentinel
           onFetchMore={onFetchMore}
           fetchMoreBufferDistance={fetchMoreBufferDistance}
@@ -141,41 +141,54 @@ function IScroller({
   );
 
   return Container;
-}
+};
 
-IScroller.defaultProps = {
+DelightfulScroller.displayName = "DelightfulScroller";
+
+const DefaultRenderContainer = ({ children, forwardRef }) => (
+  <div ref={forwardRef}>{children}</div>
+);
+
+DefaultRenderContainer.displayName = "DefaultRenderContainer";
+
+// eslint-disable-next-line no-unused-vars
+const DefaultRenderItem = ({ item, index }) => item;
+
+DefaultRenderItem.displayName = "DefaultRenderItem";
+
+DelightfulScroller.defaultProps = {
   /** Items to render */
   items: [],
   /** Total number of items to render */
   itemsCount: 0,
   /** Item renderer component */
-  RenderItem: ({ item, index }) => item,
+  RenderItem: DefaultRenderItem,
   /** Get unique key for every item, used to detect item value change */
-  getItemKey: (item, index) => (typeof item === 'string' ? item : index),
+  getItemKey: (item, index) => (typeof item === "string" ? item : index),
   /** HTML tag used to wrap each rendered item and sentinel */
-  wrapperElement: 'div',
+  wrapperElement: "div",
   /** Container node renderer component */
-  RenderContainer: ({ children, forwardRef }) => (
-    <div ref={forwardRef}>{children}</div>
-  ),
+  RenderContainer: DefaultRenderContainer,
   removeFromDOM: true,
   /** Scroll parent - should be an element */
   root: null,
   averageItemHeight: 10, // Average item height should be min 1px
   itemHeight: null, // Fixed item height(Optional)
-  axis: 'y',
+  axis: "y",
   batchSize: 10, // Batch items into batch of n elements
   batchBufferDistance: 250, // Batch buffer distance on both sides in px
   fetchMoreBufferDistance: 500, // fetch more buffer distance on both sides in px
+  // eslint-disable-next-line no-unused-vars
   onFetchMore: ({ items, itemsCount, batchSize }) => {},
-  RenderLoader: ({ items, itemsCount, batchSize }) => null,
+  // eslint-disable-next-line no-unused-vars
+  RenderLoader: ({ items, itemsCount, batchSize }) => null
 };
 
 const WindowContainer = props => {
-  let { innerWidth, innerHeight } = useWindowSize();
+  const { innerWidth, innerHeight } = useWindowSize();
 
   return (
-    <IScroller
+    <DelightfulScroller
       {...props}
       containerWidth={innerWidth}
       containerHeight={innerHeight}
@@ -183,13 +196,15 @@ const WindowContainer = props => {
   );
 };
 
-export default memo(
-  React.forwardRef((props, ref) => {
-    if (!props.root) {
-      return <WindowContainer {...props} forwardRef={ref} />;
-    }
+const DelightfulScrollerBase = (props, ref) => {
+  if (!props.root) {
+    return <WindowContainer {...props} forwardRef={ref} />;
+  }
 
-    // TODO - Custom container
-    return null;
-  }),
-);
+  // TODO - Custom container
+  return null;
+};
+
+DelightfulScrollerBase.displayName = "DelightfulScrollerBase";
+
+export default memo(React.forwardRef(DelightfulScrollerBase));

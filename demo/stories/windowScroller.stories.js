@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { getItems, Container } from './components/helpers';
-import Iscroller from '../src/iscroller';
+import Iscroller from '../../o/src/iscroller';
 import { RenderItem } from './shared/RenderItem';
 import { RenderContainer } from './shared/RenderContainer';
 
