@@ -9,6 +9,10 @@
  * - Remove triggering scroll setState every time - done using throttle + requestAnimationFrame
  * - Loading indicator after sentinel - done
  *
+ * - Delay rendering of batch
+ * - Unmount cards?
+ * - Use scrollRestoration to reduce batch creation - https://itsze.ro/blog/2017/04/09/infinite-list-and-react.html
+ * - Scroll restoration
  * - Optimize every piece of code
  * - Custom element scroll
  * - More stories
@@ -24,6 +28,7 @@
  * Use requestAnimationFrame instead of throttle on scroll
  *   - https://gist.github.com/paulmillr/3118943
  *   - https://gomakethings.com/debouncing-events-with-requestanimationframe-for-better-performance/
+ * react remounts rendered node when ref and functional component reference change in render
  */
 import React, { memo } from 'react';
 import useWindowSize from '@rehooks/window-size';
