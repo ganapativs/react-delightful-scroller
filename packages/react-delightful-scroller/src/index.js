@@ -27,7 +27,11 @@ import { BatchRenderer } from "./BatchRenderer";
 import { useVisibilityAndDimension } from "./useVisibilityAndDimension";
 import { getVisibleIndexes } from "./getVisibleIndexes";
 import { Sentinel } from "./Sentinel";
-import { DefaultRenderItem, DefaultRenderContainer } from "./DefaultRenderers";
+import {
+  DefaultRenderItem,
+  DefaultRenderContainer,
+  DefaultRenderLoader
+} from "./DefaultRenderers";
 
 const BaseRenderer = ({
   containerHeight,
@@ -160,31 +164,23 @@ const Entry = (props, ref) => {
 const DelightfulScroller = memo(React.forwardRef(Entry));
 
 DelightfulScroller.defaultProps = {
-  /** Items to render */
   items: [],
-  /** Total number of items to render */
   itemsCount: 0,
-  /** Item renderer component */
   RenderItem: DefaultRenderItem,
-  /** Get unique key for every item, used to detect item value change */
   getItemKey: (item, index) => (typeof item === "string" ? item : index),
-  /** HTML tag used to wrap each rendered item and sentinel */
   wrapperElement: "div",
-  /** Container node renderer component */
   RenderContainer: DefaultRenderContainer,
   removeFromDOM: true,
-  /** Scroll parent - should be an element */
   root: null,
-  averageItemHeight: 10, // Average item height should be min 1px
-  itemHeight: null, // Fixed item height(Optional)
+  averageItemHeight: 10,
+  itemHeight: null,
   axis: "y",
-  batchSize: 10, // Batch items into batch of n elements
-  batchBufferDistance: 250, // Batch buffer distance on both sides in px
-  fetchMoreBufferDistance: 500, // fetch more buffer distance on both sides in px
+  batchSize: 10,
+  batchBufferDistance: 250,
+  fetchMoreBufferDistance: 500,
+  RenderLoader: DefaultRenderLoader,
   // eslint-disable-next-line no-unused-vars
-  onFetchMore: ({ items, itemsCount, batchSize }) => {},
-  // eslint-disable-next-line no-unused-vars
-  RenderLoader: ({ items, itemsCount, batchSize }) => null
+  onFetchMore: ({ items, itemsCount, batchSize }) => {}
 };
 
 DelightfulScroller.displayName = "DelightfulScroller";

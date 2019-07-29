@@ -10,3 +10,8 @@ DefaultRenderContainer.displayName = "DefaultRenderContainer";
 export const DefaultRenderItem = ({ item, index }) => item;
 
 DefaultRenderItem.displayName = "DefaultRenderItem";
+
+// eslint-disable-next-line no-unused-vars
+export const DefaultRenderLoader = ({ items, itemsCount, batchSize }) => null;
+
+DefaultRenderLoader.displayName = "DefaultRenderLoader";

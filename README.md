@@ -10,16 +10,53 @@
   <a href="https://github.com/ganapativs/react-delightful-scroller/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
+  <a href="https://app.netlify.com/sites/react-delightful-scroller/deploys">
+    <img alt="Netlify Status" src="https://api.netlify.com/api/v1/badges/78aa47e6-80f3-4372-aeba-b2fb6bf491bf/deploy-status" target="_blank" />
+  </a>
   <a href="https://twitter.com/ganapativs">
     <img alt="Twitter: ganapativs" src="https://img.shields.io/twitter/follow/ganapativs.svg?style=social" target="_blank" />
   </a>
 </p>
 
-> Delightful, virtualized modern infinite scroller 🎉
+**Delightful, virtualized modern infinite scroller 🎉**
 
-### 🏠 [Homepage](https://github.com/ganapativs/react-delightful-scroller)
+### 🏠 [Demo and usage](https://react-delightful-scroller.netlify.com/)
+
+## Features
+
+- Provides delightful infinite scrolling experience for thousands of items
+- Uses batching and virtualization techniques to reduce DOM nodes
+- Handles fixed and dynamic height elements automatically
+- Smooth, aims to achieve 60fps
+- Fully customizable
+- Uses modern web APIs/features
+- Supports vertical scrolling on window (More axis and custom element scroll support soon)
+- Many more
+
+### Props
+
+| Property | Type | Required? | Description |
+|:---|:---|:---:|:---|
+| items | Array | ✓ | Items to render, can be array of strings, objects or numbers etc. |
+| itemsCount | Number | ✓ | Total number of items to render, this can be larger than number of `items`, in that case a sentinel is added at the bottom(infinite scroll) of rendered items and `onFetchMore` is triggered when page is scrolled to bottom until the number of `items` are equal to the `itemsCount`. |
+| RenderItem | Component | ✓ | Component which renders each item. Gets `item` and `index` as prop. |
+| RenderContainer | Component |  | Component which renders scroll container. Gets `children` and `forwardRef` as prop. |
+| removeFromDOM | Boolean |  | Should remove/add items from DOM while virtualizing and replace with empty node of same height of item. If set to `false`, items will be set to `visibility: hidden;` if not visible in the viewport. Default: `true`. |
+| root | HTMLNode |  | Scroll parent. should be an HTML node. Default: `null`(indicates `window`/viewport is the scroll parent). |
+| averageItemHeight | Number |  | Average item height if the items are dynamic. Default: `10`. |
+| itemHeight | Number |  | Fixed item height if the items height is fixed. This takes more priority over `averageItemHeight` if specified. Default: `null`. |
+| getItemKey | Function |  | Specify custom `key` prop while rendering each item. function receives `item` and `index` as argument. |
+| wrapperElement | String |  | HTML tag used to wrap each rendered item and sentinel. Default: `div`. |
+| axis | String |  | Scroll axis. Default: `y`. |
+| batchSize | Number |  | Batch of items to render at once when virtualizing. Default: `10`. |
+| batchBufferDistance | Number |  | Buffer distance of batch from both side of viewport/scrollable node. the batch is only rendered if the batch overlaps with this offset. Default: `250`. |
+| fetchMoreBufferDistance | Number |  | Buffer distance to trigger `onFetchMore`. Default: `500`. |
+| onFetchMore | Function |  | Function called when sentinel is near the viewport(when it crosses `fetchMoreBufferDistance`). The function receives `{items, itemsCount, batchSize}` as argument. |
+| RenderLoader | Component |  | Component which renders loader when sentinel triggers `onFetchMore`(basically, more items are loading). Gets `items`, `itemsCount` and `batchSize` as prop. |
 
 ## Install
+
+This project uses yarn workspaces. You need to have `yarn` installed.
 
 ```sh
 yarn
@@ -28,7 +65,14 @@ yarn
 ## Usage
 
 ```sh
+# Develop
+yarn watch
+```
+
+```sh
+# Build and serve
 yarn build
+yarn serve
 ```
 
 ## Author

@@ -4,6 +4,7 @@ import DelightfulScroller from "react-delightful-scroller";
 import { getItems, Container } from "./components/helpers";
 import { RenderItem } from "./shared/RenderItem";
 import { RenderContainer } from "./shared/RenderContainer";
+import { RenderLoader } from "./shared/RenderLoader";
 
 const WindowScroller = () => {
   const [items, setItems] = useState([]);
@@ -43,12 +44,7 @@ const WindowScroller = () => {
         axis="y"
         fetchMoreBufferDistance={1000}
         onFetchMore={onFetchMore}
-        // eslint-disable-next-line no-unused-vars
-        RenderLoader={({ items: i, itemsCount, batchSize }) => (
-          <div style={{ textAlign: "center" }}>{`Loading page ${i.length /
-            batchSize +
-            1}...`}</div>
-        )}
+        RenderLoader={RenderLoader}
       />
     </Container>
   );

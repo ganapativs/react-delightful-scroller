@@ -489,7 +489,15 @@ var DefaultRenderItem = function DefaultRenderItem(_ref2) {
       index = _ref2.index;
   return item;
 };
-DefaultRenderItem.displayName = "DefaultRenderItem";
+DefaultRenderItem.displayName = "DefaultRenderItem"; // eslint-disable-next-line no-unused-vars
+
+var DefaultRenderLoader = function DefaultRenderLoader(_ref3) {
+  var items = _ref3.items,
+      itemsCount = _ref3.itemsCount,
+      batchSize = _ref3.batchSize;
+  return null;
+};
+DefaultRenderLoader.displayName = "DefaultRenderLoader";
 
 var BaseRenderer = function BaseRenderer(_ref) {
   var containerHeight = _ref.containerHeight,
@@ -623,52 +631,28 @@ var Entry = function Entry(props, ref) {
 
 var DelightfulScroller = memo(React.forwardRef(Entry));
 DelightfulScroller.defaultProps = {
-  /** Items to render */
   items: [],
-
-  /** Total number of items to render */
   itemsCount: 0,
-
-  /** Item renderer component */
   RenderItem: DefaultRenderItem,
-
-  /** Get unique key for every item, used to detect item value change */
   getItemKey: function getItemKey(item, index) {
     return typeof item === "string" ? item : index;
   },
-
-  /** HTML tag used to wrap each rendered item and sentinel */
   wrapperElement: "div",
-
-  /** Container node renderer component */
   RenderContainer: DefaultRenderContainer,
   removeFromDOM: true,
-
-  /** Scroll parent - should be an element */
   root: null,
   averageItemHeight: 10,
-  // Average item height should be min 1px
   itemHeight: null,
-  // Fixed item height(Optional)
   axis: "y",
   batchSize: 10,
-  // Batch items into batch of n elements
   batchBufferDistance: 250,
-  // Batch buffer distance on both sides in px
   fetchMoreBufferDistance: 500,
-  // fetch more buffer distance on both sides in px
+  RenderLoader: DefaultRenderLoader,
   // eslint-disable-next-line no-unused-vars
   onFetchMore: function onFetchMore(_ref2) {
     var items = _ref2.items,
         itemsCount = _ref2.itemsCount,
         batchSize = _ref2.batchSize;
-  },
-  // eslint-disable-next-line no-unused-vars
-  RenderLoader: function RenderLoader(_ref3) {
-    var items = _ref3.items,
-        itemsCount = _ref3.itemsCount,
-        batchSize = _ref3.batchSize;
-    return null;
   }
 };
 DelightfulScroller.displayName = "DelightfulScroller";
