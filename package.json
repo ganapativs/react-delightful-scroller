@@ -1,68 +1,43 @@
 {
-  "name": "react-iscroller",
-  "version": "0.1.0",
+  "name": "react-delightful-scroller-monorepo",
+  "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
+  "workspaces": [
+    "packages/*"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+  "source": "packages/react-delightful-scroller/src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ganapativs/react-delightful-scroller.git"
   },
-  "lint-staged": {
-    "src/**/*.{js,json}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "src/**/*.css": [
-      "prettier --write",
-      "git add"
-    ]
+  "author": "Ganapati V S <meetguns.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ganapativs/react-delightful-scroller/issues"
   },
-  "devDependencies": {
-    "@storybook/addon-actions": "^5.0.11",
-    "@storybook/addon-knobs": "^5.0.11",
-    "@storybook/addon-options": "^5.0.11",
-    "@storybook/addon-storysource": "^5.0.11",
-    "@storybook/addon-viewport": "^5.0.11",
-    "@storybook/react": "^5.0.11",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react-hooks": "^1.6.0",
-    "husky": "^2.3.0",
-    "lint-staged": "^8.1.7",
-    "lorem-ipsum": "^2.0.2",
-    "prettier": "^1.17.1"
+  "homepage": "https://github.com/ganapativs/react-delightful-scroller",
+  "scripts": {
+    "watch-rds": "cd packages/react-delightful-scroller; yarn watch",
+    "build-rds": "cd packages/react-delightful-scroller; yarn build",
+    "lint-rds": "cd packages/react-delightful-scroller; yarn lint",
+    "watch-rds-storybook": "cd packages/storybook; yarn storybook",
+    "build-rds-storybook": "cd packages/storybook; yarn build-storybook",
+    "lint-rds-storybook": "cd packages/storybook; yarn lint",
+    "watch": "run-p watch-rds watch-rds-storybook",
+    "build": "run-s build-rds build-rds-storybook",
+    "lint": "run-s lint-rds lint-rds-storybook",
+    "serve": "cd packages/storybook/build; serve"
   },
   "dependencies": {
-    "@rehooks/window-size": "^1.0.2",
-    "@researchgate/react-intersection-observer": "^1.0.0",
-    "@types/jest": "24.0.13",
-    "@types/node": "12.0.2",
-    "@types/react": "16.8.17",
-    "@types/react-dom": "16.8.4",
-    "@types/react-measure": "^2.0.5",
-    "@types/styled-components": "^4.1.15",
-    "focus-visible": "^4.1.5",
-    "normalize.css": "^8.0.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-measure": "^2.3.0",
-    "react-scripts": "3.0.1",
-    "styled-components": "^4.2.0",
-    "typescript": "3.4.5"
+    "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
+    "husky": "^3.0.1",
+    "serve": "^11.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
   }
 }
