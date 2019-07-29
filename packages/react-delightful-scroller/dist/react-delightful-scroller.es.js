@@ -475,7 +475,23 @@ var Sentinel = function Sentinel(_ref) {
   }));
 };
 
-var DelightfulScroller = function DelightfulScroller(_ref) {
+var DefaultRenderContainer = function DefaultRenderContainer(_ref) {
+  var children = _ref.children,
+      forwardRef = _ref.forwardRef;
+  return React.createElement("div", {
+    ref: forwardRef
+  }, children);
+};
+DefaultRenderContainer.displayName = "DefaultRenderContainer"; // eslint-disable-next-line no-unused-vars
+
+var DefaultRenderItem = function DefaultRenderItem(_ref2) {
+  var item = _ref2.item,
+      index = _ref2.index;
+  return item;
+};
+DefaultRenderItem.displayName = "DefaultRenderItem";
+
+var BaseRenderer = function BaseRenderer(_ref) {
   var containerHeight = _ref.containerHeight,
       items = _ref.items,
       RenderItem = _ref.RenderItem,
@@ -581,25 +597,31 @@ var DelightfulScroller = function DelightfulScroller(_ref) {
   return Container;
 };
 
-DelightfulScroller.displayName = "DelightfulScroller";
+BaseRenderer.displayName = "BaseRenderer";
 
-var DefaultRenderContainer = function DefaultRenderContainer(_ref2) {
-  var children = _ref2.children,
-      forwardRef = _ref2.forwardRef;
-  return React.createElement("div", {
-    ref: forwardRef
-  }, children);
+var WindowContainer = function WindowContainer(props) {
+  var _useWindowSize = useWindowSize(),
+      innerWidth = _useWindowSize.innerWidth,
+      innerHeight = _useWindowSize.innerHeight;
+
+  return React.createElement(BaseRenderer, _extends({}, props, {
+    containerWidth: innerWidth,
+    containerHeight: innerHeight
+  }));
 };
 
-DefaultRenderContainer.displayName = "DefaultRenderContainer"; // eslint-disable-next-line no-unused-vars
+var Entry = function Entry(props, ref) {
+  if (!props.root) {
+    return React.createElement(WindowContainer, _extends({}, props, {
+      forwardRef: ref
+    }));
+  } // TODO - Custom container
 
-var DefaultRenderItem = function DefaultRenderItem(_ref3) {
-  var item = _ref3.item,
-      index = _ref3.index;
-  return item;
+
+  return null;
 };
 
-DefaultRenderItem.displayName = "DefaultRenderItem";
+var DelightfulScroller = memo(React.forwardRef(Entry));
 DelightfulScroller.defaultProps = {
   /** Items to render */
   items: [],
@@ -636,44 +658,20 @@ DelightfulScroller.defaultProps = {
   fetchMoreBufferDistance: 500,
   // fetch more buffer distance on both sides in px
   // eslint-disable-next-line no-unused-vars
-  onFetchMore: function onFetchMore(_ref4) {
-    var items = _ref4.items,
-        itemsCount = _ref4.itemsCount,
-        batchSize = _ref4.batchSize;
+  onFetchMore: function onFetchMore(_ref2) {
+    var items = _ref2.items,
+        itemsCount = _ref2.itemsCount,
+        batchSize = _ref2.batchSize;
   },
   // eslint-disable-next-line no-unused-vars
-  RenderLoader: function RenderLoader(_ref5) {
-    var items = _ref5.items,
-        itemsCount = _ref5.itemsCount,
-        batchSize = _ref5.batchSize;
+  RenderLoader: function RenderLoader(_ref3) {
+    var items = _ref3.items,
+        itemsCount = _ref3.itemsCount,
+        batchSize = _ref3.batchSize;
     return null;
   }
 };
+DelightfulScroller.displayName = "DelightfulScroller";
 
-var WindowContainer = function WindowContainer(props) {
-  var _useWindowSize = useWindowSize(),
-      innerWidth = _useWindowSize.innerWidth,
-      innerHeight = _useWindowSize.innerHeight;
-
-  return React.createElement(DelightfulScroller, _extends({}, props, {
-    containerWidth: innerWidth,
-    containerHeight: innerHeight
-  }));
-};
-
-var DelightfulScrollerBase = function DelightfulScrollerBase(props, ref) {
-  if (!props.root) {
-    return React.createElement(WindowContainer, _extends({}, props, {
-      forwardRef: ref
-    }));
-  } // TODO - Custom container
-
-
-  return null;
-};
-
-DelightfulScrollerBase.displayName = "DelightfulScrollerBase";
-var DelightfulScroller$1 = memo(React.forwardRef(DelightfulScrollerBase));
-
-export default DelightfulScroller$1;
+export default DelightfulScroller;
 //# sourceMappingURL=react-delightful-scroller.es.js.map

@@ -50,7 +50,7 @@
   ],
   "devDependencies": {
     "@ganapativs/babel-preset-react": "^0.0.2",
-    "@ganapativs/eslint-config-react": "^0.0.2",
+    "@ganapativs/eslint-config-react": "^0.0.3",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.3",
     "rollup": "^1.16.7",
