@@ -2,6 +2,8 @@
 
 A delightful, virtualized modern infinite scroller 🎉
 
+### 🏠 [Demo and usage](https://react-delightful-scroller.netlify.com/)
+
 <p>
   <img alt="Version" src="https://img.shields.io/npm/v/react-delightful-scroller.svg">
   <a href="https://github.com/ganapativs/react-delightful-scroller#readme">
@@ -20,9 +22,6 @@ A delightful, virtualized modern infinite scroller 🎉
     <img alt="Twitter: ganapativs" src="https://img.shields.io/twitter/follow/ganapativs.svg?style=social" target="_blank" />
   </a>
 </p>
-
-
-### 🏠 [Demo and usage](https://react-delightful-scroller.netlify.com/)
 
 ## Features
 
