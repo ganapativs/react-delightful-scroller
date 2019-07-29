@@ -1,6 +1,6 @@
 # Welcome to react-delightful-scroller 👋
 
-Delightful, virtualized modern infinite scroller 🎉
+A delightful, virtualized modern infinite scroller 🎉
 
 <p>
   <img alt="Version" src="https://img.shields.io/npm/v/react-delightful-scroller.svg">
