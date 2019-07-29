@@ -1110,19 +1110,19 @@
     "@babel/preset-env" "^7.5.5"
     "@babel/preset-react" "^7.0.0"
 
-"@ganapativs/eslint-config-react@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@ganapativs/eslint-config-react/-/eslint-config-react-0.0.2.tgz#51c6c40019f61966b8f1db83908bfa440ff453fa"
-  integrity sha512-Xh6xapHZhWjKnIZuyBIqnpUoiqAqr/Qq+6kQEzCUWkrhv8VfUkqoB0IN5tWf0vEQ7Hli1fB0CZA67pqT/qlrdQ==
+"@ganapativs/eslint-config-react@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@ganapativs/eslint-config-react/-/eslint-config-react-0.0.3.tgz#149ef15e3fb144d37e063767a79f7795d77897ff"
+  integrity sha512-T7mLLHHJVdajwGl6Tr8bluD5RvjdM9c/N7/a7l8c3aXE2/63LExfwvxReTyFoZmtBXr8eMZsQTHDWZqEmg0Atw==
   dependencies:
     babel-eslint "^10.0.2"
-    eslint "^6.0.1"
+    eslint "^6.1.0"
     eslint-config-airbnb-base "^13.2.0"
     eslint-config-prettier "^6.0.0"
     eslint-plugin-babel "^5.3.0"
-    eslint-plugin-import "^2.18.0"
+    eslint-plugin-import "^2.18.2"
     eslint-plugin-prettier "^3.1.0"
-    eslint-plugin-react "^7.14.2"
+    eslint-plugin-react "^7.14.3"
     prettier "^1.18.2"
 
 "@icons/material@^0.2.4":
@@ -1182,7 +1182,7 @@
   dependencies:
     react "^16.7.0-alpha.0"
 
-"@storybook/addon-actions@^5.0.11":
+"@storybook/addon-actions@^5.1.9":
   version "5.1.9"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-5.1.9.tgz#a515b62b109cb886ccd75ef2f5b12f8c27b43dd3"
   integrity sha512-h/csHPotBESyEUYlML3yyF2jUlDChB+u3TUNC3Ztzh/x7HzLqy88SL0INSIdY0dCBGx4TK5Gh+rMI7z28Hfdyw==
@@ -1202,7 +1202,7 @@
     react-inspector "^3.0.2"
     uuid "^3.3.2"
 
-"@storybook/addon-knobs@^5.0.11":
+"@storybook/addon-knobs@^5.1.9":
   version "5.1.9"
   resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-5.1.9.tgz#74db07fd644b41e63274f8754fbfb18f43d4cf01"
   integrity sha512-7/bICMYtR9CaTqfZX1kT2pBOTLZo3HxeslyQKWWsWlNElV33Ym2d0PPL5eS36eFxG/ZOp6lQWIFhunNnlmP5xg==
@@ -1224,7 +1224,7 @@
     react-lifecycles-compat "^3.0.4"
     react-select "^2.2.0"
 
-"@storybook/addon-options@^5.0.11":
+"@storybook/addon-options@^5.1.9":
   version "5.1.9"
   resolved "https://registry.yarnpkg.com/@storybook/addon-options/-/addon-options-5.1.9.tgz#dc326b94c52a7ee27bf948fb7ca63a6ea3c9736d"
   integrity sha512-wQIUw5Uc/5iREtI9eh2wPMlNG0O7jxaTaxGS8Bs6zDzkwiLHcLJCrfk1lPXU6O8ExEzWHpaCmxth8GyfKj8Qtw==
@@ -1233,7 +1233,7 @@
     core-js "^3.0.1"
     util-deprecate "^1.0.2"
 
-"@storybook/addon-storysource@^5.0.11":
+"@storybook/addon-storysource@^5.1.9":
   version "5.1.9"
   resolved "https://registry.yarnpkg.com/@storybook/addon-storysource/-/addon-storysource-5.1.9.tgz#c3a7a8b65080b6bb71c43c30dfab639aba10d271"
   integrity sha512-UHhF2IqaJYfKaRMLUVJboerObGzxs0zj0X2EJTnTKUL3by1/ksvdMQ3cf3525XUk08PW7nW1HAqBeZo7wAbC7w==
@@ -1250,7 +1250,7 @@
     react-syntax-highlighter "^8.0.1"
     regenerator-runtime "^0.12.1"
 
-"@storybook/addon-viewport@^5.0.11":
+"@storybook/addon-viewport@^5.1.9":
   version "5.1.9"
   resolved "https://registry.yarnpkg.com/@storybook/addon-viewport/-/addon-viewport-5.1.9.tgz#509819730ae99a9e08d1e1f71e8e567b068da01c"
   integrity sha512-0EEsZ7rWTj3q3M8AFjm6dXjQPS0w4gto8clMzGzdLHXA6D6KG3w10t9XsVr4mxve7PrEpiFXc6mhqsg7wbTDnQ==
@@ -1458,7 +1458,7 @@
     pretty-hrtime "^1.0.3"
     regenerator-runtime "^0.12.1"
 
-"@storybook/react@^5.0.11":
+"@storybook/react@^5.1.9":
   version "5.1.9"
   resolved "https://registry.yarnpkg.com/@storybook/react/-/react-5.1.9.tgz#4052f4b88e91d5a823bb9cbb61104c530fcfb1a1"
   integrity sha512-Byykpsttf6p2jv3LvqFtntEYfbUZSNTts0TjcZHNsHoUGmT7/M1PyqTeB7JUcYUNwSgdACY8FbowCrwZwDJDWQ==
@@ -4229,7 +4229,7 @@ eslint-plugin-babel@^5.3.0:
   dependencies:
     eslint-rule-composer "^0.3.0"
 
-eslint-plugin-import@^2.18.0:
+eslint-plugin-import@^2.18.2:
   version "2.18.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.18.2.tgz#02f1180b90b077b33d447a17a2326ceb400aceb6"
   integrity sha512-5ohpsHAiUBRNaBWAF08izwUGlbrJoJJ+W9/TBwsGoR1MnlgfwMIKrFeSjWbt6moabiXW9xNvtFz+97KHRfI4HQ==
@@ -4253,7 +4253,7 @@ eslint-plugin-prettier@^3.1.0:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-react@^7.14.2:
+eslint-plugin-react@^7.14.3:
   version "7.14.3"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.14.3.tgz#911030dd7e98ba49e1b2208599571846a66bdf13"
   integrity sha512-EzdyyBWC4Uz2hPYBiEJrKCUi2Fn+BJ9B/pJQcjw5X+x/H2Nm59S4MJIvL4O5NEE0+WbnQwEBxWY03oUk+Bc3FA==
@@ -4309,7 +4309,7 @@ eslint-visitor-keys@^1.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
   integrity sha512-qzm/XxIbxm/FHyH341ZrbnMUpe+5Bocte9xkmFMzPMjRaZMcXww+MpBptFvtU+79L362nqiLhekCxCxDPaUMBQ==
 
-eslint@^6.0.0, eslint@^6.0.1:
+eslint@^6.0.0, eslint@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.1.0.tgz#06438a4a278b1d84fb107d24eaaa35471986e646"
   integrity sha512-QhrbdRD7ofuV09IuE2ySWBz0FyXCq0rriLTZXZqaWSI79CVtHVRdkFuFTViiqzZhkCgfOh9USpriuGN2gIpZDQ==
@@ -6211,7 +6211,7 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
-lorem-ipsum@^2.0.2:
+lorem-ipsum@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/lorem-ipsum/-/lorem-ipsum-2.0.3.tgz#9f1fa634780c9f58a349d4e091c3ba74f733164e"
   integrity sha512-CX2r84DMWjW/DWiuzicTI9aRaJPAw2cvAGMJYZh/nx12OkTGqloj8y8FU0S8ZkKwOdqhfxEA6Ly8CW2P6Yxjwg==
@@ -9381,7 +9381,7 @@ style-loader@^0.23.1:
     loader-utils "^1.1.0"
     schema-utils "^1.0.0"
 
-styled-components@^4.2.0:
+styled-components@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-4.3.2.tgz#4ca81918c812d3006f60ac5fdec7d6b64a9509cc"
   integrity sha512-NppHzIFavZ3TsIU3R1omtddJ0Bv1+j50AKh3ZWyXHuFvJq1I8qkQ5mZ7uQgD89Y8zJNx2qRo6RqAH1BmoVafHw==

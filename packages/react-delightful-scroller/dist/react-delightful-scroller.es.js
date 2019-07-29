@@ -475,7 +475,31 @@ var Sentinel = function Sentinel(_ref) {
   }));
 };
 
-var DelightfulScroller = function DelightfulScroller(_ref) {
+var DefaultRenderContainer = function DefaultRenderContainer(_ref) {
+  var children = _ref.children,
+      forwardRef = _ref.forwardRef;
+  return React.createElement("div", {
+    ref: forwardRef
+  }, children);
+};
+DefaultRenderContainer.displayName = "DefaultRenderContainer"; // eslint-disable-next-line no-unused-vars
+
+var DefaultRenderItem = function DefaultRenderItem(_ref2) {
+  var item = _ref2.item,
+      index = _ref2.index;
+  return item;
+};
+DefaultRenderItem.displayName = "DefaultRenderItem"; // eslint-disable-next-line no-unused-vars
+
+var DefaultRenderLoader = function DefaultRenderLoader(_ref3) {
+  var items = _ref3.items,
+      itemsCount = _ref3.itemsCount,
+      batchSize = _ref3.batchSize;
+  return null;
+};
+DefaultRenderLoader.displayName = "DefaultRenderLoader";
+
+var BaseRenderer = function BaseRenderer(_ref) {
   var containerHeight = _ref.containerHeight,
       items = _ref.items,
       RenderItem = _ref.RenderItem,
@@ -581,87 +605,20 @@ var DelightfulScroller = function DelightfulScroller(_ref) {
   return Container;
 };
 
-DelightfulScroller.displayName = "DelightfulScroller";
-
-var DefaultRenderContainer = function DefaultRenderContainer(_ref2) {
-  var children = _ref2.children,
-      forwardRef = _ref2.forwardRef;
-  return React.createElement("div", {
-    ref: forwardRef
-  }, children);
-};
-
-DefaultRenderContainer.displayName = "DefaultRenderContainer"; // eslint-disable-next-line no-unused-vars
-
-var DefaultRenderItem = function DefaultRenderItem(_ref3) {
-  var item = _ref3.item,
-      index = _ref3.index;
-  return item;
-};
-
-DefaultRenderItem.displayName = "DefaultRenderItem";
-DelightfulScroller.defaultProps = {
-  /** Items to render */
-  items: [],
-
-  /** Total number of items to render */
-  itemsCount: 0,
-
-  /** Item renderer component */
-  RenderItem: DefaultRenderItem,
-
-  /** Get unique key for every item, used to detect item value change */
-  getItemKey: function getItemKey(item, index) {
-    return typeof item === "string" ? item : index;
-  },
-
-  /** HTML tag used to wrap each rendered item and sentinel */
-  wrapperElement: "div",
-
-  /** Container node renderer component */
-  RenderContainer: DefaultRenderContainer,
-  removeFromDOM: true,
-
-  /** Scroll parent - should be an element */
-  root: null,
-  averageItemHeight: 10,
-  // Average item height should be min 1px
-  itemHeight: null,
-  // Fixed item height(Optional)
-  axis: "y",
-  batchSize: 10,
-  // Batch items into batch of n elements
-  batchBufferDistance: 250,
-  // Batch buffer distance on both sides in px
-  fetchMoreBufferDistance: 500,
-  // fetch more buffer distance on both sides in px
-  // eslint-disable-next-line no-unused-vars
-  onFetchMore: function onFetchMore(_ref4) {
-    var items = _ref4.items,
-        itemsCount = _ref4.itemsCount,
-        batchSize = _ref4.batchSize;
-  },
-  // eslint-disable-next-line no-unused-vars
-  RenderLoader: function RenderLoader(_ref5) {
-    var items = _ref5.items,
-        itemsCount = _ref5.itemsCount,
-        batchSize = _ref5.batchSize;
-    return null;
-  }
-};
+BaseRenderer.displayName = "BaseRenderer";
 
 var WindowContainer = function WindowContainer(props) {
   var _useWindowSize = useWindowSize(),
       innerWidth = _useWindowSize.innerWidth,
       innerHeight = _useWindowSize.innerHeight;
 
-  return React.createElement(DelightfulScroller, _extends({}, props, {
+  return React.createElement(BaseRenderer, _extends({}, props, {
     containerWidth: innerWidth,
     containerHeight: innerHeight
   }));
 };
 
-var DelightfulScrollerBase = function DelightfulScrollerBase(props, ref) {
+var Entry = function Entry(props, ref) {
   if (!props.root) {
     return React.createElement(WindowContainer, _extends({}, props, {
       forwardRef: ref
@@ -672,8 +629,33 @@ var DelightfulScrollerBase = function DelightfulScrollerBase(props, ref) {
   return null;
 };
 
-DelightfulScrollerBase.displayName = "DelightfulScrollerBase";
-var DelightfulScroller$1 = memo(React.forwardRef(DelightfulScrollerBase));
+var DelightfulScroller = memo(React.forwardRef(Entry));
+DelightfulScroller.defaultProps = {
+  items: [],
+  itemsCount: 0,
+  RenderItem: DefaultRenderItem,
+  getItemKey: function getItemKey(item, index) {
+    return typeof item === "string" ? item : index;
+  },
+  wrapperElement: "div",
+  RenderContainer: DefaultRenderContainer,
+  removeFromDOM: true,
+  root: null,
+  averageItemHeight: 10,
+  itemHeight: null,
+  axis: "y",
+  batchSize: 10,
+  batchBufferDistance: 250,
+  fetchMoreBufferDistance: 500,
+  RenderLoader: DefaultRenderLoader,
+  // eslint-disable-next-line no-unused-vars
+  onFetchMore: function onFetchMore(_ref2) {
+    var items = _ref2.items,
+        itemsCount = _ref2.itemsCount,
+        batchSize = _ref2.batchSize;
+  }
+};
+DelightfulScroller.displayName = "DelightfulScroller";
 
-export default DelightfulScroller$1;
+export default DelightfulScroller;
 //# sourceMappingURL=react-delightful-scroller.es.js.map
