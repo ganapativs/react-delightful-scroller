@@ -1,15 +1,5 @@
 /**
  * TODO:
- * - Scroll to index - taken care automatically by the browser
- * - Buffer distance - done
- * - Fixed height elements - done
- * - Updating item test - done
- * - Test with different itemsCount and items - done
- * - Sentinel with intersection observer - done
- * - Remove triggering scroll setState every time - done using throttle + requestAnimationFrame
- * - Loading indicator after sentinel - done
- *
- * - Delay rendering of batch
  * - Unmount cards?
  * - Use scrollRestoration to reduce batch creation - https://itsze.ro/blog/2017/04/09/infinite-list-and-react.html
  * - Scroll restoration
