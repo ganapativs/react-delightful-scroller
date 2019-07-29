@@ -1,5 +1,7 @@
-<h1 align="center">Welcome to react-delightful-scroller 👋</h1>
-<h3 align="center">Delightful, virtualized modern infinite scroller 🎉</h3>
+# Welcome to react-delightful-scroller 👋
+
+Delightful, virtualized modern infinite scroller 🎉
+
 <p>
   <img alt="Version" src="https://img.shields.io/npm/v/react-delightful-scroller.svg">
   <a href="https://github.com/ganapativs/react-delightful-scroller#readme">
