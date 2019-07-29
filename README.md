@@ -1,4 +1,5 @@
 <h1 align="center">Welcome to react-delightful-scroller 👋</h1>
+<h3 align="center">Delightful, virtualized modern infinite scroller 🎉</h3>
 <p>
   <img alt="Version" src="https://img.shields.io/npm/v/react-delightful-scroller.svg">
   <a href="https://github.com/ganapativs/react-delightful-scroller#readme">
@@ -18,7 +19,6 @@
   </a>
 </p>
 
-**Delightful, virtualized modern infinite scroller 🎉**
 
 ### 🏠 [Demo and usage](https://react-delightful-scroller.netlify.com/)
 
@@ -33,7 +33,7 @@
 - Supports vertical scrolling on window (More axis and custom element scroll support soon)
 - Many more
 
-### Props
+## Component props
 
 | Property | Type | Required? | Description |
 |:---|:---|:---:|:---|
@@ -42,7 +42,7 @@
 | RenderItem | Component | ✓ | Component which renders each item. Gets `item` and `index` as prop. |
 | RenderContainer | Component |  | Component which renders scroll container. Gets `children` and `forwardRef` as prop. |
 | removeFromDOM | Boolean |  | Should remove/add items from DOM while virtualizing and replace with empty node of same height of item. If set to `false`, items will be set to `visibility: hidden;` if not visible in the viewport. Default: `true`. |
-| root | HTMLNode |  | Scroll parent. should be an HTML node. Default: `null`(indicates `window`/viewport is the scroll parent). |
+| root | Node |  | Scroll parent. should be an HTML node. Default: `null`(indicates `window`/viewport is the scroll parent). |
 | averageItemHeight | Number |  | Average item height if the items are dynamic. Default: `10`. |
 | itemHeight | Number |  | Fixed item height if the items height is fixed. This takes more priority over `averageItemHeight` if specified. Default: `null`. |
 | getItemKey | Function |  | Specify custom `key` prop while rendering each item. function receives `item` and `index` as argument. |
@@ -77,7 +77,7 @@ yarn serve
 
 ## Author
 
-👤 **Ganapati V S <meetguns.com>**
+👤 **Ganapati V S [<meetguns.com>](meetguns.com)**
 
 * Twitter: [@ganapativs](https://twitter.com/ganapativs)
 * Github: [@ganapativs](https://github.com/ganapativs)
