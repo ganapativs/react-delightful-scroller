@@ -2,7 +2,7 @@
 
 A delightful, virtualized modern infinite scroller 🎉
 
-### 🏠 [Demo and usage](https://react-delightful-scroller.netlify.com/)
+## 🏠 [Demo and usage](https://react-delightful-scroller.netlify.com/)
 
 <p>
   <img alt="Version" src="https://img.shields.io/npm/v/react-delightful-scroller.svg">
