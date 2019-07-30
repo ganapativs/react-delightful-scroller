@@ -4,7 +4,7 @@ import { themes } from '@storybook/theming';
 addParameters({
     options: {
       name: 'Delightful Scroller',
-      showAddonPanel: false,
+      showAddonPanel: true,
       theme: themes.dark,
     }
 });

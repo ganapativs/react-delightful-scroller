@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
-import { storiesOf } from "@storybook/react";
 import DelightfulScroller from "react-delightful-scroller";
-import { getItems, Container } from "./components/helpers";
-import { RenderItem } from "./shared/RenderItem";
-import { RenderContainer } from "./shared/RenderContainer";
-import { RenderLoader } from "./shared/RenderLoader";
+import { storiesOf } from "@storybook/react";
+import { getItems, Container } from "../components/helpers";
+import { RenderFixedHeightItem } from "../shared/RenderItem";
+import { RenderContainer } from "../shared/RenderContainer";
+import { RenderLoader } from "../shared/RenderLoader";
+import { configureStory } from "../shared/base";
 
 const WindowScroller = () => {
   const [items, setItems] = useState([]);
   const ref = useRef(null);
   const loading = useRef(false);
+
+  useEffect(() => {
+    console.log("Container reference: ", ref);
+  }, []);
 
   useEffect(() => {
     if (loading.current) {
@@ -31,17 +36,10 @@ const WindowScroller = () => {
       <DelightfulScroller
         ref={ref}
         items={items}
-        RenderItem={RenderItem}
-        getItemKey={(item, index) => item.text + index}
-        wrapperElement="div"
-        removeFromDOM
+        RenderItem={RenderFixedHeightItem}
         RenderContainer={RenderContainer}
-        /** Scroll parent - should be an element */
-        root={null}
         itemsCount={300}
-        averageItemHeight={50} // Average item height should be 1px
-        itemHeight={null} // Dynamic item height
-        axis="y"
+        itemHeight={76} // Average item height should be 1px
         fetchMoreBufferDistance={1000}
         onFetchMore={onFetchMore}
         RenderLoader={RenderLoader}
@@ -50,6 +48,7 @@ const WindowScroller = () => {
   );
 };
 
-storiesOf("Window Scroller", module).add("Infinite scroll", () => (
-  <WindowScroller />
-));
+configureStory(storiesOf("Window scroller", module)).add(
+  "Infinite scroll - fixed height items",
+  () => <WindowScroller />
+);

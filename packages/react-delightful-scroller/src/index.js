@@ -1,5 +1,8 @@
 /**
  * TODO:
+ * - Add propTypes
+ * - Add addon-info and customize
+ * - Add react live edit
  * - Unmount cards?
  * - Use scrollRestoration to reduce batch creation - https://itsze.ro/blog/2017/04/09/infinite-list-and-react.html
  * - Scroll restoration
