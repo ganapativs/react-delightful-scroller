@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, memo } from 'react';
 import useWindowSize from '@rehooks/window-size';
+import PropTypes from 'prop-types';
 import Measure from 'react-measure';
 import throttle from 'lodash.throttle';
 
@@ -654,6 +655,24 @@ DelightfulScroller.defaultProps = {
         itemsCount = _ref2.itemsCount,
         batchSize = _ref2.batchSize;
   }
+};
+DelightfulScroller.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.any),
+  itemsCount: PropTypes.number,
+  RenderItem: PropTypes.elementType,
+  getItemKey: PropTypes.func,
+  wrapperElement: PropTypes.string,
+  RenderContainer: PropTypes.elementType,
+  removeFromDOM: PropTypes.bool,
+  root: PropTypes.oneOf([PropTypes.element, null]),
+  averageItemHeight: PropTypes.number,
+  itemHeight: PropTypes.oneOf([PropTypes.number, null]),
+  axis: PropTypes.oneOf(["y"]),
+  batchSize: PropTypes.number,
+  batchBufferDistance: PropTypes.number,
+  fetchMoreBufferDistance: PropTypes.number,
+  RenderLoader: PropTypes.elementType,
+  onFetchMore: PropTypes.func
 };
 DelightfulScroller.displayName = "DelightfulScroller";
 
