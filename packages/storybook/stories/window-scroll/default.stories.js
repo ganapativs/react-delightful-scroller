@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import DelightfulScroller from "react-delightful-scroller";
 import { storiesOf } from "@storybook/react";
 import { getItems, Container } from "../components/helpers";
 import { RenderItem } from "../shared/RenderItem";
 import { configureStory } from "../shared/base";
 
-const items = getItems(100);
-
 const WindowScroller = () => {
+  const [items] = useState(getItems(100));
+
   return (
     <Container>
       <DelightfulScroller

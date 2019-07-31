@@ -6,15 +6,15 @@ const Quote = styled.span`
   position: absolute;
   font-size: 80px;
   line-height: 80px;
-  opacity: 0.3;
+  opacity: 0.1;
   top: -20px;
 `;
 
 const Phrase = styled.p`
   padding-left: 40px;
-  font-style: italic;
   font-size: 18px;
   line-height: 26px;
+  font-family: "Overpass Mono", monospace;
 
   &::first-letter {
     text-transform: uppercase;
@@ -36,10 +36,12 @@ const FlexOneVertical = styled.div`
 
   span:first-child {
     font-weight: bold;
+    font-size: 14px;
   }
 
   span:nth-child(2) {
     font-size: 14px;
+    opacity: 0.6;
   }
 `;
 
@@ -47,7 +49,7 @@ const AvatarImg = styled.img`
   width: 40px;
   height: 40px;
   margin-right: 15px;
-  border: 4px solid var(--darkYellow);
+  border: 2px solid var(--darkYellow);
   border-radius: 50%;
 `;
 
@@ -96,8 +98,8 @@ const UserArea = ({ item }) => (
   <Flex>
     <AvatarImg src={item.avatar} loading="lazy"></AvatarImg>
     <FlexOneVertical>
-      <span>{item.name}</span>
-      <span>{item.company}</span>
+      <div>{item.name}</div>
+      <div>{item.company}</div>
     </FlexOneVertical>
     <FollowButton type="button" following={item.following}>
       {item.following ? (
