@@ -59,14 +59,15 @@ const RelativeDiv = styled.div`
 const FollowButton = styled.button`
   color: ${props => (props.following ? "var(--black)" : "var(--white)")};
   border: 2px solid
-    ${props => (props.following ? "var(--yellow)" : "var(--white)")};
-  background: ${props => (props.following ? "var(--yellow)" : "transparent")};
+    ${props => (props.following ? "var(--darkYellow)" : "var(--darkYellow)")};
+  background: ${props =>
+    props.following ? "var(--darkYellow)" : "transparent"};
   border-radius: 30px;
   cursor: pointer;
   text-align: center;
   padding: 4px 15px;
   font-size: 14px;
-  min-width: 95px;
+  min-width: 110px;
   font-weight: bold;
   transition: color 0.1s ease, border-color 0.1s ease, background 0.1s ease;
   span:nth-child(2) {
