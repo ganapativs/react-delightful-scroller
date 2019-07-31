@@ -1,6 +1,5 @@
 import styled from "styled-components/macro";
-import gradient from "random-gradient";
-import generateFakeText from "./fakeText";
+import faker from "faker";
 
 export const Container = styled.div`
   max-width: 700px;
@@ -14,59 +13,24 @@ export const Container = styled.div`
 
 export const Card = styled.div`
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 20px;
   white-space: pre-line;
-  color: #fff;
-  background: #607d8b;
+  background: var(--darkGrey);
   position: relative;
   z-index: 0;
   overflow: hidden;
   line-height: 24px;
+  border-bottom: 4px solid var(--darkYellow);
 `;
 
-export const Input = styled.input`
-  background: rgba(37, 36, 36, 0.1);
-  border: none;
-  padding: 5px 10px;
-  border-radius: 20px;
-  color: #fff;
-  transition: background 0.2s ease-out;
-`;
-
-export const DarkLayer = styled.div`
-  &:before {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background: rgba(43, 33, 78, 0.75);
-    left: 0;
-    top: 0;
-    z-index: -1;
-    transition: all 0.2s ease-out;
-  }
-
-  &:hover :before {
-    opacity: 0.4;
-    transition: all 0.4s ease-in;
-  }
-
-  &:hover ${Input} {
-    background: rgba(37, 36, 36, 0.3);
-    transition: background 0.4s ease-in;
-  }
-`;
-
-export const getRandomColor = () =>
-  // eslint-disable-next-line no-bitwise
-  `#${((Math.random() * 0xffffff) << 0).toString(16)}`;
-
-export const getItems = (count = 0) =>
+export const getItems = (count = 0, editable) =>
   new Array(count).fill(true).map(() => {
-    const text = generateFakeText(Math.ceil(Math.random() * 3));
-
     return {
-      text,
-      gradient: gradient(text)
+      phrase: faker.hacker.phrase(),
+      name: faker.name.findName(),
+      avatar: faker.image.avatar(),
+      company: faker.company.companyName(),
+      following: faker.random.boolean(),
+      editable
     };
   });

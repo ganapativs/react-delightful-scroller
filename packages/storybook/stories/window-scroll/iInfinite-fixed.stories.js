@@ -39,7 +39,7 @@ const WindowScroller = () => {
         RenderItem={RenderFixedHeightItem}
         RenderContainer={RenderContainer}
         itemsCount={300}
-        itemHeight={76} // Average item height should be 1px
+        itemHeight={112} // Average item height should be 1px
         fetchMoreBufferDistance={1000}
         onFetchMore={onFetchMore}
         RenderLoader={RenderLoader}
