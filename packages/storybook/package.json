@@ -7,6 +7,7 @@
   "scripts": {
     "storybook": "start-storybook",
     "build-storybook": "build-storybook -c .storybook -o build",
+    "postbuild-storybook": "cp ./_headers ./build",
     "lint": "eslint './stories/**/*' --quiet --fix"
   },
   "devDependencies": {
@@ -21,10 +22,11 @@
     "@storybook/addon-storysource": "^5.1.9",
     "@storybook/addon-viewport": "^5.1.9",
     "@storybook/react": "^5.1.9",
-    "lorem-ipsum": "^2.0.3",
-    "random-gradient": "^0.0.2",
+    "faker": "^4.1.0",
     "react": "^16.8.6",
     "react-delightful-scroller": "latest",
+    "storybook-addon-smart-knobs": "^5.0.0",
+    "storybook-readme": "^5.0.5",
     "styled-components": "^4.3.2"
   }
 }

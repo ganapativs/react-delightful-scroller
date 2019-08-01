@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, memo } from 'react';
 import useWindowSize from '@rehooks/window-size';
+import PropTypes from 'prop-types';
 import Measure from 'react-measure';
 import throttle from 'lodash.throttle';
 
@@ -104,6 +105,9 @@ var Wrapper = React.forwardRef(function (_ref, ref) {
 });
 Wrapper.displayName = "Wrapper";
 
+// node won't update when other props on Render item changes
+// Might create memory leak/closure issues in react hooks
+
 var RenderItemWrapper = React.memo(function (_ref) {
   var item = _ref.item,
       index = _ref.index,
@@ -112,10 +116,6 @@ var RenderItemWrapper = React.memo(function (_ref) {
     item: item,
     index: index
   });
-}, function (_ref2, _ref3) {
-  var prevItem = _ref2.item;
-  var item = _ref3.item;
-  return prevItem === item;
 });
 RenderItemWrapper.displayName = "RenderItemWrapper";
 
@@ -175,16 +175,10 @@ var BatchRenderer = React.memo(function (_ref) {
   }
 
   return batchWrapper;
-}, function (_ref3, _ref4) {
-  var prevBatch = _ref3.batch,
-      prevVisible = _ref3.visible;
-  var batch = _ref4.batch,
-      visible = _ref4.visible;
-  var batchItemsHaveSameRef = prevBatch.length === batch.length && prevBatch.every(function (e, i) {
-    return e === batch[i];
-  });
-  return batchItemsHaveSameRef && prevVisible === visible;
-});
+} // Don't put equality check for batch items here!
+// prev batch items changes are reverted if next batch items are changed
+// Might create memory leak/closure issues in react hooks
+);
 BatchRenderer.displayName = "BatchRenderer";
 
 var useDimensions = function useDimensions() {
@@ -448,7 +442,7 @@ var Sentinel = function Sentinel(_ref) {
 
       if (isIntersecting) {
         onFetchMore({
-          items: items,
+          size: items.length,
           itemsCount: itemsCount,
           batchSize: batchSize
         });
@@ -469,7 +463,7 @@ var Sentinel = function Sentinel(_ref) {
   return React.createElement(wrapperElement, {
     ref: ref
   }, React.createElement(RenderLoader, {
-    items: items,
+    size: items.length,
     itemsCount: itemsCount,
     batchSize: batchSize
   }));
@@ -654,6 +648,24 @@ DelightfulScroller.defaultProps = {
         itemsCount = _ref2.itemsCount,
         batchSize = _ref2.batchSize;
   }
+};
+DelightfulScroller.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.any),
+  itemsCount: PropTypes.number,
+  RenderItem: PropTypes.elementType,
+  getItemKey: PropTypes.func,
+  wrapperElement: PropTypes.string,
+  RenderContainer: PropTypes.elementType,
+  removeFromDOM: PropTypes.bool,
+  root: PropTypes.element,
+  averageItemHeight: PropTypes.number,
+  itemHeight: PropTypes.number,
+  axis: PropTypes.oneOf(["y"]),
+  batchSize: PropTypes.number,
+  batchBufferDistance: PropTypes.number,
+  fetchMoreBufferDistance: PropTypes.number,
+  RenderLoader: PropTypes.elementType,
+  onFetchMore: PropTypes.func
 };
 DelightfulScroller.displayName = "DelightfulScroller";
 

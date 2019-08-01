@@ -1,9 +1,8 @@
 /**
  * TODO:
- * - Unmount cards?
  * - Use scrollRestoration to reduce batch creation - https://itsze.ro/blog/2017/04/09/infinite-list-and-react.html
  * - Scroll restoration
- * - Optimize every piece of code
+ * - Optimize computations
  * - Custom element scroll
  * - More stories
  * - Multiple axis support
@@ -22,6 +21,7 @@
  */
 import React, { memo } from "react";
 import useWindowSize from "@rehooks/window-size";
+import PropTypes from "prop-types";
 import { getBatchedItems } from "./getBatchedItems";
 import { BatchRenderer } from "./BatchRenderer";
 import { useVisibilityAndDimension } from "./useVisibilityAndDimension";
@@ -181,6 +181,25 @@ DelightfulScroller.defaultProps = {
   RenderLoader: DefaultRenderLoader,
   // eslint-disable-next-line no-unused-vars
   onFetchMore: ({ items, itemsCount, batchSize }) => {}
+};
+
+DelightfulScroller.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.any),
+  itemsCount: PropTypes.number,
+  RenderItem: PropTypes.elementType,
+  getItemKey: PropTypes.func,
+  wrapperElement: PropTypes.string,
+  RenderContainer: PropTypes.elementType,
+  removeFromDOM: PropTypes.bool,
+  root: PropTypes.element,
+  averageItemHeight: PropTypes.number,
+  itemHeight: PropTypes.number,
+  axis: PropTypes.oneOf(["y"]),
+  batchSize: PropTypes.number,
+  batchBufferDistance: PropTypes.number,
+  fetchMoreBufferDistance: PropTypes.number,
+  RenderLoader: PropTypes.elementType,
+  onFetchMore: PropTypes.func
 };
 
 DelightfulScroller.displayName = "DelightfulScroller";

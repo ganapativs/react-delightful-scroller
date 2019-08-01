@@ -74,14 +74,10 @@ export const BatchRenderer = React.memo(
     }
 
     return batchWrapper;
-  },
-  ({ batch: prevBatch, visible: prevVisible }, { batch, visible }) => {
-    const batchItemsHaveSameRef =
-      prevBatch.length === batch.length &&
-      prevBatch.every((e, i) => e === batch[i]);
-
-    return batchItemsHaveSameRef && prevVisible === visible;
   }
+  // Don't put equality check for batch items here!
+  // prev batch items changes are reverted if next batch items are changed
+  // Might create memory leak/closure issues in react hooks
 );
 
 BatchRenderer.displayName = "BatchRenderer";

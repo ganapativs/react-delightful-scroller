@@ -23,7 +23,7 @@ export const Sentinel = ({
     };
     const callback = ([{ isIntersecting }]) => {
       if (isIntersecting) {
-        onFetchMore({ items, itemsCount, batchSize });
+        onFetchMore({ size: items.length, itemsCount, batchSize });
       }
     };
     const observer = new IntersectionObserver(callback, options);
@@ -50,6 +50,10 @@ export const Sentinel = ({
     {
       ref
     },
-    <RenderLoader items={items} itemsCount={itemsCount} batchSize={batchSize} />
+    <RenderLoader
+      size={items.length}
+      itemsCount={itemsCount}
+      batchSize={batchSize}
+    />
   );
 };
