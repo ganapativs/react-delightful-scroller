@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import DelightfulScroller from "react-delightful-scroller";
 import { storiesOf } from "@storybook/react";
-import { getItems, Container } from "../components/helpers";
+import { getItems } from "../utils/helpers";
 import { RenderItem } from "../shared/RenderItem";
 import { configureStory } from "../shared/base";
+import { Container } from "../shared/Container";
 
 const WindowScroller = () => {
   const [items, setItems] = useState(getItems(100));

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { Card } from "../components/helpers";
+import { Card } from "./Card";
 
 const Quote = styled.span`
   position: absolute;
