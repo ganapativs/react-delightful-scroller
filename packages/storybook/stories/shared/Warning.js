@@ -27,7 +27,7 @@ const openStory = () => {
 export const Warning = () => {
   return isChrome && inIframe() ? (
     <Banner onClick={openStory}>
-      Scroll performance in Iframe is very choppy in Chrome for some reason
+      Scroll performance in iframe is very choppy in Chrome for some reason
       (works well in Firefox though). Click here to open demo in standalone tab.
     </Banner>
   ) : null;
