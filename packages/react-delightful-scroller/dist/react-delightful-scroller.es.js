@@ -175,16 +175,10 @@ var BatchRenderer = React.memo(function (_ref) {
   }
 
   return batchWrapper;
-}, function (_ref3, _ref4) {
-  var prevBatch = _ref3.batch,
-      prevVisible = _ref3.visible;
-  var batch = _ref4.batch,
-      visible = _ref4.visible;
-  var batchItemsHaveSameRef = prevBatch.length === batch.length && prevBatch.every(function (e, i) {
-    return e === batch[i];
-  });
-  return batchItemsHaveSameRef && prevVisible === visible;
-});
+} // Don't put equality check for batch items here!
+// prev batch items changes are reverted if next batch items are changed
+// Might create memory leak/closure issues in react hooks
+);
 BatchRenderer.displayName = "BatchRenderer";
 
 var useDimensions = function useDimensions() {
