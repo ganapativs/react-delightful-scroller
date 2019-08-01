@@ -23,7 +23,7 @@ export const Card = styled.div`
   border-bottom: 4px solid var(--darkYellow);
 `;
 
-export const getItems = (count = 0, editable) =>
+export const getItems = (count = 0, editable = true) =>
   new Array(count).fill(true).map(() => {
     return {
       phrase: faker.hacker.phrase(),

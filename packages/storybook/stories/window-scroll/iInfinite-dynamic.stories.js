@@ -11,6 +11,9 @@ const WindowScroller = () => {
   const [items, setItems] = useState([]);
   const ref = useRef(null);
   const loading = useRef(false);
+  const ItemRenderer = props => (
+    <RenderItem {...props} items={items} setItems={setItems} />
+  );
 
   useEffect(() => {
     console.log("Container reference: ", ref);
@@ -36,9 +39,9 @@ const WindowScroller = () => {
       <DelightfulScroller
         ref={ref}
         items={items}
-        RenderItem={RenderItem}
+        RenderItem={ItemRenderer}
         RenderContainer={RenderContainer}
-        itemsCount={300}
+        itemsCount={5000}
         averageItemHeight={50} // Average item height should be 1px
         fetchMoreBufferDistance={1000}
         onFetchMore={onFetchMore}

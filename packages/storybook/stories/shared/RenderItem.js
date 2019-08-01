@@ -11,7 +11,7 @@ const Quote = styled.span`
 `;
 
 const Phrase = styled.p`
-  padding-left: 40px;
+  margin-left: 42px;
   font-size: 18px;
   line-height: 26px;
   font-family: "Overpass Mono", monospace;
@@ -94,14 +94,18 @@ const FollowButton = styled.button`
   }
 `;
 
-const UserArea = ({ item }) => (
+const UserArea = ({ item, onFollowToggle }) => (
   <Flex>
     <AvatarImg src={item.avatar} loading="lazy"></AvatarImg>
     <FlexOneVertical>
-      <div>{item.name}</div>
-      <div>{item.company}</div>
+      <span>{item.name}</span>
+      <span>{item.company}</span>
     </FlexOneVertical>
-    <FollowButton type="button" following={item.following}>
+    <FollowButton
+      type="button"
+      following={item.following}
+      onClick={() => onFollowToggle(!item.following)}
+    >
       {item.following ? (
         <>
           <span>Following</span>
@@ -117,22 +121,34 @@ const UserArea = ({ item }) => (
   </Flex>
 );
 
-export const RenderItem = ({ item }) => {
-  return (
-    <Card key={item.phrase}>
-      <UserArea item={item} />
-      <RelativeDiv>
-        <Quote>“</Quote>
-        <Phrase contentEditable={item.editable}>{item.phrase}</Phrase>
-      </RelativeDiv>
-    </Card>
-  );
-};
+export const RenderItem = ({
+  item,
+  index,
+  items,
+  setItems,
+  showQuotes = true
+}) => {
+  const onFollowToggle = newFollowState => {
+    const currentItem = items[index];
+    const newItems = [...items];
+    newItems[index] = { ...currentItem, following: newFollowState };
+    setItems(newItems);
+  };
 
-export const RenderFixedHeightItem = ({ item }) => {
   return (
     <Card key={item.phrase}>
-      <UserArea item={item} />
+      <UserArea item={item} onFollowToggle={onFollowToggle} />
+      {showQuotes ? (
+        <RelativeDiv>
+          <Quote>“</Quote>
+          <Phrase
+            contentEditable={item.editable}
+            suppressContentEditableWarning={true}
+          >
+            {item.phrase}
+          </Phrase>
+        </RelativeDiv>
+      ) : null}
     </Card>
   );
 };

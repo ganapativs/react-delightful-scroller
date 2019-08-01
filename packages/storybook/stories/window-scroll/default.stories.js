@@ -6,13 +6,16 @@ import { RenderItem } from "../shared/RenderItem";
 import { configureStory } from "../shared/base";
 
 const WindowScroller = () => {
-  const [items] = useState(getItems(100));
+  const [items, setItems] = useState(getItems(100));
+  const ItemRenderer = props => (
+    <RenderItem {...props} items={items} setItems={setItems} />
+  );
 
   return (
     <Container>
       <DelightfulScroller
         items={items}
-        RenderItem={RenderItem}
+        RenderItem={ItemRenderer}
         itemsCount={items.length}
         averageItemHeight={50} // Average item height should be 1px
       />

@@ -105,6 +105,9 @@ var Wrapper = React.forwardRef(function (_ref, ref) {
 });
 Wrapper.displayName = "Wrapper";
 
+// node won't update when other props on Render item changes
+// Might create memory leak/closure issues in react hooks
+
 var RenderItemWrapper = React.memo(function (_ref) {
   var item = _ref.item,
       index = _ref.index,
@@ -113,10 +116,6 @@ var RenderItemWrapper = React.memo(function (_ref) {
     item: item,
     index: index
   });
-}, function (_ref2, _ref3) {
-  var prevItem = _ref2.item;
-  var item = _ref3.item;
-  return prevItem === item;
 });
 RenderItemWrapper.displayName = "RenderItemWrapper";
 
@@ -664,9 +663,9 @@ DelightfulScroller.propTypes = {
   wrapperElement: PropTypes.string,
   RenderContainer: PropTypes.elementType,
   removeFromDOM: PropTypes.bool,
-  root: PropTypes.oneOf([PropTypes.element, null]),
+  root: PropTypes.element,
   averageItemHeight: PropTypes.number,
-  itemHeight: PropTypes.oneOf([PropTypes.number, null]),
+  itemHeight: PropTypes.number,
   axis: PropTypes.oneOf(["y"]),
   batchSize: PropTypes.number,
   batchBufferDistance: PropTypes.number,
