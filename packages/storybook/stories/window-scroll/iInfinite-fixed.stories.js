@@ -11,6 +11,7 @@ const WindowScroller = () => {
   const [items, setItems] = useState([]);
   const ref = useRef(null);
   const loading = useRef(false);
+  const timer = useRef(false);
   const ItemRenderer = props => (
     <RenderItem
       {...props}
@@ -28,16 +29,17 @@ const WindowScroller = () => {
     if (loading.current) {
       loading.current = false;
     }
+    return () => clearTimeout(timer.current);
   });
 
   // eslint-disable-next-line no-unused-vars
   const onFetchMore = ({ size, itemsCount, batchSize }) => {
     if (!loading.current) {
       loading.current = true;
-      setTimeout(() => {
+      timer.current = setTimeout(() => {
         const newItems = getItems(100);
         setItems([...items, ...newItems]);
-      }, 250);
+      }, 1000);
     }
   };
 
