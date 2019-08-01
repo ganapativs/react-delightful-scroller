@@ -21,14 +21,25 @@ const Phrase = styled.p`
   }
 `;
 
-const Flex = styled.div`
+const FlexRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+const FlexRowWithPadding = styled(FlexRow)`
   padding: 10px 0;
 `;
 
-const FlexOneVertical = styled.div`
+const FlexOne = styled.div`
+  flex: 1;
+`;
+const CardWrapper = styled(FlexOne)`
+  padding: 20px;
+  box-shadow: -1px 0 4px -3px var(--darkYellow);
+`;
+
+const FlexOneVertical = styled(FlexOne)`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -95,7 +106,7 @@ const FollowButton = styled.button`
 `;
 
 const UserArea = ({ item, onFollowToggle }) => (
-  <Flex>
+  <FlexRowWithPadding>
     <AvatarImg src={item.avatar} loading="lazy"></AvatarImg>
     <FlexOneVertical>
       <span>{item.name}</span>
@@ -118,8 +129,17 @@ const UserArea = ({ item, onFollowToggle }) => (
         </>
       )}
     </FollowButton>
-  </Flex>
+  </FlexRowWithPadding>
 );
+
+const Number = styled.div`
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 20px;
+  padding: 0 20px 0 20px;
+  font-family: "Overpass Mono", monospace;
+  opacity: 0.2;
+`;
 
 export const RenderItem = ({
   item,
@@ -137,18 +157,23 @@ export const RenderItem = ({
 
   return (
     <Card key={item.phrase}>
-      <UserArea item={item} onFollowToggle={onFollowToggle} />
-      {showQuotes ? (
-        <RelativeDiv>
-          <Quote>“</Quote>
-          <Phrase
-            contentEditable={item.editable}
-            suppressContentEditableWarning={true}
-          >
-            {item.phrase}
-          </Phrase>
-        </RelativeDiv>
-      ) : null}
+      <FlexRow>
+        <Number>{index.toString().padStart(6, 0)}</Number>
+        <CardWrapper>
+          <UserArea item={item} onFollowToggle={onFollowToggle} />
+          {showQuotes ? (
+            <RelativeDiv>
+              <Quote>“</Quote>
+              <Phrase
+                contentEditable={item.editable}
+                suppressContentEditableWarning={true}
+              >
+                {item.phrase}
+              </Phrase>
+            </RelativeDiv>
+          ) : null}
+        </CardWrapper>
+      </FlexRow>
     </Card>
   );
 };

@@ -13,7 +13,6 @@ export const Container = styled.div`
 
 export const Card = styled.div`
   margin-bottom: 10px;
-  padding: 20px;
   white-space: pre-line;
   background: var(--darkGrey);
   position: relative;
