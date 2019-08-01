@@ -26,11 +26,13 @@ const WindowScroller = () => {
   });
 
   // eslint-disable-next-line no-unused-vars
-  const onFetchMore = ({ items: i, itemsCount, batchSize }) => {
+  const onFetchMore = ({ size, itemsCount, batchSize }) => {
     if (!loading.current) {
       loading.current = true;
-      const newItems = getItems(100);
-      setItems([...i, ...newItems]);
+      setTimeout(() => {
+        const newItems = getItems(100);
+        setItems([...items, ...newItems]);
+      }, 250);
     }
   };
 

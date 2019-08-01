@@ -52,7 +52,7 @@ A delightful, virtualized modern infinite scroller 🎉
 | batchSize | Number |  | Batch of items to render at once when virtualizing. Default: `10`. |
 | batchBufferDistance | Number |  | Buffer distance of batch from both side of viewport/scrollable node. the batch is only rendered if the batch overlaps with this offset. Default: `250`. |
 | fetchMoreBufferDistance | Number |  | Buffer distance to trigger `onFetchMore`. Default: `500`. |
-| onFetchMore | Function |  | Function called when sentinel is near the viewport(when it crosses `fetchMoreBufferDistance`). The function receives `{items, itemsCount, batchSize}` as argument. |
+| onFetchMore | Function |  | Function called when sentinel is near the viewport(when it crosses `fetchMoreBufferDistance`). The function receives `{size, itemsCount, batchSize}` as argument. |
 | RenderLoader | Component |  | Component which renders loader when sentinel triggers `onFetchMore`(basically, more items are loading). Gets `items`, `itemsCount` and `batchSize` as prop. |
 
 ## Install

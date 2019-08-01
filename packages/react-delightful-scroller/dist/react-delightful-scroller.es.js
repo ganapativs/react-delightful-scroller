@@ -442,7 +442,7 @@ var Sentinel = function Sentinel(_ref) {
 
       if (isIntersecting) {
         onFetchMore({
-          items: items,
+          size: items.length,
           itemsCount: itemsCount,
           batchSize: batchSize
         });
@@ -463,7 +463,7 @@ var Sentinel = function Sentinel(_ref) {
   return React.createElement(wrapperElement, {
     ref: ref
   }, React.createElement(RenderLoader, {
-    items: items,
+    size: items.length,
     itemsCount: itemsCount,
     batchSize: batchSize
   }));

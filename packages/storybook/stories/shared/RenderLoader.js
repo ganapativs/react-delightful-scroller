@@ -7,6 +7,6 @@ export const Loader = styled.div`
 `;
 
 // eslint-disable-next-line no-unused-vars
-export const RenderLoader = ({ items: i, itemsCount, batchSize }) => (
-  <Loader>{`Loading page ${i.length / batchSize + 1}...`}</Loader>
+export const RenderLoader = ({ size, itemsCount, batchSize }) => (
+  <Loader>{`Loading page ${size / batchSize + 1}...`}</Loader>
 );
