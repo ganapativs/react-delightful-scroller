@@ -7,6 +7,7 @@
   "scripts": {
     "storybook": "start-storybook",
     "build-storybook": "build-storybook -c .storybook -o build",
+    "postbuild-storybook": "cp ./_headers ./build",
     "lint": "eslint './stories/**/*' --quiet --fix"
   },
   "devDependencies": {
