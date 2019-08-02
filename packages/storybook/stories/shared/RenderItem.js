@@ -83,7 +83,12 @@ const FollowButton = styled.button`
   min-width: 110px;
   font-weight: bold;
   transition: color 0.1s ease, border-color 0.1s ease, background 0.1s ease;
-  span:nth-child(2) {
+
+  .visible-lg:nth-child(2) {
+    display: none;
+  }
+
+  .visible-xs {
     display: none;
   }
 
@@ -96,11 +101,29 @@ const FollowButton = styled.button`
     transition: color 0.15s ease-in, border-color 0.15s ease-in,
       background 0.15s ease-in;
 
-    span:nth-child(1) {
+    .visible-lg:nth-child(1) {
       display: none;
     }
-    span:nth-child(2) {
+    .visible-lg:nth-child(2) {
       display: inline;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    padding: 4px 10px;
+    min-width: 30px;
+
+    &:hover {
+      .visible-lg:nth-child(2) {
+        display: none;
+      }
+    }
+
+    .visible-lg {
+      display: none;
+    }
+    .visible-xs {
+      display: inline !important;
     }
   }
 `;
@@ -119,13 +142,15 @@ const UserArea = ({ item, onFollowToggle }) => (
     >
       {item.following ? (
         <>
-          <span>Following</span>
-          <span>Unfollow</span>
+          <span className="visible-lg">Following</span>
+          <span className="visible-lg">Unfollow</span>
+          <span className="visible-xs">x</span>
         </>
       ) : (
         <>
-          <span>Follow</span>
-          <span>Follow</span>
+          <span className="visible-lg">Follow</span>
+          <span className="visible-lg">Follow</span>
+          <span className="visible-xs">+</span>
         </>
       )}
     </FollowButton>
