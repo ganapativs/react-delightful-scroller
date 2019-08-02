@@ -3,11 +3,6 @@
  * - Use scrollRestoration to reduce batch creation - https://itsze.ro/blog/2017/04/09/infinite-list-and-react.html
  * - Scroll restoration
  * - Optimize computations
- * - Custom element scroll
- * - More stories
- * - Multiple axis support
- * - Testing
- * - Animatable card story
  */
 
 /**

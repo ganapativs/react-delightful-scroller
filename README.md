@@ -76,6 +76,14 @@ yarn build
 yarn serve
 ```
 
+## TODO
+
+- [ ] Custom container support
+- [ ] Support more axis - x, y-reverse & x-reverse
+- [ ] Scroll restoration
+- [ ] More stories
+- [ ] Test cases
+
 ## Author
 
 👤 **Ganapati V S [<meetguns.com>](meetguns.com)**
