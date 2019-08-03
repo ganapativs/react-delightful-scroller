@@ -6,10 +6,10 @@ import Iscroller from '../src/iscroller';
 const items = getItems(1000);
 const itemRenderer = (item, index) => (
   <Card key={item}>
-    <p>
+    {/* <p>
       <b>Index: </b>
       {index}
-    </p>
+    </p> */}
     <p>{item}</p>
   </Card>
 );
@@ -38,7 +38,7 @@ const WindowScroller = () => (
       axis="y"
       fetchItems={() => {}}
       loader={() => 'Loading...'}
-      itemsBuffer={0} // Extra items to render on each side in both directions
+      itemsBuffer={2} // Extra items to render on each side in both directions
     />
   </Container>
 );

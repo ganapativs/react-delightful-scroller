@@ -45,10 +45,8 @@ function IScroller({
     visibilityMap,
   );
   const bufferedStartIndex = Math.max(startIndex - itemsBuffer, 0);
-  console.log('TCL: bufferedStartIndex', bufferedStartIndex);
   const bufferedEndIndex = Math.min(endIndex + itemsBuffer, itemsCount);
 
-  console.log('TCL: bufferedEndIndex', bufferedEndIndex);
   const previous = items.slice(0, bufferedStartIndex);
   const current = items.slice(bufferedStartIndex, bufferedEndIndex + 1);
   const next = items.slice(bufferedEndIndex + 1, itemsCount);

@@ -60,7 +60,6 @@ const Render = ({
   return (
     <Observer
       onChange={s => {
-        console.log('TCL: index', index, s.isIntersecting);
         setVisibility(index, s.isIntersecting);
       }}
       threshold={threshold}

@@ -16,10 +16,6 @@ export function useVisibility(initial = new Map()) {
     const newVisibilityMap = new Map(intermediate.current);
     newVisibilityMap.set(index, value);
     intermediate.current = newVisibilityMap;
-    console.log(
-      'TCL: wrappedSetVisibility -> newVisibilityMap',
-      newVisibilityMap,
-    );
 
     setVisibility(newVisibilityMap);
   };

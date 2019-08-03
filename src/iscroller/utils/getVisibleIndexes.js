@@ -12,6 +12,6 @@ export const getVisibleIndexes = map => {
       end = parseInt(k);
     }
   }
-  console.log('TCL: [start, end]', [start, end]);
+
   return [start, end];
 };
