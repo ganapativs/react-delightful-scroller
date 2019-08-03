@@ -8,6 +8,8 @@ import { RenderLoader } from "../shared/RenderLoader";
 import { configureStory } from "../shared/base";
 import { Container } from "../shared/Container";
 
+const Loader = props => <RenderLoader {...props} showPageCount={false} />;
+
 const WindowScroller = () => {
   const [items, setItems] = useState(getItems(1000));
   const ref = useRef(null);
@@ -53,7 +55,7 @@ const WindowScroller = () => {
         averageItemHeight={50} // Average item height should be 1px
         fetchMoreBufferDistance={1000}
         onFetchMore={onFetchMore}
-        RenderLoader={RenderLoader}
+        RenderLoader={Loader}
       />
     </Container>
   );
