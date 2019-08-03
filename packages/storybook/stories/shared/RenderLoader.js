@@ -8,15 +8,20 @@ const Loader = styled.div`
 `;
 
 const Canvas = styled.canvas`
-  background-color: var(--yellow);
+  background-color: transparent;
   border-radius: 100%;
   display: block;
-  margin: 15px auto;
+  margin: 50px auto 15px auto;
 `;
 
 // https://codepen.io/MishaHahaha/pen/ONQQNY
 // eslint-disable-next-line no-unused-vars
-export const RenderLoader = ({ size, itemsCount, batchSize }) => {
+export const RenderLoader = ({
+  size,
+  itemsCount,
+  batchSize,
+  showPageCount = true
+}) => {
   const canvasRef = React.useRef(null);
   const animation = React.useRef(null);
 
@@ -54,7 +59,7 @@ export const RenderLoader = ({ size, itemsCount, batchSize }) => {
       }
 
       context.lineWidth = 4;
-      context.strokeStyle = "var(--black)";
+      context.strokeStyle = "#ffe877";
       context.stroke();
       context.miterLimit = 0.1;
       context.closePath();
@@ -71,9 +76,11 @@ export const RenderLoader = ({ size, itemsCount, batchSize }) => {
   return (
     <>
       <Canvas ref={canvasRef} width={100} height={100} />
-      <Loader>
-        {size / batchSize + 1}/{Math.ceil(itemsCount / batchSize)}
-      </Loader>
+      {showPageCount ? (
+        <Loader>
+          {size / batchSize + 1}/{Math.ceil(itemsCount / batchSize)}
+        </Loader>
+      ) : null}
     </>
   );
 };

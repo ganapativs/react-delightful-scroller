@@ -81,3 +81,26 @@ export const BatchRenderer = React.memo(
 );
 
 BatchRenderer.displayName = "BatchRenderer";
+
+export const NoRemoveFromDOMBatcher = React.memo(
+  props => <BatchRenderer {...props} />,
+  (
+    { batch: prevBatch, visible: prevVisible },
+    { batch, visible, removeFromDOM }
+  ) => {
+    if (!removeFromDOM) {
+      const batchItemsHaveSameRef =
+        prevBatch.length === batch.length &&
+        prevBatch.every((e, i) => e === batch[i]);
+      return (
+        batchItemsHaveSameRef &&
+        prevVisible === visible &&
+        (prevVisible === false && visible === false)
+      );
+    }
+
+    return true;
+  }
+);
+
+NoRemoveFromDOMBatcher.displayName = "NoRemoveFromDOMBatcher";

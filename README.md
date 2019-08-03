@@ -49,6 +49,7 @@ A delightful, virtualized modern infinite scroller 🎉
 | getItemKey | Function |  | Specify custom `key` prop while rendering each item. function receives `item` and `index` as argument. |
 | wrapperElement | String |  | HTML tag used to wrap each rendered item and sentinel. Default: `div`. |
 | axis | String |  | Scroll axis. Default: `y`. |
+| batch | Boolean |  | Should batch items(check `batchSize`) or not. Default: `true`. |
 | batchSize | Number |  | Batch of items to render at once when virtualizing. Default: `10`. |
 | batchBufferDistance | Number |  | Buffer distance of batch from both side of viewport/scrollable node. the batch is only rendered if the batch overlaps with this offset. Default: `250`. |
 | fetchMoreBufferDistance | Number |  | Buffer distance to trigger `onFetchMore`. Default: `500`. |

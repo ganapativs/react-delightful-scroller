@@ -18,7 +18,7 @@ import React, { memo } from "react";
 import useWindowSize from "@rehooks/window-size";
 import PropTypes from "prop-types";
 import { getBatchedItems } from "./getBatchedItems";
-import { BatchRenderer } from "./BatchRenderer";
+import { BatchRenderer, NoRemoveFromDOMBatcher } from "./BatchRenderer";
 import { useVisibilityAndDimension } from "./useVisibilityAndDimension";
 import { getVisibleIndexes } from "./getVisibleIndexes";
 import { Sentinel } from "./Sentinel";
@@ -38,6 +38,7 @@ const BaseRenderer = ({
   RenderContainer,
   removeFromDOM,
   root,
+  batch,
   batchSize,
   axis,
   averageItemHeight,
@@ -60,13 +61,14 @@ const BaseRenderer = ({
   });
 
   const batchedItems = getBatchedItems(items, batchSize);
+  const Batcher = removeFromDOM ? BatchRenderer : NoRemoveFromDOMBatcher;
   let current = batchedItems;
   let previous = [];
   let next = [];
   let prevHeight;
   let nextHeight;
 
-  if (removeFromDOM) {
+  if (removeFromDOM && batch) {
     const [startIndex, endIndex] = getVisibleIndexes(visibility);
     previous = batchedItems.slice(0, startIndex);
     current = batchedItems.slice(startIndex, endIndex + 1);
@@ -85,12 +87,12 @@ const BaseRenderer = ({
     }, 0);
   }
 
-  const batchedElements = current.map((batch, i) => {
+  const batchedElements = current.map((currentBatch, i) => {
     const index = previous.length + i;
     return (
-      <BatchRenderer
-        key={index}
-        batch={batch}
+      <Batcher
+        key={`${index}`}
+        batch={currentBatch}
         index={index}
         getItemKey={getItemKey}
         batchSize={batchSize}
@@ -170,8 +172,9 @@ DelightfulScroller.defaultProps = {
   averageItemHeight: 10,
   itemHeight: null,
   axis: "y",
+  batch: true,
   batchSize: 10,
-  batchBufferDistance: 250,
+  batchBufferDistance: 500,
   fetchMoreBufferDistance: 500,
   RenderLoader: DefaultRenderLoader,
   // eslint-disable-next-line no-unused-vars
@@ -190,6 +193,7 @@ DelightfulScroller.propTypes = {
   averageItemHeight: PropTypes.number,
   itemHeight: PropTypes.number,
   axis: PropTypes.oneOf(["y"]),
+  batch: PropTypes.bool,
   batchSize: PropTypes.number,
   batchBufferDistance: PropTypes.number,
   fetchMoreBufferDistance: PropTypes.number,
