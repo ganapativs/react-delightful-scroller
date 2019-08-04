@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/macro";
 import { getUrlParameter, inIframe, isChrome } from "../utils/helpers";
 
@@ -27,17 +27,30 @@ const openStory = () => {
 const isInChromeIframe = isChrome && inIframe();
 
 export const Warning = ({ children }) => {
-  return isInChromeIframe ? (
-    <Banner onClick={openStory}>
-      <b>
-        Scroll performance in iframe is very choppy in Chrome for some reason 🙆‍♂️
-      </b>
-      <br />
-      <small>(works well in other browser implementations though 🤔)</small>
-      <br />
-      <br />
-      Click here to open the story in new tab for better performance 🙏
-    </Banner>
+  const [hideBanner, setHideBanner] = useState(false);
+
+  return isInChromeIframe && !hideBanner ? (
+    <>
+      <Banner onClick={openStory}>
+        <b>
+          Scroll performance in iframe is very choppy in Chrome for some reason
+          🙆‍♂️
+        </b>
+        <br />
+        <small>(works well in other browser implementations though 🤔)</small>
+        <br />
+        <br />
+        Click this box to open the story in new tab for better performance 🙏
+      </Banner>
+      <p style={{ textAlign: "right" }}>
+        <a
+          style={{ cursor: "pointer", color: "var(--darkYellow)" }}
+          onClick={() => setHideBanner(true)}
+        >
+          Show in iframe anyway
+        </a>
+      </p>
+    </>
   ) : (
     children
   );
