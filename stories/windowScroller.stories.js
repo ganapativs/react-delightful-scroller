@@ -1,31 +1,25 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { getItems, Card, Container } from './components/helpers';
+import { getItems } from './utils/helpers';
+import { RenderItem } from './shared/RenderItem';
+import { Container } from './shared/Container';
 import Iscroller from '../src/iscroller';
 
-const items = getItems(1000);
-const itemRenderer = (item, index) => (
-  <Card key={item}>
-    {/* <p>
-      <b>Index: </b>
-      {index}
-    </p> */}
-    <p>{item}</p>
-  </Card>
+const LocalRenderItem = (item, index) => (
+  <RenderItem key={item} item={item} index={index} />
 );
+
+const items = getItems(1000);
 
 const WindowScroller = () => (
   <Container>
     <Iscroller
       /* d */ ref={r => console.log('TCL: App -> render -> r', r)}
       /* d */ items={items}
-      /* d */ renderItem={itemRenderer}
+      /* d */ renderItem={LocalRenderItem}
       /* d */ getItemKey={(item, index) => item + index}
       /* d */ wrapperElement="div"
       /* d */ removeFromDOM
-      /* d */ itemContainerRenderer={({ children, ref }) => (
-        <div ref={ref}>{children}</div>
-      )}
       /** Percentage of the target's visibility the observer's callback should be executed */
       threshold={0}
       /** Scroll parent - should be an element */

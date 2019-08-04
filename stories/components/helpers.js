@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import generateFakeText from './fakeText';
 
 export const Container = styled.div`
