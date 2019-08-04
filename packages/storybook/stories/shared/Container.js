@@ -15,8 +15,7 @@ const BaseContainer = styled.div`
 export const Container = ({ children }) => {
   return (
     <BaseContainer>
-      <Warning />
-      {children}
+      <Warning>{children}</Warning>
     </BaseContainer>
   );
 };

@@ -32,6 +32,7 @@ A delightful, virtualized modern infinite scroller 🎉
 - Fully customizable
 - Uses modern web APIs/features
 - Supports vertical scrolling on window (More axis and custom element scroll support soon)
+- Tiny library(Around **6.7kb**)
 - Many more
 
 ## Component props
