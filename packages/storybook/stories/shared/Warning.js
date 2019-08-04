@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components/macro";
 import { getUrlParameter, inIframe, isChrome } from "../utils/helpers";
 
@@ -27,24 +27,16 @@ const openStory = () => {
 const isInChromeIframe = isChrome && inIframe();
 
 export const Warning = ({ children }) => {
-  useEffect(() => {
-    if (isInChromeIframe) {
-      setTimeout(() => {
-        openStory();
-      }, 1000);
-    }
-  }, []);
-
   return isInChromeIframe ? (
     <Banner onClick={openStory}>
       <b>
-        Scroll performance in iframe is very choppy in Chrome for some reason
+        Scroll performance in iframe is very choppy in Chrome for some reason 🙆‍♂️
       </b>
-      (works well other browser implementations though). Opening the story in
-      new tab for better performance.
+      <br />
+      <small>(works well in other browser implementations though 🤔)</small>
       <br />
       <br />
-      <small>Click this box to open the story again.</small>
+      Click here to open the story in new tab for better performance 🙏
     </Banner>
   ) : (
     children
