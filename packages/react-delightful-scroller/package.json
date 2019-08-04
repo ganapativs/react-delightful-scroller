@@ -1,6 +1,6 @@
 {
   "name": "react-delightful-scroller",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Delightful, virtualized modern infinite scroller 🎉",
   "source": "src/index.js",
   "main": "dist/react-delightful-scroller.js",
@@ -39,7 +39,8 @@
     "build": "NODE_ENV=production rollup -c",
     "watch": "NODE_ENV=development rollup -c -w",
     "lint": "eslint './src/**/*' --quiet --fix",
-    "prepublishOnly": "yarn build",
+    "prepublishOnly": "yarn build && cp ../../README.md .",
+    "postpublish": "rm ./README.md",
     "size": "size-limit"
   },
   "size-limit": [
