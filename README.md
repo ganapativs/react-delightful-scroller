@@ -83,7 +83,7 @@ yarn serve
 
 ## TODO
 
-- [ ] Custom container support
+- [x] Custom container support
 - [ ] Support more axis - x, y-reverse & x-reverse
 - [ ] Scroll restoration
 - [ ] More stories
