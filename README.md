@@ -1,9 +1,5 @@
 # Welcome to react-delightful-scroller 👋
 
-A delightful, virtualized modern infinite scroller 🎉
-
-**[Demo and usage](https://react-delightful-scroller.netlify.com/)**
-
 <p>
   <img alt="Version" src="https://img.shields.io/npm/v/react-delightful-scroller.svg">
   <a href="https://greenkeeper.io/">
@@ -25,6 +21,30 @@ A delightful, virtualized modern infinite scroller 🎉
     <img alt="Twitter: ganapativs" src="https://img.shields.io/twitter/follow/ganapativs.svg?style=social" target="_blank" />
   </a>
 </p>
+
+A delightful, virtualized modern infinite scroller 🎉
+
+**Basic usage:**
+
+Find demos and more usage examples at **[eact-delightful-scroller.netlify.com](https://react-delightful-scroller.netlify.com/)** 🎉
+
+```jsx
+import React from "react";
+import DelightfulScroller from "react-delightful-scroller";
+
+const items = Array.from({ length: 100 })
+  .fill(true)
+  .map((_, i) => i + 1);
+
+const VirtualizedItems = () => (
+  <DelightfulScroller
+    items={items}
+    RenderItem={({ item }) => <div>{item}</div>}
+    itemsCount={items.length}
+    averageItemHeight={10}
+  />
+);
+```
 
 ## Features
 
