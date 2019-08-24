@@ -26,7 +26,7 @@ A delightful, virtualized modern infinite scroller 🎉
 
 **Basic usage:**
 
-Find demos and more usage examples at **[eact-delightful-scroller.netlify.com](https://react-delightful-scroller.netlify.com/)** 🎉
+Find demos and more usage examples at **[react-delightful-scroller.netlify.com](https://react-delightful-scroller.netlify.com/)** 🎉
 
 ```jsx
 import React from "react";
