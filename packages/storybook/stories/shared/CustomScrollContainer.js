@@ -7,6 +7,7 @@ const Wrapper = styled.div`
   overflow-y: auto;
   background: #111;
   padding: 10px;
+  margin: 30px;
 `;
 
 export const CustomScrollContainer = React.forwardRef(
