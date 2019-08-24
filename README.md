@@ -24,11 +24,10 @@
 
 A delightful, virtualized modern infinite scroller 🎉
 
-**Basic usage:**
-
 Find demos and more usage examples at **[react-delightful-scroller.netlify.com](https://react-delightful-scroller.netlify.com/)** 🎉
 
 ```jsx
+// Basic usage
 import React from "react";
 import DelightfulScroller from "react-delightful-scroller";
 
