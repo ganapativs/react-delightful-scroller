@@ -4,16 +4,6 @@
  * - Scroll restoration
  * - Optimize computations
  */
-
-/**
- * Things learnt
- * React.memo re-renders when context is used
- *   - https://github.com/facebook/react/issues/15156
- * Use requestAnimationFrame instead of throttle on scroll
- *   - https://gist.github.com/paulmillr/3118943
- *   - https://gomakethings.com/debouncing-events-with-requestanimationframe-for-better-performance/
- * react remounts rendered node when ref and functional component reference change in render
- */
 import React, { memo, useState, useEffect } from "react";
 import useWindowSize from "@rehooks/window-size";
 import useComponentSize from "@rehooks/component-size";
@@ -195,10 +185,6 @@ DelightfulScroller.defaultProps = {
   wrapperElement: "div",
   RenderContainer: DefaultRenderContainer,
   removeFromDOM: true,
-  /**
-    A function returning scroll parent node.
-    Scroll listener will be attached to this element(if provided) instead of `window`.
-  */
   root: null,
   averageItemHeight: 10,
   itemHeight: null,
