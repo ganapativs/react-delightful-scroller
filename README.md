@@ -31,7 +31,7 @@ Find demos and more usage examples at **[react-delightful-scroller.netlify.com](
 import React from "react";
 import DelightfulScroller from "react-delightful-scroller";
 
-const items = Array.from({ length: 100 })
+const items = Array.from({ length: 1000 })
   .fill(true)
   .map((_, i) => i + 1);
 
@@ -44,6 +44,8 @@ const VirtualizedItems = () => (
   />
 );
 ```
+
+[![Edit sleepy-star-o0jzz](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/sleepy-star-o0jzz?fontsize=12)
 
 ## Features
 
