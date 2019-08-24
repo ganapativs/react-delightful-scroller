@@ -154,7 +154,7 @@ const Entry = (props, ref) => {
 
   /**
    * Mount custom container after the first render cycle
-   * to make sure the parent scoll node is available
+   * to make sure the parent scroll node is available
    */
   useEffect(() => {
     if (!render) {
@@ -163,12 +163,12 @@ const Entry = (props, ref) => {
   }, []);
 
   if (render) {
-    // Window scroller
+    // Window scroll
     if (!props.root) {
       return <WindowContainer {...props} forwardRef={ref} />;
     }
 
-    // Custom scroll container
+    // Custom container scroll
     return <CustomScrollContainer {...props} forwardRef={ref} />;
   }
 
