@@ -4,18 +4,9 @@
  * - Scroll restoration
  * - Optimize computations
  */
-
-/**
- * Things learnt
- * React.memo re-renders when context is used
- *   - https://github.com/facebook/react/issues/15156
- * Use requestAnimationFrame instead of throttle on scroll
- *   - https://gist.github.com/paulmillr/3118943
- *   - https://gomakethings.com/debouncing-events-with-requestanimationframe-for-better-performance/
- * react remounts rendered node when ref and functional component reference change in render
- */
-import React, { memo } from "react";
+import React, { memo, useState, useEffect } from "react";
 import useWindowSize from "@rehooks/window-size";
+import useComponentSize from "@rehooks/component-size";
 import PropTypes from "prop-types";
 import { getBatchedItems } from "./getBatchedItems";
 import { BatchRenderer, NoRemoveFromDOMBatcher } from "./BatchRenderer";
@@ -149,12 +140,38 @@ const WindowContainer = props => {
   );
 };
 
+const CustomScrollContainer = props => {
+  const { root } = props;
+  const { width, height } = useComponentSize({ current: root() });
+
+  return (
+    <BaseRenderer {...props} containerWidth={width} containerHeight={height} />
+  );
+};
+
 const Entry = (props, ref) => {
-  if (!props.root) {
-    return <WindowContainer {...props} forwardRef={ref} />;
+  const [render, setRender] = useState(!props.root);
+
+  /**
+   * Mount custom container after the first render cycle
+   * to make sure the parent scroll node is available
+   */
+  useEffect(() => {
+    if (!render) {
+      setRender(true);
+    }
+  }, []);
+
+  if (render) {
+    // Window scroll
+    if (!props.root) {
+      return <WindowContainer {...props} forwardRef={ref} />;
+    }
+
+    // Custom container scroll
+    return <CustomScrollContainer {...props} forwardRef={ref} />;
   }
 
-  // TODO - Custom container
   return null;
 };
 
@@ -189,7 +206,7 @@ DelightfulScroller.propTypes = {
   wrapperElement: PropTypes.string,
   RenderContainer: PropTypes.elementType,
   removeFromDOM: PropTypes.bool,
-  root: PropTypes.element,
+  root: PropTypes.func,
   averageItemHeight: PropTypes.number,
   itemHeight: PropTypes.number,
   axis: PropTypes.oneOf(["y"]),

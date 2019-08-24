@@ -17,7 +17,7 @@ export const useScroll = ({ root, axis }) => {
   const [scrollOffset, setScrollOffset] = useState(0);
 
   useEffect(() => {
-    const element = root || window;
+    const element = root ? root() : window;
     const handler = throttle(() => {
       // If there's a timer, cancel it
       if (timeout.current) {
