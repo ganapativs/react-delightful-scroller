@@ -16,7 +16,7 @@ export const Sentinel = ({
   useEffect(() => {
     const targetNode = ref.current;
     const options = {
-      root,
+      root: root ? root() : null,
       rootMargin:
         axis === "y" ? `0px 0px ${fetchMoreBufferDistance}px 0px` : "0px",
       threshold: 0
