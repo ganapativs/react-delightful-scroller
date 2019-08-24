@@ -1,13 +1,14 @@
 # Welcome to react-delightful-scroller 👋
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/ganapativs/react-delightful-scroller.svg)](https://greenkeeper.io/)
-
 A delightful, virtualized modern infinite scroller 🎉
 
 **[Demo and usage](https://react-delightful-scroller.netlify.com/)**
 
 <p>
   <img alt="Version" src="https://img.shields.io/npm/v/react-delightful-scroller.svg">
+  <a href="https://greenkeeper.io/">
+    <img alt="Greenkeeper badge" src="https://badges.greenkeeper.io/ganapativs/react-delightful-scroller.svg" target="_blank" />
+  </a>
   <a href="https://github.com/ganapativs/react-delightful-scroller#readme">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
   </a>
