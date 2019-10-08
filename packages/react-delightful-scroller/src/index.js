@@ -1,9 +1,3 @@
-/**
- * TODO:
- * - Use scrollRestoration to reduce batch creation - https://itsze.ro/blog/2017/04/09/infinite-list-and-react.html
- * - Scroll restoration
- * - Optimize computations
- */
 import React, { memo, useState, useEffect } from 'react';
 import useWindowSize from '@rehooks/window-size';
 import useComponentSize from '@rehooks/component-size';
@@ -20,6 +14,7 @@ import {
 } from './DefaultRenderers';
 
 const BaseRenderer = ({
+  containerWidth,
   containerHeight,
   items,
   RenderItem,
@@ -34,6 +29,8 @@ const BaseRenderer = ({
   axis,
   averageItemHeight,
   itemHeight,
+  averageItemWidth,
+  itemWidth,
   itemsCount,
   batchBufferDistance,
   onFetchMore,
@@ -43,10 +40,13 @@ const BaseRenderer = ({
   const [dimensions, visibility, setDimension] = useVisibilityAndDimension({
     root,
     axis,
-    containerHeight,
     itemsCount,
-    itemHeight,
+    containerWidth,
+    averageItemWidth,
+    itemWidth,
+    containerHeight,
     averageItemHeight,
+    itemHeight,
     batchSize,
     batchBufferDistance,
   });
@@ -54,32 +54,32 @@ const BaseRenderer = ({
   const batchedItems = getBatchedItems(items, batchSize);
   const Batcher = removeFromDOM ? BatchRenderer : NoRemoveFromDOMBatcher;
   let current = batchedItems;
-  let previous = [];
-  let next = [];
-  let prevHeight;
-  let nextHeight;
+  let previousItems = [];
+  let nextItems = [];
+  let prev;
+  let next;
 
   if (removeFromDOM && batch) {
     const [startIndex, endIndex] = getVisibleIndexes(visibility);
-    previous = batchedItems.slice(0, startIndex);
+    previousItems = batchedItems.slice(0, startIndex);
     current = batchedItems.slice(startIndex, endIndex + 1);
-    next = batchedItems.slice(endIndex + 1, batchedItems.length);
+    nextItems = batchedItems.slice(endIndex + 1, batchedItems.length);
 
-    prevHeight = previous.reduce((p, c, i) => {
+    prev = previousItems.reduce((p, c, i) => {
       const index = i;
       const dimension = dimensions[index];
-      return p + dimension.height;
+      return p + dimension[axis === 'y' ? 'height' : 'width'];
     }, 0);
 
-    nextHeight = next.reduce((p, c, i) => {
-      const index = previous.length + current.length + i;
+    next = nextItems.reduce((p, c, i) => {
+      const index = previousItems.length + current.length + i;
       const dimension = dimensions[index];
-      return p + dimension.height;
+      return p + dimension[axis === 'y' ? 'height' : 'width'];
     }, 0);
   }
 
   const batchedElements = current.map((currentBatch, i) => {
-    const index = previous.length + i;
+    const index = previousItems.length + i;
     return (
       <Batcher
         key={`${index}`}
@@ -94,20 +94,34 @@ const BaseRenderer = ({
         dimensions={dimensions[index]}
         visible={visibility[index]}
         itemHeight={itemHeight}
+        itemWidth={itemWidth}
+        axis={axis}
       />
     );
   });
 
   const Container = (
     <RenderContainer forwardRef={forwardRef}>
-      {prevHeight ? (
-        <div style={{ height: prevHeight, visibility: 'hidden' }} />
+      {prev ? (
+        <div
+          style={{
+            height: axis === 'y' ? prev : undefined,
+            width: axis === 'x' ? prev : undefined,
+            visibility: 'hidden',
+          }}
+        />
       ) : null}
       {batchedElements}
-      {nextHeight ? (
-        <div style={{ height: nextHeight, visibility: 'hidden' }} />
+      {next ? (
+        <div
+          style={{
+            height: axis === 'y' ? next : undefined,
+            width: axis === 'x' ? next : undefined,
+            visibility: 'hidden',
+          }}
+        />
       ) : null}
-      {axis === 'y' && items.length < itemsCount ? (
+      {['y', 'x'].includes(axis) && items.length < itemsCount ? (
         <Sentinel
           onFetchMore={onFetchMore}
           fetchMoreBufferDistance={fetchMoreBufferDistance}
@@ -160,7 +174,7 @@ const Entry = (props, ref) => {
     if (!render) {
       setRender(true);
     }
-  }, []);
+  }, [render]);
 
   if (render) {
     // Window scroll
@@ -188,6 +202,8 @@ DelightfulScroller.defaultProps = {
   root: null,
   averageItemHeight: 10,
   itemHeight: null,
+  averageItemWidth: 10,
+  itemWidth: null,
   axis: 'y',
   batch: true,
   batchSize: 10,
@@ -209,7 +225,9 @@ DelightfulScroller.propTypes = {
   root: PropTypes.func,
   averageItemHeight: PropTypes.number,
   itemHeight: PropTypes.number,
-  axis: PropTypes.oneOf(['y']),
+  averageItemWidth: PropTypes.number,
+  itemWidth: PropTypes.number,
+  axis: PropTypes.oneOf(['x', 'y']),
   batch: PropTypes.bool,
   batchSize: PropTypes.number,
   batchBufferDistance: PropTypes.number,

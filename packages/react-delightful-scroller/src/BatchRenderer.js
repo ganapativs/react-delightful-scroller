@@ -16,8 +16,10 @@ export const BatchRenderer = React.memo(
     RenderItem,
     visible,
     itemHeight,
+    itemWidth,
+    axis,
   }) => {
-    const hasFixedHeightItems = !!itemHeight;
+    const hasFixedItems = axis === 'y' ? !!itemHeight : !!itemWidth;
     let batchWrapper = null;
 
     if (visible || !removeFromDOM) {
@@ -45,13 +47,13 @@ export const BatchRenderer = React.memo(
         </Wrapper>
       );
 
-      batchWrapper = hasFixedHeightItems ? (
-        // No need to add resize observer to batch of fixed height items
+      batchWrapper = hasFixedItems ? (
+        // No need to add resize observer to batch of fixed dimension items
         itemsBatch
       ) : (
         // Add resize observer to batch of dynamic items
         <Measure
-          // ScrollHeight is actual height of batch including content margins
+          // Dimension of batch including content margins
           scroll
           onResize={contentRect => {
             setDimension(index, contentRect);
@@ -65,7 +67,8 @@ export const BatchRenderer = React.memo(
       batchWrapper = (
         <div
           style={{
-            height: dimensions.height,
+            height: axis === 'y' ? dimensions.height : undefined,
+            width: axis === 'x' ? dimensions.width : undefined,
           }}
         />
       );

@@ -18,8 +18,11 @@ function areOverlapping(A, B) {
 export const useVisibilityAndDimension = ({
   root,
   axis,
-  containerHeight,
   itemsCount,
+  containerWidth,
+  averageItemWidth,
+  itemWidth,
+  containerHeight,
   itemHeight,
   averageItemHeight,
   batchSize,
@@ -29,8 +32,10 @@ export const useVisibilityAndDimension = ({
     initializeDimensions({
       itemsCount,
       axis,
-      itemHeight,
+      averageItemWidth,
+      itemWidth,
       averageItemHeight,
+      itemHeight,
       batchSize,
     }),
   );
@@ -38,9 +43,12 @@ export const useVisibilityAndDimension = ({
     initializeInitialVisibility({
       itemsCount,
       axis,
+      containerWidth,
+      averageItemWidth,
+      itemWidth,
       containerHeight,
-      itemHeight,
       averageItemHeight,
+      itemHeight,
       batchSize,
     }),
   );
@@ -49,20 +57,19 @@ export const useVisibilityAndDimension = ({
   useEffect(() => {
     const renderWindow = [
       scrollOffset - batchBufferDistance,
-      scrollOffset + containerHeight + batchBufferDistance,
+      scrollOffset +
+        (axis === 'y' ? containerHeight : containerWidth) +
+        batchBufferDistance,
     ];
     const totalBatches = Math.ceil(itemsCount / batchSize);
 
     let nextTotal = 0;
     const nextVisibility = [];
     for (let i = 0; i < totalBatches; i += 1) {
-      const currentHeight = nextTotal;
-      const nextHeight = nextTotal + dimensions[i].height;
-      nextVisibility[i] = areOverlapping(renderWindow, [
-        currentHeight,
-        nextHeight,
-      ]);
-      nextTotal = nextHeight;
+      const current = nextTotal;
+      const next = nextTotal + dimensions[i][axis === 'y' ? 'height' : 'width'];
+      nextVisibility[i] = areOverlapping(renderWindow, [current, next]);
+      nextTotal = next;
     }
 
     const visibilityChanged = nextVisibility.some(
@@ -72,6 +79,8 @@ export const useVisibilityAndDimension = ({
       setVisibility(nextVisibility);
     }
   }, [
+    axis,
+    containerWidth,
     batchSize,
     containerHeight,
     setVisibility,

@@ -71,8 +71,10 @@ const VirtualizedItems = () => (
 | RenderContainer | Component |  | Component which renders scroll container. Gets `children` and `forwardRef` as prop. |
 | removeFromDOM | Boolean |  | Should remove/add items from DOM while virtualizing and replace with empty node of same height of item. If set to `false`, items will be set to `visibility: hidden;` if not visible in the viewport. Default: `true`. |
 | root | Function |  | A function returning scroll parent node. Scroll listener will be attached to this element(if provided) instead of `window`. Default: `null`(indicates `window`/viewport is the scroll parent). |
-| averageItemHeight | Number |  | Average item height if the items are dynamic. Default: `10`. |
-| itemHeight | Number |  | Fixed item height if the items height is fixed. This takes more priority over `averageItemHeight` if specified. Default: `null`. |
+| averageItemHeight | Number |  | Average item height if the items are dynamic(only used if `axis` is `y`). Default: `10`. |
+| itemHeight | Number |  | Fixed item height if the items height is fixed. This takes more priority over `averageItemHeight` if specified(only used if `axis` is `y`). Default: `null`. |
+| averageItemWidth | Number |  | Average item width if the items are dynamic(only used if `axis` is `x`). Default: `10`. |
+| itemWidth | Number |  | Fixed item width if the items height is fixed. This takes more priority over `averageItemWidth` if specified(only used if `axis` is `x`). Default: `null`. |
 | getItemKey | Function |  | Specify custom `key` prop while rendering each item. function receives `item` and `index` as argument. |
 | wrapperElement | String |  | HTML tag used to wrap each rendered item and sentinel. Default: `div`. |
 | axis | String |  | Scroll axis. Default: `y`. |
