@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { useDimensions } from "./useDimensions";
-import { initializeDimensions } from "./initializeDimensions";
-import { useVisibility } from "./useVisibility";
-import { initializeInitialVisibility } from "./initializeInitialVisibility";
-import { useScroll } from "./useScroll";
+import { useEffect } from 'react';
+import { useDimensions } from './useDimensions';
+import { initializeDimensions } from './initializeDimensions';
+import { useVisibility } from './useVisibility';
+import { initializeInitialVisibility } from './initializeInitialVisibility';
+import { useScroll } from './useScroll';
 
 // Time interval B 'overlaps' A if:
 // B starts after A starts but before A finishes.
@@ -23,7 +23,7 @@ export const useVisibilityAndDimension = ({
   itemHeight,
   averageItemHeight,
   batchSize,
-  batchBufferDistance
+  batchBufferDistance,
 }) => {
   const [dimensions, setDimension] = useDimensions(
     initializeDimensions({
@@ -31,8 +31,8 @@ export const useVisibilityAndDimension = ({
       axis,
       itemHeight,
       averageItemHeight,
-      batchSize
-    })
+      batchSize,
+    }),
   );
   const [visibility, setVisibility] = useVisibility(
     initializeInitialVisibility({
@@ -41,15 +41,15 @@ export const useVisibilityAndDimension = ({
       containerHeight,
       itemHeight,
       averageItemHeight,
-      batchSize
-    })
+      batchSize,
+    }),
   );
   const scrollOffset = useScroll({ root, axis });
 
   useEffect(() => {
     const renderWindow = [
       scrollOffset - batchBufferDistance,
-      scrollOffset + containerHeight + batchBufferDistance
+      scrollOffset + containerHeight + batchBufferDistance,
     ];
     const totalBatches = Math.ceil(itemsCount / batchSize);
 
@@ -60,13 +60,13 @@ export const useVisibilityAndDimension = ({
       const nextHeight = nextTotal + dimensions[i].height;
       nextVisibility[i] = areOverlapping(renderWindow, [
         currentHeight,
-        nextHeight
+        nextHeight,
       ]);
       nextTotal = nextHeight;
     }
 
     const visibilityChanged = nextVisibility.some(
-      (e, i) => e !== visibility[i]
+      (e, i) => e !== visibility[i],
     );
     if (visibilityChanged) {
       setVisibility(nextVisibility);
@@ -79,7 +79,7 @@ export const useVisibilityAndDimension = ({
     itemsCount,
     scrollOffset,
     visibility,
-    batchBufferDistance
+    batchBufferDistance,
   ]);
 
   return [dimensions, visibility, setDimension];

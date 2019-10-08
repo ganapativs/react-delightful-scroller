@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
-import { storiesOf } from "@storybook/react";
-import { configureStory } from "../shared/base";
-import { CustomScrollContainer } from "../shared/CustomScrollContainer";
-import { BaseDefaultStory } from "../base-components/BaseDefaultStory";
+import React, { useRef } from 'react';
+import { storiesOf } from '@storybook/react';
+import { configureStory } from '../shared/base';
+import { CustomScrollContainer } from '../shared/CustomScrollContainer';
+import { BaseDefaultStory } from '../base-components/BaseDefaultStory';
 
 const CustomContainerScroller = () => {
   const scrollRef = useRef(null);
@@ -14,7 +14,7 @@ const CustomContainerScroller = () => {
   );
 };
 
-configureStory(storiesOf("Custom scroll container", module)).add(
-  "Minimal usage",
-  () => <CustomContainerScroller />
+configureStory(storiesOf('Custom scroll container', module)).add(
+  'Minimal usage',
+  () => <CustomContainerScroller />,
 );

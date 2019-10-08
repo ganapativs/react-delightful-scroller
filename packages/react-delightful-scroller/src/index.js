@@ -4,20 +4,20 @@
  * - Scroll restoration
  * - Optimize computations
  */
-import React, { memo, useState, useEffect } from "react";
-import useWindowSize from "@rehooks/window-size";
-import useComponentSize from "@rehooks/component-size";
-import PropTypes from "prop-types";
-import { getBatchedItems } from "./getBatchedItems";
-import { BatchRenderer, NoRemoveFromDOMBatcher } from "./BatchRenderer";
-import { useVisibilityAndDimension } from "./useVisibilityAndDimension";
-import { getVisibleIndexes } from "./getVisibleIndexes";
-import { Sentinel } from "./Sentinel";
+import React, { memo, useState, useEffect } from 'react';
+import useWindowSize from '@rehooks/window-size';
+import useComponentSize from '@rehooks/component-size';
+import PropTypes from 'prop-types';
+import { getBatchedItems } from './getBatchedItems';
+import { BatchRenderer, NoRemoveFromDOMBatcher } from './BatchRenderer';
+import { useVisibilityAndDimension } from './useVisibilityAndDimension';
+import { getVisibleIndexes } from './getVisibleIndexes';
+import { Sentinel } from './Sentinel';
 import {
   DefaultRenderItem,
   DefaultRenderContainer,
-  DefaultRenderLoader
-} from "./DefaultRenderers";
+  DefaultRenderLoader,
+} from './DefaultRenderers';
 
 const BaseRenderer = ({
   containerHeight,
@@ -38,7 +38,7 @@ const BaseRenderer = ({
   batchBufferDistance,
   onFetchMore,
   RenderLoader,
-  fetchMoreBufferDistance
+  fetchMoreBufferDistance,
 }) => {
   const [dimensions, visibility, setDimension] = useVisibilityAndDimension({
     root,
@@ -48,7 +48,7 @@ const BaseRenderer = ({
     itemHeight,
     averageItemHeight,
     batchSize,
-    batchBufferDistance
+    batchBufferDistance,
   });
 
   const batchedItems = getBatchedItems(items, batchSize);
@@ -101,13 +101,13 @@ const BaseRenderer = ({
   const Container = (
     <RenderContainer forwardRef={forwardRef}>
       {prevHeight ? (
-        <div style={{ height: prevHeight, visibility: "hidden" }} />
+        <div style={{ height: prevHeight, visibility: 'hidden' }} />
       ) : null}
       {batchedElements}
       {nextHeight ? (
-        <div style={{ height: nextHeight, visibility: "hidden" }} />
+        <div style={{ height: nextHeight, visibility: 'hidden' }} />
       ) : null}
-      {axis === "y" && items.length < itemsCount ? (
+      {axis === 'y' && items.length < itemsCount ? (
         <Sentinel
           onFetchMore={onFetchMore}
           fetchMoreBufferDistance={fetchMoreBufferDistance}
@@ -126,7 +126,7 @@ const BaseRenderer = ({
   return Container;
 };
 
-BaseRenderer.displayName = "BaseRenderer";
+BaseRenderer.displayName = 'BaseRenderer';
 
 const WindowContainer = props => {
   const { innerWidth, innerHeight } = useWindowSize();
@@ -181,21 +181,21 @@ DelightfulScroller.defaultProps = {
   items: [],
   itemsCount: 0,
   RenderItem: DefaultRenderItem,
-  getItemKey: (item, index) => (typeof item === "string" ? item : index),
-  wrapperElement: "div",
+  getItemKey: (item, index) => (typeof item === 'string' ? item : index),
+  wrapperElement: 'div',
   RenderContainer: DefaultRenderContainer,
   removeFromDOM: true,
   root: null,
   averageItemHeight: 10,
   itemHeight: null,
-  axis: "y",
+  axis: 'y',
   batch: true,
   batchSize: 10,
   batchBufferDistance: 500,
   fetchMoreBufferDistance: 500,
   RenderLoader: DefaultRenderLoader,
   // eslint-disable-next-line no-unused-vars
-  onFetchMore: ({ items, itemsCount, batchSize }) => {}
+  onFetchMore: ({ items, itemsCount, batchSize }) => {},
 };
 
 DelightfulScroller.propTypes = {
@@ -209,15 +209,15 @@ DelightfulScroller.propTypes = {
   root: PropTypes.func,
   averageItemHeight: PropTypes.number,
   itemHeight: PropTypes.number,
-  axis: PropTypes.oneOf(["y"]),
+  axis: PropTypes.oneOf(['y']),
   batch: PropTypes.bool,
   batchSize: PropTypes.number,
   batchBufferDistance: PropTypes.number,
   fetchMoreBufferDistance: PropTypes.number,
   RenderLoader: PropTypes.elementType,
-  onFetchMore: PropTypes.func
+  onFetchMore: PropTypes.func,
 };
 
-DelightfulScroller.displayName = "DelightfulScroller";
+DelightfulScroller.displayName = 'DelightfulScroller';
 
 export default DelightfulScroller;

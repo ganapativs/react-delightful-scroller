@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import styled from "styled-components/macro";
-import { getUrlParameter, inIframe, isChrome } from "../utils/helpers";
+import React, { useState } from 'react';
+import styled from 'styled-components/macro';
+import { getUrlParameter, inIframe, isChrome } from '../utils/helpers';
 
 const Banner = styled.div`
   background: var(--darkYellow);
@@ -20,7 +20,7 @@ const Banner = styled.div`
 const openStory = () => {
   const { location } = window.top;
   const { origin } = location;
-  const path = getUrlParameter("path", location).replace("/story/", "");
+  const path = getUrlParameter('path', location).replace('/story/', '');
   window.open(`${origin}/iframe.html?id=${path}`);
 };
 
@@ -42,11 +42,10 @@ export const Warning = ({ children }) => {
         <br />
         Click this box to open the story in new tab for better performance 🙏
       </Banner>
-      <p style={{ textAlign: "right" }}>
+      <p style={{ textAlign: 'right' }}>
         <a
-          style={{ cursor: "pointer", color: "var(--darkYellow)" }}
-          onClick={() => setHideBanner(true)}
-        >
+          style={{ cursor: 'pointer', color: 'var(--darkYellow)' }}
+          onClick={() => setHideBanner(true)}>
           Show in iframe anyway
         </a>
       </p>

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 // Keep components outside render, creating new instance of
 // components in each update will discard(unmount)

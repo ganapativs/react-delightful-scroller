@@ -59,6 +59,8 @@ const VirtualizedItems = () => (
 - Tiny library(Around **7kb gzip**)
 - Many more
 
+> Note: Even though the library itself doesn't add much of a performance overhead, the rendering performance of items can drastically degrade page performance and user experience.
+
 ## Component props
 
 | Property | Type | Required? | Description |
@@ -105,7 +107,7 @@ yarn serve
 ## TODO
 
 - [x] Custom container support
-- [ ] Support more axis - x, y-reverse & x-reverse
+- [ ] Support x axis
 - [ ] Scroll restoration
 - [ ] More stories
 - [ ] Test cases

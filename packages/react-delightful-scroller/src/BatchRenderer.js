@@ -1,7 +1,7 @@
-import React from "react";
-import Measure from "react-measure";
-import { Wrapper } from "./Wrapper";
-import { RenderItemWrapper } from "./RenderItemWrapper";
+import React from 'react';
+import Measure from 'react-measure';
+import { Wrapper } from './Wrapper';
+import { RenderItemWrapper } from './RenderItemWrapper';
 
 export const BatchRenderer = React.memo(
   ({
@@ -15,7 +15,7 @@ export const BatchRenderer = React.memo(
     setDimension,
     RenderItem,
     visible,
-    itemHeight
+    itemHeight,
   }) => {
     const hasFixedHeightItems = !!itemHeight;
     let batchWrapper = null;
@@ -39,9 +39,8 @@ export const BatchRenderer = React.memo(
           data-iscroller-batch={index}
           as={wrapperElement}
           style={
-            !removeFromDOM ? { visibility: visible ? "visible" : "hidden" } : {}
-          }
-        >
+            !removeFromDOM ? { visibility: visible ? 'visible' : 'hidden' } : {}
+          }>
           {items}
         </Wrapper>
       );
@@ -56,8 +55,7 @@ export const BatchRenderer = React.memo(
           scroll
           onResize={contentRect => {
             setDimension(index, contentRect);
-          }}
-        >
+          }}>
           {({ measureRef }) =>
             React.cloneElement(itemsBatch, { ref: measureRef })
           }
@@ -67,26 +65,26 @@ export const BatchRenderer = React.memo(
       batchWrapper = (
         <div
           style={{
-            height: dimensions.height
+            height: dimensions.height,
           }}
         />
       );
     }
 
     return batchWrapper;
-  }
+  },
   // Don't put equality check for batch items here!
   // prev batch items changes are reverted if next batch items are changed
   // Might create memory leak/closure issues in react hooks
 );
 
-BatchRenderer.displayName = "BatchRenderer";
+BatchRenderer.displayName = 'BatchRenderer';
 
 export const NoRemoveFromDOMBatcher = React.memo(
   props => <BatchRenderer {...props} />,
   (
     { batch: prevBatch, visible: prevVisible },
-    { batch, visible, removeFromDOM }
+    { batch, visible, removeFromDOM },
   ) => {
     if (!removeFromDOM) {
       const batchItemsHaveSameRef =
@@ -100,7 +98,7 @@ export const NoRemoveFromDOMBatcher = React.memo(
     }
 
     return true;
-  }
+  },
 );
 
-NoRemoveFromDOMBatcher.displayName = "NoRemoveFromDOMBatcher";
+NoRemoveFromDOMBatcher.displayName = 'NoRemoveFromDOMBatcher';

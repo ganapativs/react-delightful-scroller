@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import DelightfulScroller from "react-delightful-scroller";
-import { getItems } from "../utils/helpers";
-import { RenderItem } from "../shared/RenderItem";
-import { RenderContainer } from "../shared/RenderContainer";
-import { RenderLoader } from "../shared/RenderLoader";
-import { Container } from "../shared/Container";
+import React, { useState, useEffect, useRef } from 'react';
+import DelightfulScroller from 'react-delightful-scroller';
+import { getItems } from '../utils/helpers';
+import { RenderItem } from '../shared/RenderItem';
+import { RenderContainer } from '../shared/RenderContainer';
+import { RenderLoader } from '../shared/RenderLoader';
+import { Container } from '../shared/Container';
 
 export const BaseFixedHeightInfinite = props => {
   const [items, setItems] = useState([]);
@@ -16,7 +16,7 @@ export const BaseFixedHeightInfinite = props => {
   );
 
   useEffect(() => {
-    console.log("Container reference: ", ref);
+    console.log('Container reference: ', ref);
   }, []);
 
   useEffect(() => {

@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import throttle from "lodash.throttle";
+import { useEffect, useRef, useState } from 'react';
+import throttle from 'lodash.throttle';
 
 const getScrollOffset = (element, axis) => {
   const { scrollTop, scrollY } = element;
-  if (axis === "y") {
+  if (axis === 'y') {
     if (scrollTop !== undefined) {
       return scrollTop;
     }
@@ -25,12 +25,12 @@ export const useScroll = ({ root, axis }) => {
       }
       // Setup the requestAnimationFrame
       timeout.current = window.requestAnimationFrame(() =>
-        setScrollOffset(getScrollOffset(element, axis))
+        setScrollOffset(getScrollOffset(element, axis)),
       );
     }, 100);
-    element.addEventListener("scroll", handler, {
+    element.addEventListener('scroll', handler, {
       capture: false,
-      passive: true
+      passive: true,
     });
 
     return () => {
@@ -38,7 +38,7 @@ export const useScroll = ({ root, axis }) => {
         handler.cancel();
       }
       window.cancelAnimationFrame(timeout.current);
-      element.removeEventListener("scroll", handler);
+      element.removeEventListener('scroll', handler);
     };
   }, [axis, root]);
 

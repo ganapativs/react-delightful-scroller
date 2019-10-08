@@ -4,14 +4,14 @@ export function initializeInitialVisibility({
   itemHeight,
   averageItemHeight,
   batchSize,
-  itemsCount
+  itemsCount,
 }) {
   return () => {
     const totalBatches = Math.ceil(itemsCount / batchSize);
     const estimatedInitialBatches =
-      axis === "y"
+      axis === 'y'
         ? Math.ceil(
-            containerHeight / ((itemHeight || averageItemHeight) * batchSize)
+            containerHeight / ((itemHeight || averageItemHeight) * batchSize),
           )
         : // TODO - handle other directions
           0;

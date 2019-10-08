@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components/macro";
-import { Warning } from "./Warning";
+import React from 'react';
+import styled from 'styled-components/macro';
+import { Warning } from './Warning';
 
 const BaseContainer = styled.div`
   max-width: 700px;
