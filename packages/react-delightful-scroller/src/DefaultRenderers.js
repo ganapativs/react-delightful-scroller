@@ -1,7 +1,9 @@
 import React from 'react';
 
-export const DefaultRenderContainer = ({ children, forwardRef }) => (
-  <div ref={forwardRef}>{children}</div>
+export const DefaultRenderContainer = ({ children, forwardRef, style }) => (
+  <div ref={forwardRef} style={style}>
+    {children}
+  </div>
 );
 
 DefaultRenderContainer.displayName = 'DefaultRenderContainer';

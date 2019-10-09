@@ -101,12 +101,15 @@ const BaseRenderer = ({
   });
 
   const Container = (
-    <RenderContainer forwardRef={forwardRef}>
+    <RenderContainer
+      forwardRef={forwardRef}
+      style={axis === 'x' ? { whiteSpace: 'nowrap' } : {}}>
       {prev ? (
         <div
           style={{
             height: axis === 'y' ? prev : undefined,
             width: axis === 'x' ? prev : undefined,
+            display: axis === 'x' ? 'inline-flex' : 'block',
             visibility: 'hidden',
           }}
         />
@@ -117,6 +120,7 @@ const BaseRenderer = ({
           style={{
             height: axis === 'y' ? next : undefined,
             width: axis === 'x' ? next : undefined,
+            display: axis === 'x' ? 'inline-flex' : 'block',
             visibility: 'hidden',
           }}
         />

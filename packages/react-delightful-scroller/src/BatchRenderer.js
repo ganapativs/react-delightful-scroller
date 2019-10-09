@@ -38,11 +38,14 @@ export const BatchRenderer = React.memo(
 
       const itemsBatch = (
         <Wrapper
-          data-iscroller-batch={index}
+          data-scroller-batch={index}
           as={wrapperElement}
-          style={
-            !removeFromDOM ? { visibility: visible ? 'visible' : 'hidden' } : {}
-          }>
+          style={{
+            ...(!removeFromDOM
+              ? { visibility: visible ? 'visible' : 'hidden' }
+              : {}),
+            ...(axis === 'x' ? { display: 'inline-flex' } : {}),
+          }}>
           {items}
         </Wrapper>
       );

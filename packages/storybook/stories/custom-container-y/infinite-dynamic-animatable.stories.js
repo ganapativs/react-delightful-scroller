@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { configureStory } from '../shared/base';
-import { BaseFixedHeightInfinite } from '../base-components/BaseFixedHeightInfinite';
+import { BaseDynamicHeightInfiniteAnimated } from '../base-components/BaseDynamicHeightInfiniteAnimated';
 import { CustomScrollContainer } from '../shared/CustomScrollContainer';
 
 const CustomContainerScroller = () => {
@@ -9,12 +9,15 @@ const CustomContainerScroller = () => {
 
   return (
     <CustomScrollContainer ref={scrollRef}>
-      <BaseFixedHeightInfinite root={() => scrollRef.current} />
+      <BaseDynamicHeightInfiniteAnimated
+        axis="y"
+        root={() => scrollRef.current}
+      />
     </CustomScrollContainer>
   );
 };
 
-configureStory(storiesOf('Custom scroll container', module)).add(
-  'Infinite scroll - fixed height items',
+configureStory(storiesOf('Custom scroll container - y', module)).add(
+  'Infinite scroll - animated dynamic height items',
   () => <CustomContainerScroller />,
 );

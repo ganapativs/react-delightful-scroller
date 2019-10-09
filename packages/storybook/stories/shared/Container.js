@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { Warning } from './Warning';
 
 const BaseContainer = styled.div`
-  max-width: 700px;
+  max-width: ${props => (props.axis === 'y' ? '700px' : null)};
   margin: 0px auto;
   padding: 10px 0;
 
@@ -12,9 +12,9 @@ const BaseContainer = styled.div`
   }
 `;
 
-export const Container = ({ children }) => {
+export const Container = ({ axis, children }) => {
   return (
-    <BaseContainer>
+    <BaseContainer axis={axis}>
       <Warning>{children}</Warning>
     </BaseContainer>
   );

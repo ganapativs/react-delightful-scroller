@@ -82,6 +82,7 @@ const FollowButton = styled.button`
   font-size: 14px;
   min-width: 110px;
   font-weight: bold;
+  margin: 0 15px;
   transition: color 0.1s ease, border-color 0.1s ease, background 0.1s ease;
 
   .visible-lg:nth-child(2) {
@@ -171,6 +172,7 @@ export const RenderItem = ({
   items,
   setItems,
   showQuotes = true,
+  ...rest
 }) => {
   const onFollowToggle = newFollowState => {
     const currentItem = items[index];
@@ -180,7 +182,7 @@ export const RenderItem = ({
   };
 
   return (
-    <Card key={item.phrase}>
+    <Card key={item.phrase} {...rest}>
       <FlexRow>
         <Number>{index.toString().padStart(6, 0)}</Number>
         <CardWrapper>

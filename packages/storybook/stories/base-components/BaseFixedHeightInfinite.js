@@ -38,7 +38,7 @@ export const BaseFixedHeightInfinite = props => {
   };
 
   return (
-    <Container>
+    <Container axis={props.axis}>
       <DelightfulScroller
         ref={ref}
         items={items}

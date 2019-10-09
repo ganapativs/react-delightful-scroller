@@ -1,20 +1,20 @@
 import React, { useRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { configureStory } from '../shared/base';
+import { BaseDynamicHeightInfinite } from '../base-components/BaseDynamicHeightInfinite';
 import { CustomScrollContainer } from '../shared/CustomScrollContainer';
-import { BaseDefaultStory } from '../base-components/BaseDefaultStory';
 
 const CustomContainerScroller = () => {
   const scrollRef = useRef(null);
 
   return (
     <CustomScrollContainer ref={scrollRef}>
-      <BaseDefaultStory root={() => scrollRef.current} />
+      <BaseDynamicHeightInfinite axis="y" root={() => scrollRef.current} />
     </CustomScrollContainer>
   );
 };
 
-configureStory(storiesOf('Custom scroll container', module)).add(
-  'Minimal usage',
+configureStory(storiesOf('Custom scroll container - y', module)).add(
+  'Infinite scroll - dynamic height items',
   () => <CustomContainerScroller />,
 );

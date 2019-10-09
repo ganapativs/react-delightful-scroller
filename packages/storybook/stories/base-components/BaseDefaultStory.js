@@ -7,11 +7,16 @@ import { Container } from '../shared/Container';
 export const BaseDefaultStory = props => {
   const [items, setItems] = useState(getItems(100));
   const ItemRenderer = p => (
-    <RenderItem {...p} items={items} setItems={setItems} />
+    <RenderItem
+      {...p}
+      items={items}
+      setItems={setItems}
+      showQuotes={props.axis === 'y'}
+    />
   );
 
   return (
-    <Container>
+    <Container axis={props.axis}>
       <DelightfulScroller
         items={items}
         RenderItem={ItemRenderer}

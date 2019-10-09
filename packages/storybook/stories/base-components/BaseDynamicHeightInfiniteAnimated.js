@@ -52,7 +52,12 @@ export const BaseDynamicHeightInfiniteAnimated = props => {
   const loading = useRef(false);
   const timer = useRef(false);
   const ItemRenderer = p => (
-    <WrappedRenderItem {...p} items={items} setItems={setItems} />
+    <WrappedRenderItem
+      {...p}
+      items={items}
+      setItems={setItems}
+      showQuotes={props.axis === 'y'}
+    />
   );
 
   useEffect(() => {
@@ -78,7 +83,7 @@ export const BaseDynamicHeightInfiniteAnimated = props => {
   };
 
   return (
-    <Container>
+    <Container axis={props.axis}>
       <DelightfulScroller
         ref={ref}
         items={items}

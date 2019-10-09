@@ -68,7 +68,7 @@ const VirtualizedItems = () => (
 | items | Array | ✓ | Items to render, can be array of strings, objects or numbers etc. |
 | itemsCount | Number | ✓ | Total number of items to render, this can be larger than number of `items`, in that case a sentinel is added at the bottom(infinite scroll) of rendered items and `onFetchMore` is triggered when page is scrolled to bottom until the number of `items` are equal to the `itemsCount`. |
 | RenderItem | Component | ✓ | Component which renders each item. Gets `item` and `index` as prop. |
-| RenderContainer | Component |  | Component which renders scroll container. Gets `children` and `forwardRef` as prop. |
+| RenderContainer | Component |  | Component which renders scroll container. Gets `children`, `style` and `forwardRef` as prop. |
 | removeFromDOM | Boolean |  | Should remove/add items from DOM while virtualizing and replace with empty node of same height of item. If set to `false`, items will be set to `visibility: hidden;` if not visible in the viewport. Default: `true`. |
 | root | Function |  | A function returning scroll parent node. Scroll listener will be attached to this element(if provided) instead of `window`. Default: `null`(indicates `window`/viewport is the scroll parent). |
 | averageItemHeight | Number |  | Average item height if the items are dynamic(only used if `axis` is `y`). Default: `10`. |

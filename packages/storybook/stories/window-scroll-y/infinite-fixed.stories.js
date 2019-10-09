@@ -3,9 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { configureStory } from '../shared/base';
 import { BaseFixedHeightInfinite } from '../base-components/BaseFixedHeightInfinite';
 
-const WindowScroller = BaseFixedHeightInfinite;
-
-configureStory(storiesOf('Window scroller', module)).add(
+configureStory(storiesOf('Window scroller - y', module)).add(
   'Infinite scroll - fixed height items',
-  () => <WindowScroller />,
+  () => <BaseFixedHeightInfinite axis="y" />,
 );
