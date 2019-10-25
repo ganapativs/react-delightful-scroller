@@ -25,7 +25,7 @@
     "faker": "^4.1.0",
     "react": "^16.8.6",
     "react-delightful-scroller": "latest",
-    "storybook-addon-smart-knobs": "^5.0.0",
+    "storybook-addon-smart-knobs": "^6.0.0",
     "storybook-readme": "^5.0.5",
     "styled-components": "^4.3.2"
   }
