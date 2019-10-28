@@ -5,7 +5,7 @@ import { Warning } from './Warning';
 const BaseContainer = styled.div`
   max-width: ${props => (props.axis === 'y' ? '700px' : null)};
   margin: 0px auto;
-  padding: 10px 0;
+  padding: 10px;
 
   @media screen and (max-width: 767px) {
     padding: 10px;

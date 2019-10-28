@@ -11,7 +11,7 @@ const Canvas = styled.canvas`
   background-color: transparent;
   border-radius: 100%;
   display: block;
-  margin: 50px auto 15px auto;
+  margin: ${p => p.margin};
 `;
 
 // https://codepen.io/MishaHahaha/pen/ONQQNY
@@ -20,6 +20,7 @@ export const RenderLoader = ({
   size,
   itemsCount,
   batchSize,
+  axis,
   showPageCount = true,
 }) => {
   const canvasRef = React.useRef(null);
@@ -75,8 +76,13 @@ export const RenderLoader = ({
 
   return (
     <>
-      <Canvas ref={canvasRef} width={100} height={100} />
-      {showPageCount ? (
+      <Canvas
+        ref={canvasRef}
+        width={100}
+        height={100}
+        margin={axis === 'y' ? '50px auto 15px auto' : 0}
+      />
+      {showPageCount && axis === 'y' ? (
         <Loader>
           {size / batchSize + 1}/{Math.ceil(itemsCount / batchSize)}
         </Loader>

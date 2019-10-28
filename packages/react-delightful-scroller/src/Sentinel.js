@@ -10,6 +10,7 @@ export const Sentinel = ({
   batchSize,
   root,
   axis,
+  style,
 }) => {
   const ref = useRef(null);
 
@@ -49,9 +50,14 @@ export const Sentinel = ({
     wrapperElement,
     {
       ref,
+      style: {
+        ...style,
+        display: axis === 'x' ? 'inline-flex' : 'block',
+      },
     },
     <RenderLoader
       size={items.length}
+      axis={axis}
       itemsCount={itemsCount}
       batchSize={batchSize}
     />,
