@@ -99,7 +99,8 @@ export const NoRemoveFromDOMBatcher = React.memo(
       return (
         batchItemsHaveSameRef &&
         prevVisible === visible &&
-        (prevVisible === false && visible === false)
+        prevVisible === false &&
+        visible === false
       );
     }
 
