@@ -1,20 +1,20 @@
-import React from "react";
-import styled from "styled-components/macro";
-import { Warning } from "./Warning";
+import React from 'react';
+import styled from 'styled-components/macro';
+import { Warning } from './Warning';
 
 const BaseContainer = styled.div`
-  max-width: 700px;
+  max-width: ${props => (props.axis === 'y' ? '700px' : null)};
   margin: 0px auto;
-  padding: 10px 0;
+  padding: 10px;
 
   @media screen and (max-width: 767px) {
     padding: 10px;
   }
 `;
 
-export const Container = ({ children }) => {
+export const Container = ({ axis, children }) => {
   return (
-    <BaseContainer>
+    <BaseContainer axis={axis}>
       <Warning>{children}</Warning>
     </BaseContainer>
   );

@@ -1,8 +1,7 @@
-import styled from "styled-components/macro";
+import styled from 'styled-components/macro';
 
 export const Card = styled.div`
-  margin-bottom: 10px;
-  white-space: pre-line;
+  margin: 10px;
   background: var(--darkGrey);
   position: relative;
   z-index: 0;

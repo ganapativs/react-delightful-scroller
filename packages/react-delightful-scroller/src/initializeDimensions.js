@@ -1,20 +1,26 @@
 export function initializeDimensions({
   axis,
-  itemHeight,
+  averageItemWidth,
+  itemWidth,
   averageItemHeight,
+  itemHeight,
   batchSize,
-  itemsCount
+  itemsCount,
 }) {
   return () => {
     const totalBatches = Math.ceil(itemsCount / batchSize);
-    const estimatedEmptyBatchHeight =
-      axis === "y"
-        ? Math.ceil((itemHeight || averageItemHeight) * batchSize)
-        : // TODO - handle other directions
-          0;
     const initial = [];
     for (let i = 0; i < totalBatches; i += 1) {
-      initial[i] = { height: estimatedEmptyBatchHeight, width: null };
+      initial[i] = {
+        height:
+          axis === 'y'
+            ? Math.ceil((itemHeight || averageItemHeight) * batchSize)
+            : null,
+        width:
+          axis === 'x'
+            ? Math.ceil((itemWidth || averageItemWidth) * batchSize)
+            : null,
+      };
     }
     return initial;
   };

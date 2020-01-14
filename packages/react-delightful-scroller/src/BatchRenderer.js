@@ -1,7 +1,7 @@
-import React from "react";
-import Measure from "react-measure";
-import { Wrapper } from "./Wrapper";
-import { RenderItemWrapper } from "./RenderItemWrapper";
+import React from 'react';
+import Measure from 'react-measure';
+import { Wrapper } from './Wrapper';
+import { RenderItemWrapper } from './RenderItemWrapper';
 
 export const BatchRenderer = React.memo(
   ({
@@ -15,9 +15,11 @@ export const BatchRenderer = React.memo(
     setDimension,
     RenderItem,
     visible,
-    itemHeight
+    itemHeight,
+    itemWidth,
+    axis,
   }) => {
-    const hasFixedHeightItems = !!itemHeight;
+    const hasFixedItems = axis === 'y' ? !!itemHeight : !!itemWidth;
     let batchWrapper = null;
 
     if (visible || !removeFromDOM) {
@@ -36,28 +38,29 @@ export const BatchRenderer = React.memo(
 
       const itemsBatch = (
         <Wrapper
-          data-iscroller-batch={index}
+          data-scroller-batch={index}
           as={wrapperElement}
-          style={
-            !removeFromDOM ? { visibility: visible ? "visible" : "hidden" } : {}
-          }
-        >
+          style={{
+            ...(!removeFromDOM
+              ? { visibility: visible ? 'visible' : 'hidden' }
+              : {}),
+            ...(axis === 'x' ? { display: 'inline-flex' } : {}),
+          }}>
           {items}
         </Wrapper>
       );
 
-      batchWrapper = hasFixedHeightItems ? (
-        // No need to add resize observer to batch of fixed height items
+      batchWrapper = hasFixedItems ? (
+        // No need to add resize observer to batch of fixed dimension items
         itemsBatch
       ) : (
         // Add resize observer to batch of dynamic items
         <Measure
-          // ScrollHeight is actual height of batch including content margins
+          // Dimension of batch including content margins
           scroll
           onResize={contentRect => {
             setDimension(index, contentRect);
-          }}
-        >
+          }}>
           {({ measureRef }) =>
             React.cloneElement(itemsBatch, { ref: measureRef })
           }
@@ -67,26 +70,27 @@ export const BatchRenderer = React.memo(
       batchWrapper = (
         <div
           style={{
-            height: dimensions.height
+            height: axis === 'y' ? dimensions.height : undefined,
+            width: axis === 'x' ? dimensions.width : undefined,
           }}
         />
       );
     }
 
     return batchWrapper;
-  }
+  },
   // Don't put equality check for batch items here!
   // prev batch items changes are reverted if next batch items are changed
   // Might create memory leak/closure issues in react hooks
 );
 
-BatchRenderer.displayName = "BatchRenderer";
+BatchRenderer.displayName = 'BatchRenderer';
 
 export const NoRemoveFromDOMBatcher = React.memo(
   props => <BatchRenderer {...props} />,
   (
     { batch: prevBatch, visible: prevVisible },
-    { batch, visible, removeFromDOM }
+    { batch, visible, removeFromDOM },
   ) => {
     if (!removeFromDOM) {
       const batchItemsHaveSameRef =
@@ -95,12 +99,13 @@ export const NoRemoveFromDOMBatcher = React.memo(
       return (
         batchItemsHaveSameRef &&
         prevVisible === visible &&
-        (prevVisible === false && visible === false)
+        prevVisible === false &&
+        visible === false
       );
     }
 
     return true;
-  }
+  },
 );
 
-NoRemoveFromDOMBatcher.displayName = "NoRemoveFromDOMBatcher";
+NoRemoveFromDOMBatcher.displayName = 'NoRemoveFromDOMBatcher';

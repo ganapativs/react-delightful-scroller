@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import styled from "styled-components/macro";
+import React, { useEffect } from 'react';
+import styled from 'styled-components/macro';
 
 const Loader = styled.div`
   text-align: center;
@@ -11,7 +11,7 @@ const Canvas = styled.canvas`
   background-color: transparent;
   border-radius: 100%;
   display: block;
-  margin: 50px auto 15px auto;
+  margin: ${p => p.margin};
 `;
 
 // https://codepen.io/MishaHahaha/pen/ONQQNY
@@ -20,14 +20,15 @@ export const RenderLoader = ({
   size,
   itemsCount,
   batchSize,
-  showPageCount = true
+  axis,
+  showPageCount = true,
 }) => {
   const canvasRef = React.useRef(null);
   const animation = React.useRef(null);
 
   useEffect(() => {
     const { current: canvas } = canvasRef;
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext('2d');
 
     const radius = canvas.width / 3;
     const angleStep = (Math.PI * 2) / 360;
@@ -59,7 +60,7 @@ export const RenderLoader = ({
       }
 
       context.lineWidth = 4;
-      context.strokeStyle = "#ffe877";
+      context.strokeStyle = '#ffe877';
       context.stroke();
       context.miterLimit = 0.1;
       context.closePath();
@@ -75,8 +76,13 @@ export const RenderLoader = ({
 
   return (
     <>
-      <Canvas ref={canvasRef} width={100} height={100} />
-      {showPageCount ? (
+      <Canvas
+        ref={canvasRef}
+        width={100}
+        height={100}
+        margin={axis === 'y' ? '50px auto 15px auto' : 0}
+      />
+      {showPageCount && axis === 'y' ? (
         <Loader>
           {size / batchSize + 1}/{Math.ceil(itemsCount / batchSize)}
         </Loader>

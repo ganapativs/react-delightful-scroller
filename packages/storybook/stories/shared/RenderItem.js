@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components/macro";
-import { Card } from "./Card";
+import React from 'react';
+import styled from 'styled-components/macro';
+import { Card } from './Card';
 
 const Quote = styled.span`
   position: absolute;
@@ -14,7 +14,7 @@ const Phrase = styled.p`
   margin-left: 42px;
   font-size: 18px;
   line-height: 26px;
-  font-family: "Overpass Mono", monospace;
+  font-family: 'Overpass Mono', monospace;
 
   &::first-letter {
     text-transform: uppercase;
@@ -70,11 +70,11 @@ const RelativeDiv = styled.div`
 `;
 
 const FollowButton = styled.button`
-  color: ${props => (props.following ? "var(--black)" : "var(--white)")};
+  color: ${props => (props.following ? 'var(--black)' : 'var(--white)')};
   border: 2px solid
-    ${props => (props.following ? "var(--darkYellow)" : "var(--darkYellow)")};
+    ${props => (props.following ? 'var(--darkYellow)' : 'var(--darkYellow)')};
   background: ${props =>
-    props.following ? "var(--darkYellow)" : "transparent"};
+    props.following ? 'var(--darkYellow)' : 'transparent'};
   border-radius: 30px;
   cursor: pointer;
   text-align: center;
@@ -82,6 +82,7 @@ const FollowButton = styled.button`
   font-size: 14px;
   min-width: 110px;
   font-weight: bold;
+  margin: 0 15px;
   transition: color 0.1s ease, border-color 0.1s ease, background 0.1s ease;
 
   .visible-lg:nth-child(2) {
@@ -93,11 +94,11 @@ const FollowButton = styled.button`
   }
 
   &:hover {
-    color: ${props => (props.following ? "var(--white)" : "var(--black)")};
+    color: ${props => (props.following ? 'var(--white)' : 'var(--black)')};
     border-color: ${props =>
-      props.following ? "var(--pinky)" : "var(--yellow)"};
+      props.following ? 'var(--pinky)' : 'var(--yellow)'};
     background: ${props =>
-      props.following ? "var(--pinky)" : "var(--yellow)"};
+      props.following ? 'var(--pinky)' : 'var(--yellow)'};
     transition: color 0.15s ease-in, border-color 0.15s ease-in,
       background 0.15s ease-in;
 
@@ -138,8 +139,7 @@ const UserArea = ({ item, onFollowToggle }) => (
     <FollowButton
       type="button"
       following={item.following}
-      onClick={() => onFollowToggle(!item.following)}
-    >
+      onClick={() => onFollowToggle(!item.following)}>
       {item.following ? (
         <>
           <span className="visible-lg">Following</span>
@@ -162,7 +162,7 @@ const Number = styled.div`
   transform: rotate(180deg);
   font-size: 20px;
   padding: 0 20px 0 20px;
-  font-family: "Overpass Mono", monospace;
+  font-family: 'Overpass Mono', monospace;
   opacity: 0.2;
 `;
 
@@ -171,7 +171,8 @@ export const RenderItem = ({
   index,
   items,
   setItems,
-  showQuotes = true
+  showQuotes = true,
+  ...rest
 }) => {
   const onFollowToggle = newFollowState => {
     const currentItem = items[index];
@@ -181,7 +182,7 @@ export const RenderItem = ({
   };
 
   return (
-    <Card key={item.phrase}>
+    <Card key={item.phrase} {...rest}>
       <FlexRow>
         <Number>{index.toString().padStart(6, 0)}</Number>
         <CardWrapper>
@@ -191,8 +192,7 @@ export const RenderItem = ({
               <Quote>“</Quote>
               <Phrase
                 contentEditable={item.editable}
-                suppressContentEditableWarning={true}
-              >
+                suppressContentEditableWarning={true}>
                 {item.phrase}
               </Phrase>
             </RelativeDiv>

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import DelightfulScroller from "react-delightful-scroller";
-import { getItems } from "../utils/helpers";
-import { RenderItem } from "../shared/RenderItem";
-import { RenderContainer } from "../shared/RenderContainer";
-import { RenderLoader } from "../shared/RenderLoader";
-import { Container } from "../shared/Container";
+import React, { useState, useEffect, useRef } from 'react';
+import DelightfulScroller from 'react-delightful-scroller';
+import { getItems } from '../utils/helpers';
+import { RenderItem } from '../shared/RenderItem';
+import { RenderContainer } from '../shared/RenderContainer';
+import { RenderLoader } from '../shared/RenderLoader';
+import { Container } from '../shared/Container';
 
 const threshold = [];
 for (let i = 0; i <= 1.0; i += 0.01) {
@@ -29,7 +29,7 @@ const WrappedRenderItem = props => {
   useEffect(() => {
     const targetNode = ref.current;
     const options = {
-      threshold
+      threshold,
     };
     const observer = new IntersectionObserver(callback, options);
     observer.observe(targetNode);
@@ -52,11 +52,16 @@ export const BaseDynamicHeightInfiniteAnimated = props => {
   const loading = useRef(false);
   const timer = useRef(false);
   const ItemRenderer = p => (
-    <WrappedRenderItem {...p} items={items} setItems={setItems} />
+    <WrappedRenderItem
+      {...p}
+      items={items}
+      setItems={setItems}
+      showQuotes={props.axis === 'y'}
+    />
   );
 
   useEffect(() => {
-    console.log("Container reference: ", ref);
+    console.log('Container reference: ', ref);
   }, []);
 
   useEffect(() => {
@@ -78,7 +83,7 @@ export const BaseDynamicHeightInfiniteAnimated = props => {
   };
 
   return (
-    <Container>
+    <Container axis={props.axis}>
       <DelightfulScroller
         ref={ref}
         items={items}

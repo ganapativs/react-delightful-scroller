@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components/macro";
+import React from 'react';
+import styled from 'styled-components/macro';
 
 const Wrapper = styled.div`
   height: 500px;
@@ -17,7 +17,7 @@ export const CustomScrollContainer = React.forwardRef(
         {children}
       </Wrapper>
     );
-  }
+  },
 );
 
-CustomScrollContainer.displayName = "CustomScrollContainer";
+CustomScrollContainer.displayName = 'CustomScrollContainer';

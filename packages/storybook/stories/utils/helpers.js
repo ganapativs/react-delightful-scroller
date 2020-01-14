@@ -1,4 +1,4 @@
-import faker from "faker";
+import faker from 'faker';
 
 export const getItems = (count = 0, editable = true) =>
   new Array(count).fill(true).map(() => {
@@ -8,7 +8,7 @@ export const getItems = (count = 0, editable = true) =>
       avatar: faker.image.avatar(),
       company: faker.company.companyName(),
       following: faker.random.boolean(),
-      editable
+      editable,
     };
   });
 
@@ -24,10 +24,10 @@ export function inIframe() {
 }
 
 export function getUrlParameter(n, location = window.location) {
-  const name = n.replace(/[[]/, "\\[").replace(/[\]]/, "\\]");
+  const name = n.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
   const regex = new RegExp(`[\\?&]${name}=([^&#]*)`);
   const results = regex.exec(location.search);
   return results === null
-    ? ""
-    : decodeURIComponent(results[1].replace(/\+/g, " "));
+    ? ''
+    : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
