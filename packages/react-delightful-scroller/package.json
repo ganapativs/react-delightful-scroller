@@ -55,7 +55,7 @@
     "@size-limit/preset-big-lib": "^2.1.1",
     "mkdirp": "^0.5.1",
     "rimraf": "^3.0.0",
-    "rollup": "^1.16.7",
+    "rollup": "^2.6.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-eslint": "^7.0.0",
