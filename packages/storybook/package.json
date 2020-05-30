@@ -11,7 +11,7 @@
     "lint": "eslint './stories/**/*' --quiet --fix"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
+    "@babel/core": "^7.10.2",
     "@ganapativs/eslint-config-react": "^0.0.3",
     "babel-loader": "^8.0.6"
   },
